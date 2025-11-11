@@ -3,6 +3,7 @@ import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +16,13 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [project, setProject] = useState<any>(null);
+  const [runs, setRuns] = useState<any[]>([]);
+  const [stats, setStats] = useState({
+    totalRuns: 0,
+    avgDsi: 0,
+    lastRunStatus: 'Healthy',
+    topDriftedFeature: '-'
+  });
   
   // CSV Upload state
   const [baselineId, setBaselineId] = useState("");
@@ -25,11 +33,11 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (projectId) {
-      loadProject();
+      loadData();
     }
   }, [projectId]);
 
-  const loadProject = async () => {
+  const loadData = async () => {
     try {
       const { data: projectData } = await supabase
         .from('projects')
@@ -38,8 +46,38 @@ const Dashboard = () => {
         .single();
       
       setProject(projectData);
+
+      // Load runs
+      const { data: runsData } = await supabase
+        .from('drift_runs')
+        .select('*')
+        .eq('project_id', projectId)
+        .order('created_at', { ascending: false })
+        .limit(10);
+
+      setRuns(runsData || []);
+
+      // Calculate stats
+      if (runsData && runsData.length > 0) {
+        const last10 = runsData.slice(0, 10);
+        const avgDsi = last10.reduce((sum, r) => sum + parseFloat(String(r.dsi)), 0) / last10.length;
+        
+        const lastRun = runsData[0];
+        const status = parseFloat(String(lastRun.dsi)) > 0.3 || parseFloat(String(lastRun.drift_ratio)) > 0.3 ? 'Attention' : 'Healthy';
+        
+        const topFeature = lastRun.drifted_features && Array.isArray(lastRun.drifted_features) && lastRun.drifted_features.length > 0 
+          ? (lastRun.drifted_features[0] as any)[0]
+          : '-';
+
+        setStats({
+          totalRuns: runsData.length,
+          avgDsi: avgDsi,
+          lastRunStatus: status,
+          topDriftedFeature: topFeature
+        });
+      }
     } catch (error) {
-      console.error('Error loading project:', error);
+      console.error('Error loading data:', error);
     }
   };
 
@@ -168,11 +206,93 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <Tabs defaultValue="upload" className="w-full">
-          <TabsList className="grid w-full max-w-md grid-cols-2">
+        <Tabs defaultValue="dashboard" className="w-full">
+          <TabsList className="grid w-full max-w-md grid-cols-3">
+            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
             <TabsTrigger value="upload">CSV Upload</TabsTrigger>
             <TabsTrigger value="webhook">Webhook API</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="dashboard" className="mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              <Card className="bg-card/50 backdrop-blur-sm">
+                <CardHeader>
+                  <CardDescription>Total Runs</CardDescription>
+                  <CardTitle className="text-3xl">{stats.totalRuns}</CardTitle>
+                </CardHeader>
+              </Card>
+
+              <Card className="bg-card/50 backdrop-blur-sm">
+                <CardHeader>
+                  <CardDescription>Avg DSI (Last 10)</CardDescription>
+                  <CardTitle className="text-3xl">{stats.avgDsi.toFixed(2)}</CardTitle>
+                </CardHeader>
+              </Card>
+
+              <Card className="bg-card/50 backdrop-blur-sm">
+                <CardHeader>
+                  <CardDescription>Last Run Status</CardDescription>
+                  <CardTitle>
+                    <Badge variant={stats.lastRunStatus === 'Healthy' ? 'default' : 'destructive'}>
+                      {stats.lastRunStatus}
+                    </Badge>
+                  </CardTitle>
+                </CardHeader>
+              </Card>
+
+              <Card className="bg-card/50 backdrop-blur-sm">
+                <CardHeader>
+                  <CardDescription>Top Drifted Feature</CardDescription>
+                  <CardTitle className="text-2xl truncate">{stats.topDriftedFeature}</CardTitle>
+                </CardHeader>
+              </Card>
+            </div>
+
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle>Recent Runs</CardTitle>
+                <CardDescription>Last 10 drift analysis runs</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {runs.length === 0 ? (
+                  <div className="text-center py-8">
+                    <p className="text-muted-foreground mb-4">No runs yet</p>
+                    <p className="text-sm text-muted-foreground">Upload your first dataset using the CSV Upload tab</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {runs.map((run) => (
+                      <div key={run.id} className="flex items-center justify-between p-4 border border-border rounded-lg">
+                        <div>
+                          <p className="font-medium">{run.baseline_id} vs {run.dataset_id}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {new Date(run.created_at).toLocaleString()}
+                          </p>
+                        </div>
+                        <div className="flex gap-4">
+                          <div className="text-right">
+                            <p className="text-sm text-muted-foreground">DSI</p>
+                            <Badge>{run.dsi}</Badge>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-sm text-muted-foreground">Drift Ratio</p>
+                            <Badge variant={parseFloat(String(run.drift_ratio)) > 0.3 ? 'destructive' : 'default'}>
+                              {run.drift_ratio}
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    {runs.length >= 10 && (
+                      <Link to={`/history?project_id=${projectId}`}>
+                        <Button variant="outline" className="w-full">View All History</Button>
+                      </Link>
+                    )}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
 
           <TabsContent value="upload" className="mt-6">
             <Card className="max-w-2xl bg-card/50 backdrop-blur-sm">
