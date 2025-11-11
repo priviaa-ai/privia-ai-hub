@@ -115,7 +115,7 @@ const Landing = () => {
           </Badge>
           
           <h1 className="text-6xl md:text-7xl font-extrabold leading-tight mb-6 bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
-            Monitor ML Model Drift
+            Monitor AI/ML Model Drift
             <br />
             <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
               Before It's Too Late
@@ -123,7 +123,7 @@ const Landing = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
-            Detect data distribution changes in your ML pipelines with intelligent drift monitoring. 
+            Detect data distribution changes in your AI/ML pipelines with intelligent drift monitoring. 
             Get real-time alerts and detailed analytics to keep your models performing at their best.
           </p>
 
