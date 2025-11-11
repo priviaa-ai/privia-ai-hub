@@ -101,6 +101,81 @@ serve(async (req) => {
       );
     }
 
+    // Send Slack notification if drift detected
+    if (driftResult.dsi > 0.3 || driftResult.drift_ratio > 0.3) {
+      try {
+        const slackMessage = {
+          text: `🚨 *Drift Alert!*`,
+          blocks: [
+            {
+              type: "header",
+              text: {
+                type: "plain_text",
+                text: "🚨 Data Drift Detected"
+              }
+            },
+            {
+              type: "section",
+              fields: [
+                {
+                  type: "mrkdwn",
+                  text: `*Project:*\n${projectId}`
+                },
+                {
+                  type: "mrkdwn",
+                  text: `*Run ID:*\n${run.id}`
+                }
+              ]
+            },
+            {
+              type: "section",
+              fields: [
+                {
+                  type: "mrkdwn",
+                  text: `*DSI:*\n${driftResult.dsi}`
+                },
+                {
+                  type: "mrkdwn",
+                  text: `*Drift Ratio:*\n${driftResult.drift_ratio}`
+                }
+              ]
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: `*Top Drifted Features:*\n${driftResult.drifted_features.map(([name, score]: any) => `• ${name}: ${score}`).join('\n')}`
+              }
+            },
+            {
+              type: "section",
+              fields: [
+                {
+                  type: "mrkdwn",
+                  text: `*Baseline:*\n${baselineId} (${baselineData.rows.length} rows)`
+                },
+                {
+                  type: "mrkdwn",
+                  text: `*Current:*\n${currentId} (${currentData.rows.length} rows)`
+                }
+              ]
+            }
+          ]
+        };
+
+        await fetch('https://hooks.slack.com/services/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', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(slackMessage)
+        });
+        
+        console.log('Slack notification sent successfully');
+      } catch (slackError) {
+        console.error('Failed to send Slack notification:', slackError);
+        // Don't fail the request if Slack notification fails
+      }
+    }
+
     return new Response(
       JSON.stringify({
         run_id: run.id,
