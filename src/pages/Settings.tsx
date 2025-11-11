@@ -3,6 +3,8 @@ import { useSearchParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Copy } from "lucide-react";
 
@@ -10,25 +12,65 @@ const Settings = () => {
   const [searchParams] = useSearchParams();
   const projectId = searchParams.get('project_id');
   const [project, setProject] = useState<any>(null);
+  const [settings, setSettings] = useState<any>(null);
+  const [slackWebhook, setSlackWebhook] = useState("");
+  const [saving, setSaving] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
     if (projectId) {
-      loadProject();
+      loadData();
     }
   }, [projectId]);
 
-  const loadProject = async () => {
+  const loadData = async () => {
     try {
-      const { data } = await supabase
+      const { data: projectData } = await supabase
         .from('projects')
         .select('*')
         .eq('id', projectId)
         .single();
       
-      setProject(data);
+      setProject(projectData);
+
+      const { data: settingsData } = await supabase
+        .from('project_settings')
+        .select('*')
+        .eq('project_id', projectId)
+        .single();
+      
+      setSettings(settingsData);
+      setSlackWebhook(settingsData?.slack_webhook_url || "");
     } catch (error) {
-      console.error('Error loading project:', error);
+      console.error('Error loading data:', error);
+    }
+  };
+
+  const handleSaveSlackWebhook = async () => {
+    if (!projectId) return;
+
+    setSaving(true);
+    try {
+      const { error } = await supabase
+        .from('project_settings')
+        .update({ slack_webhook_url: slackWebhook })
+        .eq('project_id', projectId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Slack webhook URL saved",
+      });
+    } catch (error: any) {
+      console.error('Error saving webhook:', error);
+      toast({
+        title: "Error",
+        description: error.message || "Failed to save webhook URL",
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -112,6 +154,37 @@ const Settings = () => {
                   <Copy className="h-4 w-4" />
                 </Button>
               </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-card/50 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle>Slack Notifications</CardTitle>
+              <CardDescription>
+                Configure Slack webhook to receive drift alerts
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="slack-webhook">Slack Webhook URL</Label>
+                <Input
+                  id="slack-webhook"
+                  value={slackWebhook}
+                  onChange={(e) => setSlackWebhook(e.target.value)}
+                  placeholder="https://hooks.slack.com/services/..."
+                  type="url"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Create a webhook at <a href="https://api.slack.com/messaging/webhooks" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Slack's webhook page</a>
+                </p>
+              </div>
+              <Button 
+                onClick={handleSaveSlackWebhook}
+                disabled={saving}
+                className="bg-gradient-to-r from-primary to-accent hover:opacity-90"
+              >
+                {saving ? 'Saving...' : 'Save Webhook URL'}
+              </Button>
             </CardContent>
           </Card>
 

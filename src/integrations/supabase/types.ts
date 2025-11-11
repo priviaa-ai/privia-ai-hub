@@ -67,18 +67,21 @@ export type Database = {
           dsi_threshold: number
           id: string
           project_id: string
+          slack_webhook_url: string | null
         }
         Insert: {
           drift_ratio_threshold?: number
           dsi_threshold?: number
           id?: string
           project_id: string
+          slack_webhook_url?: string | null
         }
         Update: {
           drift_ratio_threshold?: number
           dsi_threshold?: number
           id?: string
           project_id?: string
+          slack_webhook_url?: string | null
         }
         Relationships: [
           {

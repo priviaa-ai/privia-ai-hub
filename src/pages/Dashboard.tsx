@@ -158,9 +158,14 @@ const Dashboard = () => {
       <main className="container mx-auto px-6 py-12">
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">{project?.name || 'Dashboard'}</h1>
-          <Link to={`/history?project_id=${projectId}`}>
-            <Button variant="outline">View History</Button>
-          </Link>
+          <div className="flex gap-4">
+            <Link to={`/history?project_id=${projectId}`}>
+              <Button variant="outline">View History</Button>
+            </Link>
+            <Link to={`/settings?project_id=${projectId}`}>
+              <Button variant="outline">Settings</Button>
+            </Link>
+          </div>
         </div>
 
         <Tabs defaultValue="upload" className="w-full">
