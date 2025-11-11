@@ -242,7 +242,7 @@ const Landing = () => {
           <div className="text-center mb-16">
             <Badge className="mb-4" variant="outline">Use Cases</Badge>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Built for ML Teams
+              Built for AI/ML Teams
             </h2>
           </div>
 
@@ -301,7 +301,7 @@ const Landing = () => {
             Ready to Monitor Your Models?
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join ML teams using Mon AI to maintain model performance with intelligent drift detection
+            Join AI/ML teams using Mon AI to maintain model performance with intelligent drift detection
           </p>
           <Link to="/projects">
             <Button 
