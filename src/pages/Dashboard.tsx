@@ -114,7 +114,7 @@ const Dashboard = () => {
     });
   };
 
-  const baseUrl = window.location.origin;
+  const baseUrl = "https://api.monai.app";
   const curlExample = `curl -X POST "${baseUrl}/api/ingest" \\
   -F project_id=${projectId || '<PROJECT_UUID>'} \\
   -F baseline_id=training_dataset_v1 \\

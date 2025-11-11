@@ -6,7 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const Webhook = () => {
   const { toast } = useToast();
-  const baseUrl = window.location.origin;
+  const baseUrl = "https://api.monai.app";
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);

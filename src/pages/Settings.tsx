@@ -82,7 +82,7 @@ const Settings = () => {
     });
   };
 
-  const webhookUrl = `${window.location.origin}/api/ingest`;
+  const webhookUrl = "https://api.monai.app/api/ingest";
 
   return (
     <div className="min-h-screen bg-background">
