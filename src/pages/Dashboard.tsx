@@ -7,8 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Upload as UploadIcon, Copy } from "lucide-react";
+import { Upload as UploadIcon, Copy, FileText, AlertTriangle, CheckCircle } from "lucide-react";
 
 const Dashboard = () => {
   const [searchParams] = useSearchParams();
@@ -30,6 +31,10 @@ const Dashboard = () => {
   const [baselineFile, setBaselineFile] = useState<File | null>(null);
   const [currentFile, setCurrentFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  
+  // Report dialog state
+  const [selectedRun, setSelectedRun] = useState<any>(null);
+  const [reportOpen, setReportOpen] = useState(false);
 
   useEffect(() => {
     if (projectId) {
@@ -263,13 +268,13 @@ const Dashboard = () => {
                   <div className="space-y-4">
                     {runs.map((run) => (
                       <div key={run.id} className="flex items-center justify-between p-4 border border-border rounded-lg">
-                        <div>
+                        <div className="flex-1">
                           <p className="font-medium">{run.baseline_id} vs {run.dataset_id}</p>
                           <p className="text-sm text-muted-foreground">
                             {new Date(run.created_at).toLocaleString()}
                           </p>
                         </div>
-                        <div className="flex gap-4">
+                        <div className="flex gap-4 items-center">
                           <div className="text-right">
                             <p className="text-sm text-muted-foreground">DSI</p>
                             <Badge>{run.dsi}</Badge>
@@ -280,6 +285,17 @@ const Dashboard = () => {
                               {run.drift_ratio}
                             </Badge>
                           </div>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => {
+                              setSelectedRun(run);
+                              setReportOpen(true);
+                            }}
+                          >
+                            <FileText className="h-4 w-4 mr-2" />
+                            Report
+                          </Button>
                         </div>
                       </div>
                     ))}
@@ -513,6 +529,189 @@ const Dashboard = () => {
           </TabsContent>
         </Tabs>
       </main>
+
+      {/* Detailed Report Dialog */}
+      <Dialog open={reportOpen} onOpenChange={setReportOpen}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              Drift Analysis Report
+            </DialogTitle>
+            <DialogDescription>
+              Detailed analysis for run {selectedRun?.id?.substring(0, 8)}
+            </DialogDescription>
+          </DialogHeader>
+
+          {selectedRun && (
+            <div className="space-y-6 pt-4">
+              {/* Overall Status */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    {(parseFloat(String(selectedRun.dsi)) > 0.3 || parseFloat(String(selectedRun.drift_ratio)) > 0.3) ? (
+                      <>
+                        <AlertTriangle className="h-5 w-5 text-destructive" />
+                        Drift Detected
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle className="h-5 w-5 text-green-500" />
+                        No Significant Drift
+                      </>
+                    )}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-1">Baseline Dataset</p>
+                      <p className="font-medium">{selectedRun.baseline_id}</p>
+                      <p className="text-sm text-muted-foreground">{selectedRun.reference_rows} rows</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-1">Current Dataset</p>
+                      <p className="font-medium">{selectedRun.dataset_id}</p>
+                      <p className="text-sm text-muted-foreground">{selectedRun.current_rows} rows</p>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <p className="text-sm text-muted-foreground">Run Time</p>
+                    <p className="font-medium">{new Date(selectedRun.created_at).toLocaleString()}</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Drift Metrics */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Drift Metrics</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-medium">Drift Score Index (DSI)</span>
+                        <Badge variant={parseFloat(String(selectedRun.dsi)) > 0.3 ? 'destructive' : 'default'}>
+                          {selectedRun.dsi}
+                        </Badge>
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-2">
+                        <div 
+                          className={`h-2 rounded-full ${parseFloat(String(selectedRun.dsi)) > 0.3 ? 'bg-destructive' : 'bg-primary'}`}
+                          style={{ width: `${Math.min(parseFloat(String(selectedRun.dsi)) * 100, 100)}%` }}
+                        />
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Average drift score across all features. Values &gt; 0.3 indicate significant drift.
+                      </p>
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-medium">Drift Ratio</span>
+                        <Badge variant={parseFloat(String(selectedRun.drift_ratio)) > 0.3 ? 'destructive' : 'default'}>
+                          {selectedRun.drift_ratio}
+                        </Badge>
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-2">
+                        <div 
+                          className={`h-2 rounded-full ${parseFloat(String(selectedRun.drift_ratio)) > 0.3 ? 'bg-destructive' : 'bg-primary'}`}
+                          style={{ width: `${parseFloat(String(selectedRun.drift_ratio)) * 100}%` }}
+                        />
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Proportion of features with drift score &gt; 0.3. Higher values indicate more widespread drift.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Top Drifted Features */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Top Drifted Features</CardTitle>
+                  <CardDescription>
+                    Features showing the most significant distribution changes
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {selectedRun.drifted_features && Array.isArray(selectedRun.drifted_features) && selectedRun.drifted_features.length > 0 ? (
+                    <div className="space-y-4">
+                      {selectedRun.drifted_features.map((feature: any, idx: number) => {
+                        const [name, score] = feature;
+                        return (
+                          <div key={idx} className="space-y-2">
+                            <div className="flex justify-between items-center">
+                              <span className="font-medium">{name}</span>
+                              <Badge variant={score > 0.3 ? 'destructive' : 'default'}>
+                                {score}
+                              </Badge>
+                            </div>
+                            <div className="w-full bg-muted rounded-full h-2">
+                              <div 
+                                className={`h-2 rounded-full ${score > 0.3 ? 'bg-destructive' : 'bg-primary'}`}
+                                style={{ width: `${Math.min(score * 100, 100)}%` }}
+                              />
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              {score > 0.5 ? 'High drift - significant distribution change detected' :
+                               score > 0.3 ? 'Moderate drift - noticeable distribution change' :
+                               'Low drift - minimal distribution change'}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">No drifted features detected</p>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Analysis Summary */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Analysis Summary</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2 text-sm">
+                    <p>
+                      <strong>Why did drift occur?</strong>
+                    </p>
+                    <p className="text-muted-foreground">
+                      {parseFloat(String(selectedRun.dsi)) > 0.3 || parseFloat(String(selectedRun.drift_ratio)) > 0.3 ? (
+                        <>
+                          Drift was detected because {parseFloat(String(selectedRun.dsi)) > 0.3 && 'the average feature drift score exceeded the threshold'} 
+                          {parseFloat(String(selectedRun.dsi)) > 0.3 && parseFloat(String(selectedRun.drift_ratio)) > 0.3 && ' and '}
+                          {parseFloat(String(selectedRun.drift_ratio)) > 0.3 && 'too many features showed significant drift'}.
+                          This indicates that the current data distribution has changed compared to your baseline training data.
+                        </>
+                      ) : (
+                        'No significant drift was detected. The current data distribution is consistent with your baseline training data.'
+                      )}
+                    </p>
+                    <p className="mt-4">
+                      <strong>What does this mean?</strong>
+                    </p>
+                    <p className="text-muted-foreground">
+                      {parseFloat(String(selectedRun.dsi)) > 0.3 || parseFloat(String(selectedRun.drift_ratio)) > 0.3 ? (
+                        <>
+                          Your model may not perform as well on the current data as it did on the training data. 
+                          Consider retraining your model with recent data or investigating the causes of drift in the top drifted features.
+                        </>
+                      ) : (
+                        'Your model should continue to perform well on this data, as it closely matches the training distribution.'
+                      )}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
