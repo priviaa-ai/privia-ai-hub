@@ -102,10 +102,26 @@ const Landing = () => {
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-6 relative overflow-hidden">
-        {/* Background Effects */}
+        {/* Background Effects - Cybersecurity Grid */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse delay-700" />
+          {/* Animated Grid */}
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              linear-gradient(hsl(var(--grid-color)) 1px, transparent 1px),
+              linear-gradient(90deg, hsl(var(--grid-color)) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px',
+            opacity: 0.3
+          }} />
+          
+          {/* Glowing Orbs */}
+          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-accent/20 rounded-full blur-3xl animate-pulse delay-700" />
+          
+          {/* Scan Lines Effect */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent animate-pulse" style={{ animationDuration: '3s' }} />
+          </div>
         </div>
 
         <div className="container mx-auto max-w-6xl text-center">
@@ -114,15 +130,15 @@ const Landing = () => {
             AI-Powered Data Drift Monitoring
           </Badge>
           
-          <h1 className="text-6xl md:text-7xl font-extrabold leading-tight mb-6 bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
+          <h1 className="text-6xl md:text-7xl font-bold leading-tight mb-6 text-white drop-shadow-2xl">
             Monitor AI/ML Model Drift
             <br />
-            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(147,112,219,0.5)]">
               Before It's Too Late
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
+          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-12 leading-relaxed drop-shadow-lg">
             Detect data distribution changes in your AI/ML pipelines with intelligent drift monitoring. 
             Get real-time alerts and detailed analytics to keep your models performing at their best.
           </p>
@@ -146,24 +162,33 @@ const Landing = () => {
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto mt-20">
-            <div>
-              <p className="text-4xl font-bold text-foreground">200k</p>
-              <p className="text-sm text-muted-foreground mt-1">Rows per dataset</p>
+            <div className="backdrop-blur-sm bg-white/5 p-4 rounded-lg border border-white/10">
+              <p className="text-4xl font-bold text-white drop-shadow-lg">200k</p>
+              <p className="text-sm text-white/70 mt-1">Rows per dataset</p>
             </div>
-            <div>
-              <p className="text-4xl font-bold text-foreground">&lt;10s</p>
-              <p className="text-sm text-muted-foreground mt-1">Analysis time</p>
+            <div className="backdrop-blur-sm bg-white/5 p-4 rounded-lg border border-white/10">
+              <p className="text-4xl font-bold text-white drop-shadow-lg">&lt;10s</p>
+              <p className="text-sm text-white/70 mt-1">Analysis time</p>
             </div>
-            <div>
-              <p className="text-4xl font-bold text-foreground">200</p>
-              <p className="text-sm text-muted-foreground mt-1">Feature columns</p>
+            <div className="backdrop-blur-sm bg-white/5 p-4 rounded-lg border border-white/10">
+              <p className="text-4xl font-bold text-white drop-shadow-lg">200</p>
+              <p className="text-sm text-white/70 mt-1">Feature columns</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-6 bg-muted/30">
+      <section className="py-20 px-6 bg-muted/30 relative">
+        {/* Grid Background */}
+        <div className="absolute inset-0 -z-10" style={{
+          backgroundImage: `
+            linear-gradient(hsl(var(--grid-color)) 1px, transparent 1px),
+            linear-gradient(90deg, hsl(var(--grid-color)) 1px, transparent 1px)
+          `,
+          backgroundSize: '50px 50px',
+          opacity: 0.2
+        }} />
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
             <Badge className="mb-4" variant="outline">Features</Badge>
@@ -293,6 +318,15 @@ const Landing = () => {
       {/* CTA Section */}
       <section className="py-20 px-6 relative overflow-hidden">
         <div className="absolute inset-0 -z-10">
+          {/* Grid Background */}
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              linear-gradient(hsl(var(--grid-color)) 1px, transparent 1px),
+              linear-gradient(90deg, hsl(var(--grid-color)) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px',
+            opacity: 0.3
+          }} />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 rounded-full blur-3xl" />
         </div>
         
