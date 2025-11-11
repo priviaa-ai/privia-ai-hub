@@ -14,6 +14,8 @@ const Settings = () => {
   const [project, setProject] = useState<any>(null);
   const [settings, setSettings] = useState<any>(null);
   const [slackWebhook, setSlackWebhook] = useState("");
+  const [dsiThreshold, setDsiThreshold] = useState("0.3");
+  const [driftRatioThreshold, setDriftRatioThreshold] = useState("0.3");
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
 
@@ -41,32 +43,38 @@ const Settings = () => {
       
       setSettings(settingsData);
       setSlackWebhook(settingsData?.slack_webhook_url || "");
+      setDsiThreshold(settingsData?.dsi_threshold?.toString() || "0.3");
+      setDriftRatioThreshold(settingsData?.drift_ratio_threshold?.toString() || "0.3");
     } catch (error) {
       console.error('Error loading data:', error);
     }
   };
 
-  const handleSaveSlackWebhook = async () => {
+  const handleSaveSettings = async () => {
     if (!projectId) return;
 
     setSaving(true);
     try {
       const { error } = await supabase
         .from('project_settings')
-        .update({ slack_webhook_url: slackWebhook })
+        .update({ 
+          slack_webhook_url: slackWebhook,
+          dsi_threshold: parseFloat(dsiThreshold),
+          drift_ratio_threshold: parseFloat(driftRatioThreshold)
+        })
         .eq('project_id', projectId);
 
       if (error) throw error;
 
       toast({
         title: "Success",
-        description: "Slack webhook URL saved",
+        description: "Settings saved successfully",
       });
     } catch (error: any) {
-      console.error('Error saving webhook:', error);
+      console.error('Error saving settings:', error);
       toast({
         title: "Error",
-        description: error.message || "Failed to save webhook URL",
+        description: error.message || "Failed to save settings",
         variant: "destructive",
       });
     } finally {
@@ -161,7 +169,7 @@ const Settings = () => {
             <CardHeader>
               <CardTitle>Slack Notifications</CardTitle>
               <CardDescription>
-                Configure Slack webhook to receive drift alerts
+                Configure Slack webhook and drift detection thresholds
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -178,12 +186,49 @@ const Settings = () => {
                   Create a webhook at <a href="https://api.slack.com/messaging/webhooks" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Slack's webhook page</a>
                 </p>
               </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="dsi-threshold">DSI Threshold</Label>
+                  <Input
+                    id="dsi-threshold"
+                    value={dsiThreshold}
+                    onChange={(e) => setDsiThreshold(e.target.value)}
+                    placeholder="0.3"
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    max="1"
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Alert when DSI exceeds this value
+                  </p>
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="drift-ratio-threshold">Drift Ratio Threshold</Label>
+                  <Input
+                    id="drift-ratio-threshold"
+                    value={driftRatioThreshold}
+                    onChange={(e) => setDriftRatioThreshold(e.target.value)}
+                    placeholder="0.3"
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    max="1"
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Alert when drift ratio exceeds this value
+                  </p>
+                </div>
+              </div>
+              
               <Button 
-                onClick={handleSaveSlackWebhook}
+                onClick={handleSaveSettings}
                 disabled={saving}
                 className="bg-gradient-to-r from-primary to-accent hover:opacity-90"
               >
-                {saving ? 'Saving...' : 'Save Webhook URL'}
+                {saving ? 'Saving...' : 'Save Settings'}
               </Button>
             </CardContent>
           </Card>

@@ -102,16 +102,19 @@ serve(async (req) => {
     }
 
     // Send Slack notification if drift detected
-    if (driftResult.dsi > 0.3 || driftResult.drift_ratio > 0.3) {
-      try {
-        // Get project settings to retrieve Slack webhook URL
-        const { data: settingsData } = await supabase
-          .from('project_settings')
-          .select('slack_webhook_url')
-          .eq('project_id', projectId)
-          .single();
+    try {
+      // Get project settings to retrieve Slack webhook URL and thresholds
+      const { data: settingsData } = await supabase
+        .from('project_settings')
+        .select('slack_webhook_url, dsi_threshold, drift_ratio_threshold')
+        .eq('project_id', projectId)
+        .single();
 
-        const slackWebhookUrl = settingsData?.slack_webhook_url;
+      const slackWebhookUrl = settingsData?.slack_webhook_url;
+      const dsiThreshold = settingsData?.dsi_threshold || 0.3;
+      const driftRatioThreshold = settingsData?.drift_ratio_threshold || 0.3;
+
+    if (driftResult.dsi > dsiThreshold || driftResult.drift_ratio > driftRatioThreshold) {
 
         if (slackWebhookUrl) {
           const slackMessage = {
@@ -142,11 +145,11 @@ serve(async (req) => {
                 fields: [
                   {
                     type: "mrkdwn",
-                    text: `*DSI:*\n${driftResult.dsi}`
+                    text: `*DSI:*\n${driftResult.dsi} (threshold: ${dsiThreshold})`
                   },
                   {
                     type: "mrkdwn",
-                    text: `*Drift Ratio:*\n${driftResult.drift_ratio}`
+                    text: `*Drift Ratio:*\n${driftResult.drift_ratio} (threshold: ${driftRatioThreshold})`
                   }
                 ]
               },
@@ -183,10 +186,12 @@ serve(async (req) => {
         } else {
           console.log('No Slack webhook URL configured, skipping notification');
         }
-      } catch (slackError) {
-        console.error('Failed to send Slack notification:', slackError);
-        // Don't fail the request if Slack notification fails
+      } else {
+        console.log(`Drift not significant enough (DSI: ${driftResult.dsi} <= ${dsiThreshold}, Drift Ratio: ${driftResult.drift_ratio} <= ${driftRatioThreshold})`);
       }
+    } catch (slackError) {
+      console.error('Failed to send Slack notification:', slackError);
+      // Don't fail the request if Slack notification fails
     }
 
     return new Response(
