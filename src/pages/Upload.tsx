@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ const Upload = () => {
   const projectId = searchParams.get('project_id');
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { getAuthHeader } = useAuth();
 
   const [baselineId, setBaselineId] = useState("");
   const [currentId, setCurrentId] = useState("");
@@ -51,6 +53,7 @@ const Upload = () => {
 
       const { data, error } = await supabase.functions.invoke('ingest', {
         body: formData,
+        headers: getAuthHeader()
       });
 
       if (error) throw error;
