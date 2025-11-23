@@ -8,6 +8,16 @@ import { StatusPill } from "@/components/monai/StatusPill";
 import { Button } from "@/components/ui/button";
 import { Plus, TrendingUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface Project {
   id: string;
@@ -21,6 +31,9 @@ interface Project {
 export default function MonaiProjects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [newProjectName, setNewProjectName] = useState("");
+  const [creating, setCreating] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -80,6 +93,50 @@ export default function MonaiProjects() {
     }
   };
 
+  const createProject = async () => {
+    if (!newProjectName.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a project name",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setCreating(true);
+    try {
+      const { data, error } = await supabase
+        .from('monai_projects')
+        .insert({
+          name: newProjectName.trim(),
+          description: null,
+          default_model_type: 'llm',
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      toast({
+        title: "Project Created",
+        description: `${newProjectName} has been created successfully`,
+      });
+
+      setNewProjectName("");
+      setDialogOpen(false);
+      loadProjects();
+    } catch (error: any) {
+      console.error('Error creating project:', error);
+      toast({
+        title: "Error",
+        description: error.message || "Failed to create project",
+        variant: "destructive",
+      });
+    } finally {
+      setCreating(false);
+    }
+  };
+
   if (loading) {
     return (
       <>
@@ -101,10 +158,45 @@ export default function MonaiProjects() {
           title="Projects"
           subtitle="AI reliability monitoring across your ML and LLM systems"
           actions={
-            <Button className="bg-primary hover:bg-primary/90">
-              <Plus className="h-4 w-4 mr-2" />
-              New Project
-            </Button>
+            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="bg-primary hover:bg-primary/90">
+                  <Plus className="h-4 w-4 mr-2" />
+                  New Project
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Create New Project</DialogTitle>
+                  <DialogDescription>
+                    Set up a new project to monitor your AI systems
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Project Name</Label>
+                    <Input
+                      id="name"
+                      placeholder="My AI Project"
+                      value={newProjectName}
+                      onChange={(e) => setNewProjectName(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !creating) {
+                          createProject();
+                        }
+                      }}
+                    />
+                  </div>
+                  <Button 
+                    onClick={createProject} 
+                    disabled={creating}
+                    className="w-full"
+                  >
+                    {creating ? "Creating..." : "Create Project"}
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
           }
         />
 
