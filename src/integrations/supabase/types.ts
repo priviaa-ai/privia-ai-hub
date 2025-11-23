@@ -61,6 +61,404 @@ export type Database = {
           },
         ]
       }
+      monai_alerts: {
+        Row: {
+          channel: string | null
+          id: string
+          message: string
+          payload_json: Json | null
+          project_id: string
+          resolved_at: string | null
+          severity: string
+          status: string | null
+          title: string
+          triggered_at: string
+          type: string
+        }
+        Insert: {
+          channel?: string | null
+          id?: string
+          message: string
+          payload_json?: Json | null
+          project_id: string
+          resolved_at?: string | null
+          severity: string
+          status?: string | null
+          title: string
+          triggered_at?: string
+          type: string
+        }
+        Update: {
+          channel?: string | null
+          id?: string
+          message?: string
+          payload_json?: Json | null
+          project_id?: string
+          resolved_at?: string | null
+          severity?: string
+          status?: string | null
+          title?: string
+          triggered_at?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monai_alerts_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "monai_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      monai_api_keys: {
+        Row: {
+          created_at: string
+          hashed_key: string
+          id: string
+          is_active: boolean | null
+          label: string
+          last_used_at: string | null
+          plain_key_preview: string
+          project_id: string
+        }
+        Insert: {
+          created_at?: string
+          hashed_key: string
+          id?: string
+          is_active?: boolean | null
+          label: string
+          last_used_at?: string | null
+          plain_key_preview: string
+          project_id: string
+        }
+        Update: {
+          created_at?: string
+          hashed_key?: string
+          id?: string
+          is_active?: boolean | null
+          label?: string
+          last_used_at?: string | null
+          plain_key_preview?: string
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monai_api_keys_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "monai_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      monai_datasets: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          name: string
+          project_id: string
+          row_count: number | null
+          schema_json: Json | null
+          source_type: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          name: string
+          project_id: string
+          row_count?: number | null
+          schema_json?: Json | null
+          source_type?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          name?: string
+          project_id?: string
+          row_count?: number | null
+          schema_json?: Json | null
+          source_type?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monai_datasets_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "monai_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      monai_drift_feature_metrics: {
+        Row: {
+          details_json: Json | null
+          drift_flag: boolean
+          drift_run_id: string
+          feature_name: string
+          feature_type: string
+          id: string
+          js_divergence: number | null
+          kl_divergence: number | null
+          p_value: number | null
+          psi: number | null
+        }
+        Insert: {
+          details_json?: Json | null
+          drift_flag?: boolean
+          drift_run_id: string
+          feature_name: string
+          feature_type: string
+          id?: string
+          js_divergence?: number | null
+          kl_divergence?: number | null
+          p_value?: number | null
+          psi?: number | null
+        }
+        Update: {
+          details_json?: Json | null
+          drift_flag?: boolean
+          drift_run_id?: string
+          feature_name?: string
+          feature_type?: string
+          id?: string
+          js_divergence?: number | null
+          kl_divergence?: number | null
+          p_value?: number | null
+          psi?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monai_drift_feature_metrics_drift_run_id_fkey"
+            columns: ["drift_run_id"]
+            isOneToOne: false
+            referencedRelation: "monai_drift_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      monai_drift_runs: {
+        Row: {
+          baseline_dataset_id: string
+          created_at: string
+          current_dataset_id: string
+          drift_ratio: number
+          dsi: number
+          id: string
+          metrics_json: Json | null
+          project_id: string
+          status: string | null
+          summary: string | null
+        }
+        Insert: {
+          baseline_dataset_id: string
+          created_at?: string
+          current_dataset_id: string
+          drift_ratio: number
+          dsi: number
+          id?: string
+          metrics_json?: Json | null
+          project_id: string
+          status?: string | null
+          summary?: string | null
+        }
+        Update: {
+          baseline_dataset_id?: string
+          created_at?: string
+          current_dataset_id?: string
+          drift_ratio?: number
+          dsi?: number
+          id?: string
+          metrics_json?: Json | null
+          project_id?: string
+          status?: string | null
+          summary?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monai_drift_runs_baseline_dataset_id_fkey"
+            columns: ["baseline_dataset_id"]
+            isOneToOne: false
+            referencedRelation: "monai_datasets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "monai_drift_runs_current_dataset_id_fkey"
+            columns: ["current_dataset_id"]
+            isOneToOne: false
+            referencedRelation: "monai_datasets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "monai_drift_runs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "monai_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      monai_embedding_vectors: {
+        Row: {
+          cluster_label: string | null
+          created_at: string
+          dataset_id: string | null
+          id: string
+          interaction_id: string | null
+          project_id: string
+          vector: Json
+        }
+        Insert: {
+          cluster_label?: string | null
+          created_at?: string
+          dataset_id?: string | null
+          id?: string
+          interaction_id?: string | null
+          project_id: string
+          vector: Json
+        }
+        Update: {
+          cluster_label?: string | null
+          created_at?: string
+          dataset_id?: string | null
+          id?: string
+          interaction_id?: string | null
+          project_id?: string
+          vector?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monai_embedding_vectors_dataset_id_fkey"
+            columns: ["dataset_id"]
+            isOneToOne: false
+            referencedRelation: "monai_datasets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "monai_embedding_vectors_interaction_id_fkey"
+            columns: ["interaction_id"]
+            isOneToOne: false
+            referencedRelation: "monai_llm_interactions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "monai_embedding_vectors_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "monai_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      monai_events: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: string
+          payload_json: Json
+          project_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: string
+          payload_json: Json
+          project_id: string
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: string
+          payload_json?: Json
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monai_events_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "monai_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      monai_llm_interactions: {
+        Row: {
+          created_at: string
+          hallucination_score: number | null
+          id: string
+          input_text: string
+          metadata_json: Json | null
+          output_text: string
+          project_id: string
+          safety_flags_json: Json | null
+          tone: string | null
+        }
+        Insert: {
+          created_at?: string
+          hallucination_score?: number | null
+          id?: string
+          input_text: string
+          metadata_json?: Json | null
+          output_text: string
+          project_id: string
+          safety_flags_json?: Json | null
+          tone?: string | null
+        }
+        Update: {
+          created_at?: string
+          hallucination_score?: number | null
+          id?: string
+          input_text?: string
+          metadata_json?: Json | null
+          output_text?: string
+          project_id?: string
+          safety_flags_json?: Json | null
+          tone?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monai_llm_interactions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "monai_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      monai_projects: {
+        Row: {
+          created_at: string
+          default_model_type: string | null
+          description: string | null
+          id: string
+          is_demo: boolean | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          default_model_type?: string | null
+          description?: string | null
+          id?: string
+          is_demo?: boolean | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          default_model_type?: string | null
+          description?: string | null
+          id?: string
+          is_demo?: boolean | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       project_settings: {
         Row: {
           drift_ratio_threshold: number

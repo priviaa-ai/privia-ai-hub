@@ -2,17 +2,16 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
-import Auth from "./pages/Auth";
-import Projects from "./pages/Projects";
-import Dashboard from "./pages/Dashboard";
-import Upload from "./pages/Upload";
-import History from "./pages/History";
-import Settings from "./pages/Settings";
-import Webhook from "./pages/Webhook";
-import NotFound from "./pages/NotFound";
+import Pricing from "./pages/monai/Pricing";
+import Docs from "./pages/monai/Docs";
+import DocsWebhooks from "./pages/monai/DocsWebhooks";
+import DocsSDK from "./pages/monai/DocsSDK";
+import MonaiProjects from "./pages/monai/MonaiProjects";
+import ProjectOverview from "./pages/monai/ProjectOverview";
+import ProjectDrift from "./pages/monai/ProjectDrift";
+import ProjectSettings from "./pages/monai/ProjectSettings";
 
 const queryClient = new QueryClient();
 
@@ -23,15 +22,18 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* Public marketing pages */}
           <Route path="/" element={<Landing />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
-          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/upload" element={<ProtectedRoute><Upload /></ProtectedRoute>} />
-          <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
-          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-          <Route path="/webhook" element={<ProtectedRoute><Webhook /></ProtectedRoute>} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/docs" element={<Docs />} />
+          <Route path="/docs/webhooks" element={<DocsWebhooks />} />
+          <Route path="/docs/sdk" element={<DocsSDK />} />
+          
+          {/* MonAI app pages - no auth required for public beta */}
+          <Route path="/monai/projects" element={<MonaiProjects />} />
+          <Route path="/monai/projects/:projectId" element={<ProjectOverview />} />
+          <Route path="/monai/projects/:projectId/drift" element={<ProjectDrift />} />
+          <Route path="/monai/projects/:projectId/settings" element={<ProjectSettings />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

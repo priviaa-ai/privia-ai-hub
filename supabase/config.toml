@@ -1,1 +1,13 @@
 project_id = "pecnrqvrennoqvewkpuq"
+
+[functions.ingest]
+verify_jwt = false
+
+[functions.projects-create]
+verify_jwt = false
+
+[functions.projects-list]
+verify_jwt = false
+
+[functions.create-demo-project]
+verify_jwt = false
