@@ -97,9 +97,10 @@ export default function ProjectOverview() {
   };
 
   const latestDriftRun = driftRuns[0];
+  const hasData = latestDriftRun || llmCount > 0;
   const reliabilityScore = latestDriftRun 
     ? Math.max(0, 100 - latestDriftRun.dsi - (avgHallucination * 50))
-    : 94;
+    : null;
 
   // Chart data
   const chartData = driftRuns.slice(0, 7).reverse().map(run => ({
@@ -135,28 +136,28 @@ export default function ProjectOverview() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <MetricCard
             label="Reliability Score"
-            value={Math.round(reliabilityScore)}
-            badge={reliabilityScore > 90 ? "Healthy" : "Attention"}
-            trend={reliabilityScore > 90 ? "up" : "neutral"}
-            trendValue={reliabilityScore > 90 ? "+2%" : "0%"}
+            value={reliabilityScore !== null ? Math.round(reliabilityScore) : "-"}
+            badge={reliabilityScore !== null && reliabilityScore > 90 ? "Healthy" : undefined}
+            trend={reliabilityScore !== null && reliabilityScore > 90 ? "up" : "neutral"}
+            trendValue={reliabilityScore !== null && reliabilityScore > 90 ? "+2%" : ""}
           />
           <MetricCard
             label="Drift Score"
-            value={latestDriftRun?.dsi || 0}
+            value={latestDriftRun?.dsi || "-"}
             trend={latestDriftRun && latestDriftRun.dsi < 30 ? "down" : "neutral"}
-            trendValue={latestDriftRun ? "-5" : "0"}
+            trendValue={latestDriftRun ? "-5" : ""}
           />
           <MetricCard
             label="Hallucination Index"
-            value={(avgHallucination * 100).toFixed(0) + "%"}
+            value={avgHallucination > 0 ? (avgHallucination * 100).toFixed(0) + "%" : "-"}
             trend="neutral"
-            trendValue="0.0"
+            trendValue=""
           />
           <MetricCard
             label="24h Volume"
             value={llmCount}
             trend={llmCount > 0 ? "up" : "neutral"}
-            trendValue={llmCount > 0 ? "+18%" : "0%"}
+            trendValue={llmCount > 0 ? `+${llmCount}` : ""}
           />
         </div>
 
