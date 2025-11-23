@@ -104,6 +104,7 @@ export default function ProjectLLM() {
         <PageHeader
           title="LLM Behavior Dashboard"
           subtitle="Monitor hallucinations, tone, and safety across LLM interactions"
+          showBack
         />
 
         {/* Key Metrics */}
