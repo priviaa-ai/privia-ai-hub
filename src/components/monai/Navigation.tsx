@@ -12,31 +12,40 @@ export function Navigation() {
   const location = useLocation();
   
   return (
-    <nav className="border-b border-white/10 backdrop-blur-xl bg-white/5 sticky top-0 z-50">
-      <div className="container mx-auto px-6 py-4">
+    <nav className="border-b border-white/5 backdrop-blur-2xl bg-white/[0.02] sticky top-0 z-50 shadow-lg shadow-black/10">
+      <div className="container mx-auto px-6 py-5">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="relative">
+              <div className="absolute inset-0 bg-primary rounded-full blur-md opacity-50 group-hover:opacity-75 transition-opacity" />
+              <div className="relative w-2.5 h-2.5 rounded-full bg-gradient-to-br from-primary to-accent animate-pulse" />
+            </div>
+            <span className="text-2xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
               MonAI
             </span>
           </Link>
           
-          <div className="flex items-center gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary",
-                  location.pathname === link.path
-                    ? "text-foreground"
-                    : "text-muted-foreground"
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
+          <div className="flex items-center gap-8">
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.path;
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={cn(
+                    "relative text-sm font-medium transition-all duration-300",
+                    isActive
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  {link.label}
+                  {isActive && (
+                    <div className="absolute -bottom-5 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full" />
+                  )}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
