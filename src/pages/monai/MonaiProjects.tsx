@@ -222,11 +222,6 @@ export default function MonaiProjects() {
                     <span>•</span>
                     <span className="capitalize">{project.default_model_type}</span>
                   </div>
-
-                  <div className="flex items-center gap-2 text-sm">
-                    <TrendingUp className="h-4 w-4 text-success" />
-                    <span className="text-success font-medium">Reliability 94%</span>
-                  </div>
                 </div>
               </GlassCard>
             </Link>
