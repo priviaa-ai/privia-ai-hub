@@ -90,7 +90,7 @@ const Landing = () => {
               <Link to="/projects" className="text-muted-foreground hover:text-foreground transition-colors">
                 Projects
               </Link>
-              <Link to="/projects">
+              <Link to="/auth">
                 <Button className="bg-gradient-to-r from-primary to-accent hover:opacity-90">
                   Get Started
                 </Button>
@@ -144,7 +144,7 @@ const Landing = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link to="/projects">
+            <Link to="/auth">
               <Button 
                 size="lg" 
                 className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity text-lg px-10 py-6 group"
@@ -337,7 +337,7 @@ const Landing = () => {
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             Join AI/ML teams using Mon AI to maintain model performance with intelligent drift detection
           </p>
-          <Link to="/projects">
+          <Link to="/auth">
             <Button 
               size="lg" 
               className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-lg px-10 py-6 group"

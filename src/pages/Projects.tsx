@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Plus } from "lucide-react";
+import { Plus, LogOut } from "lucide-react";
 
 const Projects = () => {
   const [projects, setProjects] = useState<any[]>([]);
@@ -16,21 +17,30 @@ const Projects = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { getAuthHeader, user } = useAuth();
 
   useEffect(() => {
     loadProjects();
   }, []);
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/auth");
+  };
+
   const loadProjects = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('projects-list');
+      const { data, error } = await supabase.functions.invoke('projects-list', {
+        headers: getAuthHeader()
+      });
       
       if (error) throw error;
 
       if (data.projects.length === 0) {
         // Create demo project
         const { data: newProject, error: createError } = await supabase.functions.invoke('projects-create', {
-          body: { name: 'Demo Project' }
+          body: { name: 'Demo Project' },
+          headers: getAuthHeader()
         });
         
         if (createError) throw createError;
@@ -44,7 +54,7 @@ const Projects = () => {
       console.error('Error loading projects:', error);
       toast({
         title: "Error",
-        description: "Failed to load projects",
+        description: error.message || "Failed to load projects",
         variant: "destructive",
       });
     } finally {
@@ -64,7 +74,8 @@ const Projects = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke('projects-create', {
-        body: { name: newProjectName.trim() }
+        body: { name: newProjectName.trim() },
+        headers: getAuthHeader()
       });
 
       if (error) throw error;
@@ -81,7 +92,7 @@ const Projects = () => {
       console.error('Error creating project:', error);
       toast({
         title: "Error",
-        description: "Failed to create project",
+        description: error.message || "Failed to create project",
         variant: "destructive",
       });
     }
@@ -105,7 +116,7 @@ const Projects = () => {
                 Mon AI
               </h1>
             </Link>
-            <div className="flex gap-6">
+            <div className="flex gap-6 items-center">
               <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
                 Home
               </Link>
@@ -115,6 +126,10 @@ const Projects = () => {
               <Link to="/webhook" className="text-muted-foreground hover:text-foreground transition-colors">
                 Webhook
               </Link>
+              <Button variant="ghost" size="sm" onClick={handleLogout}>
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
+              </Button>
             </div>
           </div>
         </div>

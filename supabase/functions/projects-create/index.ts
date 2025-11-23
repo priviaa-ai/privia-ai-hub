@@ -12,10 +12,29 @@ serve(async (req) => {
   }
 
   try {
+    // Validate JWT token
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized - No auth token provided' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      { global: { headers: { Authorization: authHeader } } }
     );
+
+    // Verify user is authenticated
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized - Invalid token' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
     const { name } = await req.json();
 
@@ -26,10 +45,10 @@ serve(async (req) => {
       );
     }
 
-    // Create project
+    // Create project with user_id
     const { data: project, error: projectError } = await supabase
       .from('projects')
-      .insert({ name: name.trim() })
+      .insert({ name: name.trim(), user_id: user.id })
       .select()
       .single();
 
