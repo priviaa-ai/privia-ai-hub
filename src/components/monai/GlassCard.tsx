@@ -3,19 +3,26 @@ import { cn } from "@/lib/utils";
 interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   hover?: boolean;
+  glow?: boolean;
 }
 
-export function GlassCard({ children, hover = false, className, ...props }: GlassCardProps) {
+export function GlassCard({ children, hover = false, glow = false, className, ...props }: GlassCardProps) {
   return (
     <div
       className={cn(
-        "rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-xl",
-        hover && "transition-all duration-300 hover:border-white/20 hover:shadow-2xl hover:bg-white/[0.07]",
+        "glass-card rounded-2xl",
+        hover && "glass-card-hover cursor-pointer",
+        glow && "relative",
         className
       )}
       {...props}
     >
-      {children}
+      {glow && (
+        <div className="absolute -inset-[1px] bg-gradient-to-r from-primary via-accent to-primary opacity-0 group-hover:opacity-20 rounded-2xl blur-xl transition-opacity duration-500" />
+      )}
+      <div className="relative z-10">
+        {children}
+      </div>
     </div>
   );
 }

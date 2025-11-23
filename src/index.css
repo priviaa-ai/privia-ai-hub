@@ -7,59 +7,69 @@
 @layer base {
   :root {
     /* Dark gradient background colors */
-    --background: 240 20% 6%;
-    --background-gradient-start: 240 40% 8%;
-    --background-gradient-end: 270 45% 12%;
+    --background: 240 25% 4%;
+    --background-gradient-start: 240 35% 6%;
+    --background-gradient-end: 265 40% 10%;
     
     --foreground: 0 0% 98%;
 
     /* Glass card colors */
     --card: 0 0% 100%;
-    --card-opacity: 0.05;
+    --card-opacity: 0.03;
     --card-border: 0 0% 100%;
-    --card-border-opacity: 0.1;
+    --card-border-opacity: 0.08;
     --card-foreground: 0 0% 98%;
 
     --popover: 240 20% 10%;
     --popover-foreground: 0 0% 98%;
 
-    /* Primary colors - vibrant purple */
-    --primary: 264 80% 65%;
+    /* Primary colors - vibrant blue/purple */
+    --primary: 250 85% 68%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 264 80% 65%;
+    --primary-glow: 250 85% 68%;
 
     /* Secondary colors */
-    --secondary: 240 15% 15%;
+    --secondary: 240 15% 12%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 15% 18%;
-    --muted-foreground: 0 0% 70%;
+    --muted: 240 15% 15%;
+    --muted-foreground: 0 0% 65%;
 
-    /* Accent colors - cyan/teal */
-    --accent: 180 80% 55%;
+    /* Accent colors - cyan */
+    --accent: 190 95% 60%;
     --accent-foreground: 0 0% 100%;
-    --accent-glow: 180 80% 55%;
+    --accent-glow: 190 95% 60%;
 
     /* Status colors */
-    --success: 142 76% 45%;
+    --success: 142 76% 48%;
     --success-foreground: 0 0% 100%;
     
-    --warning: 45 90% 60%;
+    --warning: 45 90% 62%;
     --warning-foreground: 240 20% 10%;
     
-    --destructive: 0 84% 60%;
+    --destructive: 0 84% 62%;
     --destructive-foreground: 0 0% 100%;
     
-    --info: 210 80% 60%;
+    --info: 210 85% 62%;
     --info-foreground: 0 0% 100%;
 
     --border: 0 0% 100%;
-    --border-opacity: 0.1;
+    --border-opacity: 0.08;
     
-    --input: 240 15% 15%;
-    --ring: 264 80% 65%;
+    --input: 240 15% 12%;
+    --ring: 250 85% 68%;
 
-    --radius: 1rem;
+    --radius: 1.25rem;
+
+    /* Gradient stops */
+    --gradient-primary-start: 250 85% 68%;
+    --gradient-primary-end: 190 95% 60%;
+    --gradient-purple-cyan: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    
+    /* Glow effects */
+    --glow-primary: 0 0 40px hsla(var(--primary-glow), 0.5);
+    --glow-accent: 0 0 40px hsla(var(--accent-glow), 0.5);
+    --glow-subtle: 0 10px 50px -10px hsla(var(--primary-glow), 0.3);
   }
 }
 
@@ -69,11 +79,15 @@
   }
 
   body {
-    @apply bg-gradient-to-br from-[hsl(var(--background-gradient-start))] to-[hsl(var(--background-gradient-end))] text-foreground min-h-screen;
+    @apply bg-[hsl(var(--background))] text-foreground min-h-screen;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-feature-settings: 'cv11', 'ss01', 'ss02';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
   }
 
-  /* Animated gradient background */
+  /* Multi-layer animated gradient background */
   body::before {
     content: '';
     position: fixed;
@@ -82,9 +96,26 @@
     right: 0;
     bottom: 0;
     background: 
-      radial-gradient(circle at 20% 30%, hsla(var(--primary-glow), 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, hsla(var(--accent-glow), 0.12) 0%, transparent 50%);
-    animation: gradientShift 15s ease-in-out infinite;
+      radial-gradient(ellipse at 15% 20%, hsla(var(--primary-glow), 0.18) 0%, transparent 45%),
+      radial-gradient(ellipse at 85% 80%, hsla(var(--accent-glow), 0.15) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 50%, hsla(265, 70%, 50%, 0.08) 0%, transparent 60%);
+    animation: gradientShift 20s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Second gradient layer for depth */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 70% 30%, hsla(190, 90%, 55%, 0.1) 0%, transparent 40%),
+      radial-gradient(circle at 30% 70%, hsla(250, 80%, 60%, 0.12) 0%, transparent 40%);
+    animation: gradientShift 25s ease-in-out infinite reverse;
     pointer-events: none;
     z-index: 0;
   }
@@ -94,9 +125,13 @@
       opacity: 1;
       transform: scale(1) translate(0, 0);
     }
-    50% {
-      opacity: 0.8;
-      transform: scale(1.1) translate(5%, 5%);
+    33% {
+      opacity: 0.85;
+      transform: scale(1.15) translate(3%, -3%);
+    }
+    66% {
+      opacity: 0.9;
+      transform: scale(1.08) translate(-3%, 3%);
     }
   }
 
@@ -104,5 +139,86 @@
   #root {
     position: relative;
     z-index: 1;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Enhanced glass card effect */
+  .glass-card {
+    @apply relative overflow-hidden;
+    background: linear-gradient(
+      135deg,
+      hsla(var(--card), 0.04) 0%,
+      hsla(var(--card), 0.02) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid hsla(var(--card-border), 0.08);
+    box-shadow: 
+      0 8px 32px 0 rgba(0, 0, 0, 0.37),
+      inset 0 1px 1px 0 hsla(var(--card-border), 0.05);
+  }
+
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsla(var(--card-border), 0.2) 50%,
+      transparent 100%
+    );
+  }
+
+  /* Glowing card on hover */
+  .glass-card-hover {
+    @apply transition-all duration-300;
+  }
+
+  .glass-card-hover:hover {
+    border-color: hsla(var(--primary), 0.3);
+    box-shadow: 
+      0 8px 32px 0 rgba(0, 0, 0, 0.4),
+      0 0 0 1px hsla(var(--primary), 0.2),
+      0 0 40px -10px hsla(var(--primary-glow), 0.4),
+      inset 0 1px 1px 0 hsla(var(--card-border), 0.08);
+    transform: translateY(-2px);
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  }
+
+  /* Glowing button effect */
+  .btn-glow {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-glow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, hsla(var(--primary), 0.4) 0%, transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.4s ease-out;
+  }
+
+  .btn-glow:hover::before {
+    transform: translate(-50%, -50%) scale(2);
   }
 }

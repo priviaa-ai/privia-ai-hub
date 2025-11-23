@@ -126,6 +126,8 @@ export default function MonaiProjects() {
         <PageHeader
           title="Projects"
           subtitle="AI reliability monitoring across your ML and LLM systems"
+          showBack
+          backTo="/"
           actions={
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <DialogTrigger asChild>
