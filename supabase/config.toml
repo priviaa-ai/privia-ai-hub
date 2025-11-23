@@ -11,3 +11,15 @@ verify_jwt = false
 
 [functions.create-demo-project]
 verify_jwt = false
+
+[functions.analyze-drift]
+verify_jwt = false
+
+[functions.upload-dataset]
+verify_jwt = false
+
+[functions.ingest-llm-interaction]
+verify_jwt = false
+
+[functions.ingest-embeddings]
+verify_jwt = false
