@@ -25,6 +25,7 @@ export default function ProjectSettings() {
         <PageHeader
           title="Project Settings"
           subtitle="Manage your project configuration and API keys"
+          showBack
         />
 
         {/* Project Info */}

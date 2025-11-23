@@ -115,6 +115,8 @@ export default function ProjectOverview() {
         <PageHeader
           title={project?.name || "Demo Project"}
           subtitle={project?.description || "Overview of your AI reliability metrics"}
+          showBack
+          backTo="/monai/projects"
           actions={
             <>
               <Link to={`/monai/projects/${projectId}/llm`}>
