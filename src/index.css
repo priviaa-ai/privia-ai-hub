@@ -2,56 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* MonAI Design System - Dark Glass Aesthetic */
 
 @layer base {
   :root {
-    --background: 220 25% 4%;
-    --foreground: 0 0% 100%;
+    /* Dark gradient background colors */
+    --background: 240 20% 6%;
+    --background-gradient-start: 240 40% 8%;
+    --background-gradient-end: 270 45% 12%;
+    
+    --foreground: 0 0% 98%;
 
-    --card: 220 20% 8%;
-    --card-foreground: 0 0% 100%;
+    /* Glass card colors */
+    --card: 0 0% 100%;
+    --card-opacity: 0.05;
+    --card-border: 0 0% 100%;
+    --card-border-opacity: 0.1;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 220 20% 8%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 240 20% 10%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 264 70% 65%;
+    /* Primary colors - vibrant purple */
+    --primary: 264 80% 65%;
     --primary-foreground: 0 0% 100%;
+    --primary-glow: 264 80% 65%;
 
-    --secondary: 220 20% 12%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary colors */
+    --secondary: 240 15% 15%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 220 20% 12%;
-    --muted-foreground: 0 0% 85%;
+    --muted: 240 15% 18%;
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 185 80% 55%;
+    /* Accent colors - cyan/teal */
+    --accent: 180 80% 55%;
     --accent-foreground: 0 0% 100%;
+    --accent-glow: 180 80% 55%;
 
+    /* Status colors */
+    --success: 142 76% 45%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 45 90% 60%;
+    --warning-foreground: 240 20% 10%;
+    
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
+    
+    --info: 210 80% 60%;
+    --info-foreground: 0 0% 100%;
 
-    --border: 220 20% 18%;
-    --input: 220 20% 12%;
-    --ring: 264 70% 65%;
+    --border: 0 0% 100%;
+    --border-opacity: 0.1;
+    
+    --input: 240 15% 15%;
+    --ring: 264 80% 65%;
 
     --radius: 1rem;
-
-    --gradient-violet: 264 70% 65%;
-    --gradient-cyan: 185 80% 55%;
-    --grid-color: 220 20% 15%;
-    --glow-primary: 264 70% 65%;
-    --glow-accent: 185 80% 55%;
-
-    --sidebar-background: 220 20% 8%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 264 70% 65%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 20% 12%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 220 20% 18%;
-    --sidebar-ring: 264 70% 65%;
   }
 }
 
@@ -61,6 +69,40 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gradient-to-br from-[hsl(var(--background-gradient-start))] to-[hsl(var(--background-gradient-end))] text-foreground min-h-screen;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  /* Animated gradient background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 30%, hsla(var(--primary-glow), 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, hsla(var(--accent-glow), 0.12) 0%, transparent 50%);
+    animation: gradientShift 15s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1) translate(0, 0);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.1) translate(5%, 5%);
+    }
+  }
+
+  /* Ensure content is above background */
+  #root {
+    position: relative;
+    z-index: 1;
   }
 }
