@@ -27,7 +27,7 @@ export function MetricCard({ label, value, badge, trend, trendValue, className }
         <div className="flex items-baseline gap-2">
           <span className="text-3xl font-bold">{value}</span>
           
-          {trend && trendValue && (
+          {trend && trendValue && trendValue !== "" && (
             <div className={cn(
               "flex items-center gap-1 text-sm",
               trend === "up" && "text-success",

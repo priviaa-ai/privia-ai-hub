@@ -49,13 +49,7 @@ export default function MonaiProjects() {
 
       if (error) throw error;
 
-      // If no projects exist, create demo project
-      if (!data || data.length === 0) {
-        await createDemoProject();
-        return;
-      }
-
-      setProjects(data);
+      setProjects(data || []);
     } catch (error: any) {
       console.error('Error loading projects:', error);
       toast({
@@ -64,31 +58,6 @@ export default function MonaiProjects() {
         variant: "destructive",
       });
     } finally {
-      setLoading(false);
-    }
-  };
-
-  const createDemoProject = async () => {
-    try {
-      // Call edge function to create demo project with seed data
-      const { data, error } = await supabase.functions.invoke('create-demo-project');
-      
-      if (error) throw error;
-
-      toast({
-        title: "Demo Project Created",
-        description: "Explore MonAI with sample drift data and LLM interactions",
-      });
-
-      // Reload projects
-      loadProjects();
-    } catch (error: any) {
-      console.error('Error creating demo:', error);
-      toast({
-        title: "Error",
-        description: error.message || "Failed to create demo project",
-        variant: "destructive",
-      });
       setLoading(false);
     }
   };
