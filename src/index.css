@@ -43,6 +43,15 @@ All colors MUST be HSL.
     --grid-color: 220 20% 15%;
     --glow-primary: 264 70% 65%;
     --glow-accent: 185 80% 55%;
+
+    --sidebar-background: 220 20% 8%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 264 70% 65%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 20% 12%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 20% 18%;
+    --sidebar-ring: 264 70% 65%;
   }
 }
 
