@@ -19,6 +19,14 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 interface Project {
   id: string;
@@ -32,26 +40,42 @@ interface Project {
   lastUpdated?: string;
 }
 
+const PROJECTS_PER_PAGE = 12;
+
 export default function MonaiProjects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newProjectName, setNewProjectName] = useState("");
   const [creating, setCreating] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
   const { toast } = useToast();
 
   useEffect(() => {
+    setLoading(true);
     loadProjects();
-  }, []);
+  }, [currentPage]);
 
   const loadProjects = async () => {
     try {
-      // Fetch all projects
+      // Get total count
+      const { count } = await supabase
+        .from('monai_projects')
+        .select('*', { count: 'exact', head: true });
+      
+      setTotalCount(count || 0);
+
+      // Fetch paginated projects
+      const from = (currentPage - 1) * PROJECTS_PER_PAGE;
+      const to = from + PROJECTS_PER_PAGE - 1;
+
       const { data: projectsData, error: projectsError } = await supabase
         .from('monai_projects')
         .select('*')
         .order('is_demo', { ascending: false })
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .range(from, to);
 
       if (projectsError) throw projectsError;
       if (!projectsData || projectsData.length === 0) {
@@ -59,7 +83,7 @@ export default function MonaiProjects() {
         return;
       }
 
-      // Fetch all drift runs for all projects in a single query
+      // Fetch all drift runs for current page projects in a single query
       const projectIds = projectsData.map(p => p.id);
       const { data: driftRuns } = await supabase
         .from('monai_drift_runs')
@@ -134,6 +158,7 @@ export default function MonaiProjects() {
 
       setNewProjectName("");
       setDialogOpen(false);
+      setCurrentPage(1);
       loadProjects();
     } catch (error: any) {
       console.error('Error creating project:', error);
@@ -289,6 +314,38 @@ export default function MonaiProjects() {
                 </GlassCard>
               </Link>
             ))}
+          </div>
+        )}
+
+        {totalCount > PROJECTS_PER_PAGE && (
+          <div className="mt-8 flex justify-center">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious 
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  />
+                </PaginationItem>
+                {Array.from({ length: Math.ceil(totalCount / PROJECTS_PER_PAGE) }, (_, i) => i + 1).map((page) => (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      onClick={() => setCurrentPage(page)}
+                      isActive={currentPage === page}
+                      className="cursor-pointer"
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem>
+                  <PaginationNext 
+                    onClick={() => setCurrentPage(p => Math.min(Math.ceil(totalCount / PROJECTS_PER_PAGE), p + 1))}
+                    className={currentPage === Math.ceil(totalCount / PROJECTS_PER_PAGE) ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
           </div>
         )}
       </div>
