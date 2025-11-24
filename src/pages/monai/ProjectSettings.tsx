@@ -70,6 +70,8 @@ print(response.json())`;
         <PageHeader
           title="Project Settings"
           subtitle="Manage your project configuration and API keys"
+          showBack={true}
+          backTo="/monai/projects"
         />
 
         {/* Project Info */}

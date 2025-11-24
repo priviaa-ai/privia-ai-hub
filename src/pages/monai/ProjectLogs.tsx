@@ -83,7 +83,12 @@ export default function ProjectLogs() {
       <Navigation />
       <ProjectTabs />
       <div className="container mx-auto px-6 py-12 max-w-7xl">
-        <PageHeader title="Event Logs" subtitle="Monitor and debug system events" />
+        <PageHeader 
+          title="Event Logs" 
+          subtitle="Monitor and debug system events"
+          showBack={true}
+          backTo="/monai/projects"
+        />
 
         {events.length === 0 ? (
           <GlassCard className="p-12 text-center">
