@@ -28,7 +28,7 @@ serve(async (req) => {
     // Fetch all API keys for the project
     const { data: apiKeys, error } = await supabase
       .from('monai_api_keys')
-      .select('id, name, prefix, last_four, created_at, last_used_at, is_active, environment')
+      .select('id, name, description, prefix, last_four, created_at, last_used_at, is_active, environment, permissions, expires_at, usage_count')
       .eq('project_id', project_id)
       .order('created_at', { ascending: false });
 
