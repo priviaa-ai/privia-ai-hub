@@ -8,37 +8,37 @@
   :root {
     /* Dark gradient background colors */
     --background: 240 25% 4%;
-    --background-gradient-start: 260 60% 8%;
-    --background-gradient-end: 280 70% 12%;
+    --background-gradient-start: 235 50% 8%;
+    --background-gradient-end: 245 55% 12%;
     
     --foreground: 0 0% 98%;
 
     /* Glass card colors with higher visibility */
     --card: 0 0% 100%;
     --card-opacity: 0.05;
-    --card-border: 270 100% 70%;
+    --card-border: 220 80% 65%;
     --card-border-opacity: 0.15;
     --card-foreground: 0 0% 98%;
 
     --popover: 240 20% 10%;
     --popover-foreground: 0 0% 98%;
 
-    /* Primary colors - vibrant purple/magenta */
-    --primary: 280 90% 65%;
+    /* Primary colors - intelligent blue-purple */
+    --primary: 235 75% 62%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 280 90% 65%;
+    --primary-glow: 235 75% 62%;
 
     /* Secondary colors */
-    --secondary: 260 40% 15%;
+    --secondary: 235 35% 15%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 260 30% 18%;
+    --muted: 235 25% 18%;
     --muted-foreground: 0 0% 70%;
 
-    /* Accent colors - vibrant pink/cyan */
-    --accent: 320 85% 60%;
+    /* Accent colors - trustworthy cyan-blue */
+    --accent: 195 85% 58%;
     --accent-foreground: 0 0% 100%;
-    --accent-glow: 320 85% 60%;
+    --accent-glow: 195 85% 58%;
 
     /* Status colors */
     --success: 142 76% 48%;
@@ -53,18 +53,18 @@
     --info: 210 85% 62%;
     --info-foreground: 0 0% 100%;
 
-    --border: 270 100% 70%;
+    --border: 220 80% 65%;
     --border-opacity: 0.15;
     
-    --input: 260 40% 15%;
-    --ring: 280 90% 65%;
+    --input: 235 35% 15%;
+    --ring: 235 75% 62%;
 
     --radius: 1.25rem;
 
-    /* Gradient stops - vibrant purple to pink */
-    --gradient-primary-start: 280 90% 65%;
-    --gradient-primary-end: 320 85% 60%;
-    --gradient-purple-pink: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    /* Gradient stops - blue to purple */
+    --gradient-primary-start: 235 75% 62%;
+    --gradient-primary-end: 195 85% 58%;
+    --gradient-blue-purple: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
     
     /* Glow effects */
     --glow-primary: 0 0 60px hsla(var(--primary-glow), 0.6);
@@ -87,7 +87,7 @@
     position: relative;
   }
 
-  /* Multi-layer animated gradient background - vibrant purple/pink/blue */
+  /* Multi-layer animated gradient background - intelligent blue/purple */
   body::before {
     content: '';
     position: fixed;
@@ -96,15 +96,15 @@
     right: 0;
     bottom: 0;
     background: 
-      radial-gradient(ellipse at 20% 30%, hsla(280, 90%, 65%, 0.25) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 70%, hsla(320, 85%, 60%, 0.22) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 50%, hsla(260, 80%, 55%, 0.15) 0%, transparent 60%);
+      radial-gradient(ellipse at 20% 30%, hsla(235, 75%, 62%, 0.22) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, hsla(195, 85%, 58%, 0.18) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, hsla(220, 70%, 55%, 0.12) 0%, transparent 60%);
     animation: gradientShift 20s ease-in-out infinite;
     pointer-events: none;
     z-index: 0;
   }
 
-  /* Second gradient layer for depth - more vibrant */
+  /* Second gradient layer for depth - trust and innovation */
   body::after {
     content: '';
     position: fixed;
@@ -113,9 +113,9 @@
     right: 0;
     bottom: 0;
     background: 
-      radial-gradient(circle at 60% 20%, hsla(250, 100%, 70%, 0.18) 0%, transparent 45%),
-      radial-gradient(circle at 40% 80%, hsla(310, 90%, 65%, 0.20) 0%, transparent 45%),
-      radial-gradient(circle at 90% 50%, hsla(190, 85%, 60%, 0.12) 0%, transparent 40%);
+      radial-gradient(circle at 60% 20%, hsla(210, 85%, 65%, 0.16) 0%, transparent 45%),
+      radial-gradient(circle at 40% 80%, hsla(245, 75%, 60%, 0.18) 0%, transparent 45%),
+      radial-gradient(circle at 90% 50%, hsla(190, 80%, 60%, 0.10) 0%, transparent 40%);
     animation: gradientShift 25s ease-in-out infinite reverse;
     pointer-events: none;
     z-index: 0;
