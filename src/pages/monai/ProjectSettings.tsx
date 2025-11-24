@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -43,12 +44,20 @@ import {
 interface ApiKey {
   id: string;
   name: string;
+  description?: string;
   prefix: string;
   last_four: string;
   created_at: string;
   last_used_at: string | null;
   is_active: boolean;
   environment: string;
+  permissions?: {
+    read: boolean;
+    write: boolean;
+    admin?: boolean;
+  };
+  expires_at?: string | null;
+  usage_count?: number;
 }
 
 export default function ProjectSettings() {
@@ -58,6 +67,8 @@ export default function ProjectSettings() {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [keyName, setKeyName] = useState("");
+  const [keyDescription, setKeyDescription] = useState("");
+  const [expiresInDays, setExpiresInDays] = useState<number | null>(null);
   const [creating, setCreating] = useState(false);
   const [newKey, setNewKey] = useState<{ display_key: string; name: string } | null>(null);
   const [showKey, setShowKey] = useState(false);
@@ -72,15 +83,22 @@ export default function ProjectSettings() {
   const loadApiKeys = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase.functions.invoke('api-keys-list', {
+      // Build URL with query parameter
+      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/api-keys-list?project_id=${projectId}`;
+      
+      const response = await fetch(url, {
         method: 'GET',
         headers: {
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ project_id: projectId }),
       });
 
-      if (error) throw error;
+      if (!response.ok) {
+        throw new Error('Failed to fetch API keys');
+      }
+
+      const data = await response.json();
       setApiKeys(data.keys || []);
     } catch (error: any) {
       console.error('Error loading API keys:', error);
@@ -97,20 +115,38 @@ export default function ProjectSettings() {
   const createApiKey = async () => {
     try {
       setCreating(true);
-      const { data, error } = await supabase.functions.invoke('api-keys-create', {
-        body: {
-          project_id: projectId,
-          name: keyName || 'API Key',
-        },
-      });
+      
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/api-keys-create`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            project_id: projectId,
+            name: keyName || 'API Key',
+            description: keyDescription || null,
+            expires_in_days: expiresInDays,
+            permissions: { read: true, write: true },
+          }),
+        }
+      );
 
-      if (error) throw error;
+      if (!response.ok) {
+        throw new Error('Failed to create API key');
+      }
+
+      const data = await response.json();
 
       setNewKey({
         display_key: data.display_key,
         name: data.name,
       });
       setKeyName("");
+      setKeyDescription("");
+      setExpiresInDays(null);
       setDialogOpen(false);
       await loadApiKeys();
     } catch (error: any) {
@@ -127,11 +163,21 @@ export default function ProjectSettings() {
 
   const revokeApiKey = async (keyId: string) => {
     try {
-      const { error } = await supabase.functions.invoke('api-keys-revoke', {
-        body: { key_id: keyId },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/api-keys-revoke`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ key_id: keyId }),
+        }
+      );
 
-      if (error) throw error;
+      if (!response.ok) {
+        throw new Error('Failed to revoke API key');
+      }
 
       toast({
         title: "Success",
@@ -273,6 +319,8 @@ print(response.json())`;
                   <TableHead>Key</TableHead>
                   <TableHead>Created</TableHead>
                   <TableHead>Last Used</TableHead>
+                  <TableHead>Usage</TableHead>
+                  <TableHead>Expires</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead></TableHead>
                 </TableRow>
@@ -280,7 +328,14 @@ print(response.json())`;
               <TableBody>
                 {apiKeys.map((key) => (
                   <TableRow key={key.id}>
-                    <TableCell className="font-medium">{key.name}</TableCell>
+                    <TableCell>
+                      <div>
+                        <div className="font-medium">{key.name}</div>
+                        {key.description && (
+                          <div className="text-xs text-muted-foreground">{key.description}</div>
+                        )}
+                      </div>
+                    </TableCell>
                     <TableCell>
                       <code className="text-xs">
                         {key.prefix}_••••{key.last_four}
@@ -293,6 +348,18 @@ print(response.json())`;
                       {key.last_used_at
                         ? format(new Date(key.last_used_at), 'MMM d, yyyy')
                         : 'Never'}
+                    </TableCell>
+                    <TableCell className="text-sm">
+                      {key.usage_count || 0} requests
+                    </TableCell>
+                    <TableCell className="text-sm">
+                      {key.expires_at ? (
+                        <span className={new Date(key.expires_at) < new Date() ? 'text-red-500' : ''}>
+                          {format(new Date(key.expires_at), 'MMM d, yyyy')}
+                        </span>
+                      ) : (
+                        'Never'
+                      )}
                     </TableCell>
                     <TableCell>
                       <Badge variant={key.is_active ? "default" : "secondary"}>
@@ -441,29 +508,70 @@ print(response.json())`;
 
       {/* Create API Key Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent>
+        <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>Generate New API Key</DialogTitle>
             <DialogDescription>
-              Create a new API key for authenticating requests to MonAI.
+              Create a new API key for authenticating requests to MonAI. Keys are only shown once.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div>
-              <Label htmlFor="keyName">Key Name (Optional)</Label>
+              <Label htmlFor="keyName">Key Name *</Label>
               <Input
                 id="keyName"
                 placeholder="e.g., Production Backend"
                 value={keyName}
                 onChange={(e) => setKeyName(e.target.value)}
+                className="mt-1"
               />
+              <p className="text-xs text-muted-foreground mt-1">
+                A descriptive name to help you identify this key
+              </p>
+            </div>
+            <div>
+              <Label htmlFor="keyDescription">Description (Optional)</Label>
+              <Input
+                id="keyDescription"
+                placeholder="e.g., Main production API for web app"
+                value={keyDescription}
+                onChange={(e) => setKeyDescription(e.target.value)}
+                className="mt-1"
+              />
+            </div>
+            <div>
+              <Label htmlFor="expires">Expiration (Optional)</Label>
+              <Select 
+                value={expiresInDays?.toString() || ''} 
+                onValueChange={(value) => setExpiresInDays(value ? parseInt(value) : null)}
+              >
+                <SelectTrigger className="mt-1">
+                  <SelectValue placeholder="Never expires" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">Never expires</SelectItem>
+                  <SelectItem value="30">30 days</SelectItem>
+                  <SelectItem value="90">90 days</SelectItem>
+                  <SelectItem value="180">180 days</SelectItem>
+                  <SelectItem value="365">1 year</SelectItem>
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground mt-1">
+                Keys expire automatically for enhanced security
+              </p>
+            </div>
+            <div className="bg-muted/50 p-3 rounded-lg">
+              <p className="text-xs text-muted-foreground">
+                <strong>Permissions:</strong> Full access (read & write)<br />
+                <strong>Environment:</strong> Production
+              </p>
             </div>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDialogOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={createApiKey} disabled={creating}>
+            <Button onClick={createApiKey} disabled={creating || !keyName}>
               {creating ? "Generating..." : "Generate Key"}
             </Button>
           </DialogFooter>
@@ -472,11 +580,12 @@ print(response.json())`;
 
       {/* Show New Key Dialog */}
       <Dialog open={!!newKey} onOpenChange={() => setNewKey(null)}>
-        <DialogContent>
+        <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>API Key Generated</DialogTitle>
-            <DialogDescription className="text-yellow-500 font-semibold">
-              ⚠️ Copy this key now. You will not be able to see it again!
+            <DialogTitle>API Key Generated Successfully</DialogTitle>
+            <DialogDescription className="flex items-center gap-2 text-yellow-600 dark:text-yellow-500 font-semibold">
+              <span className="text-2xl">⚠️</span>
+              <span>Please save this key now. For security reasons, you won't be able to view it again.</span>
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
@@ -487,8 +596,8 @@ print(response.json())`;
             <div>
               <Label>API Key</Label>
               <div className="flex items-center gap-2 mt-1">
-                <code className="flex-1 bg-black/50 px-4 py-2 rounded text-sm break-all">
-                  {showKey ? newKey?.display_key : '••••••••••••••••••••••••••••••••'}
+                <code className="flex-1 bg-black/50 px-4 py-3 rounded text-sm break-all font-mono">
+                  {showKey ? newKey?.display_key : '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••'}
                 </code>
                 <Button
                   size="sm"
@@ -508,13 +617,22 @@ print(response.json())`;
                 </Button>
               </div>
             </div>
+            <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+              <h4 className="text-sm font-semibold mb-2">Best Practices</h4>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                <li>• Store this key securely in your backend environment variables</li>
+                <li>• Never expose API keys in client-side code or public repositories</li>
+                <li>• Use separate keys for different environments (dev, staging, production)</li>
+                <li>• Rotate keys regularly for enhanced security</li>
+              </ul>
+            </div>
           </div>
           <DialogFooter>
             <Button onClick={() => {
               setNewKey(null);
               setShowKey(false);
             }}>
-              I've Saved My Key
+              I've Saved My Key Securely
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -8,6 +8,7 @@ import Pricing from "./pages/monai/Pricing";
 import Docs from "./pages/monai/Docs";
 import DocsWebhooks from "./pages/monai/DocsWebhooks";
 import DocsSDK from "./pages/monai/DocsSDK";
+import DocsAPIKeys from "./pages/monai/DocsAPIKeys";
 import MonaiProjects from "./pages/monai/MonaiProjects";
 import ProjectOverview from "./pages/monai/ProjectOverview";
 import ProjectDrift from "./pages/monai/ProjectDrift";
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/docs" element={<Docs />} />
           <Route path="/docs/webhooks" element={<DocsWebhooks />} />
           <Route path="/docs/sdk" element={<DocsSDK />} />
+          <Route path="/docs/api-keys" element={<DocsAPIKeys />} />
           
           {/* MonAI app pages - no auth required for public beta */}
           <Route path="/monai/projects" element={<MonaiProjects />} />

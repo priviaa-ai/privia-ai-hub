@@ -29,7 +29,7 @@ serve(async (req) => {
   }
 
   try {
-    const { project_id, name } = await req.json();
+    const { project_id, name, description, permissions, expires_in_days } = await req.json();
 
     if (!project_id) {
       throw new Error('project_id is required');
@@ -62,17 +62,28 @@ serve(async (req) => {
     // Extract last 4 characters
     const lastFour = randomPart.slice(-4);
 
+    // Calculate expiration date if provided
+    let expiresAt = null;
+    if (expires_in_days && expires_in_days > 0) {
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + expires_in_days);
+      expiresAt = expirationDate.toISOString();
+    }
+
     // Store in database
     const { data: apiKey, error: insertError } = await supabase
       .from('monai_api_keys')
       .insert({
         project_id,
         name: name || 'API Key',
+        description: description || null,
         prefix,
         hashed_key: hashedKey,
         last_four: lastFour,
         environment: 'live',
         is_active: true,
+        permissions: permissions || { read: true, write: true },
+        expires_at: expiresAt,
       })
       .select()
       .single();
@@ -86,10 +97,13 @@ serve(async (req) => {
       JSON.stringify({
         id: apiKey.id,
         name: apiKey.name,
+        description: apiKey.description,
         created_at: apiKey.created_at,
         last_used_at: apiKey.last_used_at,
         is_active: apiKey.is_active,
         environment: apiKey.environment,
+        permissions: apiKey.permissions,
+        expires_at: apiKey.expires_at,
         display_key: fullKey, // ONLY time the full key is ever returned
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
