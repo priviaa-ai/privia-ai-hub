@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Home", path: "/" },
-  { label: "Dashboard", path: "/monai/projects" },
+  { label: "Projects", path: "/monai/projects" },
   { label: "Docs", path: "/docs" },
   { label: "Pricing", path: "/pricing" },
 ];

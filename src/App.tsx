@@ -12,6 +12,8 @@ import MonaiProjects from "./pages/monai/MonaiProjects";
 import ProjectOverview from "./pages/monai/ProjectOverview";
 import ProjectDrift from "./pages/monai/ProjectDrift";
 import ProjectLLM from "./pages/monai/ProjectLLM";
+import ProjectEmbeddings from "./pages/monai/ProjectEmbeddings";
+import ProjectLogs from "./pages/monai/ProjectLogs";
 import ProjectSettings from "./pages/monai/ProjectSettings";
 
 const queryClient = new QueryClient();
@@ -35,6 +37,8 @@ const App = () => (
           <Route path="/monai/projects/:projectId" element={<ProjectOverview />} />
           <Route path="/monai/projects/:projectId/drift" element={<ProjectDrift />} />
           <Route path="/monai/projects/:projectId/llm" element={<ProjectLLM />} />
+          <Route path="/monai/projects/:projectId/embeddings" element={<ProjectEmbeddings />} />
+          <Route path="/monai/projects/:projectId/logs" element={<ProjectLogs />} />
           <Route path="/monai/projects/:projectId/settings" element={<ProjectSettings />} />
         </Routes>
       </BrowserRouter>

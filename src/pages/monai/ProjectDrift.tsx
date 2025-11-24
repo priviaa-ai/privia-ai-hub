@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Navigation } from "@/components/monai/Navigation";
+import { ProjectTabs } from "@/components/monai/ProjectTabs";
 import { PageHeader } from "@/components/monai/PageHeader";
 import { GlassCard } from "@/components/monai/GlassCard";
 import { MetricCard } from "@/components/monai/MetricCard";
@@ -14,6 +15,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useToast } from "@/hooks/use-toast";
 import { Upload, Play, TrendingUp } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import emptyDriftImage from "@/assets/empty-drift.png";
 
 interface Dataset {
   id: string;
@@ -218,11 +220,11 @@ export default function ProjectDrift() {
   return (
     <>
       <Navigation />
-      <div className="container mx-auto px-6 py-12 max-w-5xl">
+      <ProjectTabs />
+      <div className="container mx-auto px-6 py-12 max-w-6xl">
         <PageHeader
           title="Drift Dashboard"
           subtitle="Monitor data and model drift across your datasets"
-          showBack
         />
 
         {/* Controls */}
@@ -400,13 +402,17 @@ export default function ProjectDrift() {
         )}
 
         {!selectedRun && driftRuns.length === 0 && (
-          <GlassCard className="p-6">
-            <div className="text-center py-12">
-              <TrendingUp className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground mb-4">
-                No drift runs yet. Upload datasets and run your first analysis.
-              </p>
-            </div>
+          <GlassCard className="p-12 text-center">
+            <img
+              src={emptyDriftImage}
+              alt="No drift runs"
+              className="mx-auto mb-6 w-80 h-48 object-contain opacity-60"
+            />
+            <TrendingUp className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-2xl font-semibold mb-2">No Drift Runs Yet</h3>
+            <p className="text-muted-foreground mb-4">
+              Upload datasets and run your first drift analysis to get started.
+            </p>
           </GlassCard>
         )}
       </div>

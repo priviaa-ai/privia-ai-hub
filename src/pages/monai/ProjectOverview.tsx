@@ -2,13 +2,15 @@ import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Navigation } from "@/components/monai/Navigation";
+import { ProjectTabs } from "@/components/monai/ProjectTabs";
 import { PageHeader } from "@/components/monai/PageHeader";
 import { MetricCard } from "@/components/monai/MetricCard";
 import { GlassCard } from "@/components/monai/GlassCard";
 import { StatusPill } from "@/components/monai/StatusPill";
 import { Button } from "@/components/ui/button";
-import { Settings, AlertCircle, TrendingUp } from "lucide-react";
+import { Settings, AlertCircle, TrendingUp, FileUp, MessageSquare } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import emptyDriftImage from "@/assets/empty-drift.png";
 
 interface Project {
   id: string;
@@ -111,17 +113,17 @@ export default function ProjectOverview() {
   return (
     <>
       <Navigation />
-      <div className="container mx-auto px-6 py-12 max-w-5xl">
+      <ProjectTabs />
+      <div className="container mx-auto px-6 py-12 max-w-6xl">
         <PageHeader
-          title={project?.name || "Demo Project"}
-          subtitle={project?.description || "Overview of your AI reliability metrics"}
-          showBack
-          backTo="/monai/projects"
+          title={project?.name || "Project Overview"}
+          subtitle="Overview of your AI reliability metrics"
           actions={
             <>
-              <Link to={`/monai/projects/${projectId}/llm`}>
+              <Link to={`/monai/projects/${projectId}/drift`}>
                 <Button variant="outline">
-                  LLM Dashboard
+                  <TrendingUp className="h-4 w-4 mr-2" />
+                  Drift Dashboard
                 </Button>
               </Link>
               <Link to={`/monai/projects/${projectId}/settings`}>
@@ -268,12 +270,36 @@ export default function ProjectOverview() {
             </div>
           ) : (
             <div className="flex items-center justify-center py-12">
-              <div className="text-center">
+              <div className="text-center max-w-lg">
+                <img
+                  src={emptyDriftImage}
+                  alt="No drift data"
+                  className="mx-auto mb-6 w-80 h-48 object-contain opacity-60"
+                />
                 <TrendingUp className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground mb-4">No drift runs yet</p>
-                <Link to={`/monai/projects/${projectId}/drift`}>
-                  <Button>Run Drift Analysis</Button>
-                </Link>
+                <h3 className="text-2xl font-semibold mb-2">Quick Start</h3>
+                <p className="text-muted-foreground mb-6">
+                  Get started by uploading a baseline dataset or sending your first LLM event.
+                </p>
+                <div className="flex items-center justify-center gap-4">
+                  <Link to={`/monai/projects/${projectId}/drift`}>
+                    <Button variant="outline">
+                      <FileUp className="h-4 w-4 mr-2" />
+                      Upload Dataset
+                    </Button>
+                  </Link>
+                  <Link to="/docs/sdk">
+                    <Button variant="outline">
+                      <MessageSquare className="h-4 w-4 mr-2" />
+                      Send LLM Event
+                    </Button>
+                  </Link>
+                  <Link to="/docs">
+                    <Button>
+                      View Docs
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
           )}
