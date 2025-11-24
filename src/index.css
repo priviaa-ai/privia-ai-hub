@@ -80,7 +80,7 @@
 
   body {
     @apply bg-[hsl(var(--background))] text-foreground min-h-screen;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Inter Tight', 'Inter', sans-serif;
     font-weight: 400;
     font-feature-settings: 'cv11', 'ss01', 'ss02';
     -webkit-font-smoothing: antialiased;
@@ -90,20 +90,20 @@
 
   /* Typography system */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Clash Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
     font-weight: 600;
     letter-spacing: -0.02em;
   }
 
-  /* Metrics use Space Mono */
+  /* Metrics and numbers use Space Mono */
   .metric, .number, [class*="metric"], [class*="count"], [data-metric], .stats {
-    font-family: 'Space Mono', ui-monospace, monospace;
+    font-family: 'Space Mono', monospace;
     font-weight: 700;
   }
 
-  /* Code uses JetBrains Mono */
+  /* Code and JSON logs use JetBrains Mono */
   code, pre, kbd, samp, .code, .json-log {
-    font-family: 'JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+    font-family: 'JetBrains Mono', monospace;
     font-weight: 400;
   }
 
