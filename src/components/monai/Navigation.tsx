@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import priviaLogo from "@/assets/privia-logo.png";
+import monaiLogo from "@/assets/monai-logo.png";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -18,8 +18,8 @@ export function Navigation() {
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 group">
             <img 
-              src={priviaLogo} 
-              alt="Privia AI" 
+              src={monaiLogo} 
+              alt="MonAI" 
               className="w-8 h-8 object-contain transition-transform group-hover:scale-110"
             />
             <span className="text-2xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
