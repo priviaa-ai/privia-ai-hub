@@ -17,7 +17,6 @@ export default {
         sans: ['Inter Tight', 'Inter', 'sans-serif'],
         heading: ['Space Grotesk', 'Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
-        metric: ['Space Mono', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border) / var(--border-opacity, 1))",
