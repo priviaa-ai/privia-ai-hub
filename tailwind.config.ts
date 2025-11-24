@@ -15,8 +15,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui'],
-        display: ['Satoshi', 'ui-sans-serif', 'system-ui'],
-        mono: ['IBM Plex Mono', 'ui-monospace', 'monospace'],
+        display: ['Recoleta', 'Georgia', 'serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border) / var(--border-opacity, 1))",
