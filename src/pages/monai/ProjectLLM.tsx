@@ -2,12 +2,14 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Navigation } from "@/components/monai/Navigation";
+import { ProjectTabs } from "@/components/monai/ProjectTabs";
 import { PageHeader } from "@/components/monai/PageHeader";
 import { MetricCard } from "@/components/monai/MetricCard";
 import { GlassCard } from "@/components/monai/GlassCard";
 import { StatusPill } from "@/components/monai/StatusPill";
 import { Sparkles, AlertTriangle } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import emptyLlmImage from "@/assets/empty-llm.png";
 
 interface LLMInteraction {
   id: string;
@@ -100,11 +102,11 @@ export default function ProjectLLM() {
   return (
     <>
       <Navigation />
-      <div className="container mx-auto px-6 py-12 max-w-5xl">
+      <ProjectTabs />
+      <div className="container mx-auto px-6 py-12 max-w-6xl">
         <PageHeader
           title="LLM Behavior Dashboard"
           subtitle="Monitor hallucinations, tone, and safety across LLM interactions"
-          showBack
         />
 
         {/* Key Metrics */}
@@ -250,9 +252,15 @@ export default function ProjectLLM() {
             </div>
           ) : (
             <div className="text-center py-12">
+              <img
+                src={emptyLlmImage}
+                alt="No LLM interactions"
+                className="mx-auto mb-6 w-80 h-48 object-contain opacity-60"
+              />
               <Sparkles className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-2xl font-semibold mb-2">No LLM Interactions Yet</h3>
               <p className="text-muted-foreground">
-                No LLM interactions yet. Start logging interactions via the ingestion API.
+                Start logging interactions via the ingestion API to see them here.
               </p>
             </div>
           )}
