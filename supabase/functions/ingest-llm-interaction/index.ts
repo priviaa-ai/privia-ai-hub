@@ -1,6 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { validateApiKey } from '../_shared/validateApiKey.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -82,6 +83,23 @@ serve(async (req) => {
 
     if (!project_id || !user_query || !model_output) {
       throw new Error('Missing required fields: project_id, user_query, model_output');
+    }
+
+    // Optional API key validation
+    // If Authorization header with Bearer token is present, validate it
+    const authHeader = req.headers.get('Authorization');
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const apiKey = authHeader.replace('Bearer ', '');
+      const validationResult = await validateApiKey(apiKey, project_id);
+      
+      if (!validationResult.valid) {
+        console.error('API key validation failed:', validationResult.error);
+        return new Response(
+          JSON.stringify({ error: 'Invalid or inactive API key' }),
+          { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      console.log('API key validated successfully');
     }
 
     // Calculate hallucination score
