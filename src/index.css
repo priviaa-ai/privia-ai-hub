@@ -81,7 +81,7 @@
   body {
     @apply bg-[hsl(var(--background))] text-foreground min-h-screen;
     font-family: 'Inter Tight', 'Inter', sans-serif;
-    font-weight: 400;
+    font-weight: 300;
     font-feature-settings: 'cv11', 'ss01', 'ss02';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -95,13 +95,13 @@
     letter-spacing: -0.02em;
   }
 
-  /* Metrics and numbers use Space Mono */
+  /* Numbers and metrics use Space Grotesk */
   .metric, .number, [class*="metric"], [class*="count"], [data-metric], .stats {
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-weight: 600;
   }
 
-  /* Code and JSON logs use JetBrains Mono */
+  /* Code and small labels use JetBrains Mono */
   code, pre, kbd, samp, .code, .json-log {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 400;
