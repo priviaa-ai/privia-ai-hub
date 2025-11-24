@@ -23,3 +23,15 @@ verify_jwt = false
 
 [functions.ingest-embeddings]
 verify_jwt = false
+
+[functions.ingest-event]
+verify_jwt = false
+
+[functions.api-keys-create]
+verify_jwt = false
+
+[functions.api-keys-list]
+verify_jwt = false
+
+[functions.api-keys-revoke]
+verify_jwt = false

@@ -17,9 +17,9 @@ export default function DocsWebhooks() {
     });
   };
 
-  const llmExampleCurl = `curl -X POST "https://your-domain.com/api/ingest/llm-interaction" \\
+  const llmExampleCurl = `curl -X POST "https://pecnrqvrennoqvewkpuq.supabase.co/functions/v1/ingest-llm-interaction" \\
   -H "Content-Type: application/json" \\
-  -H "X-MonAI-Project-ID: <PROJECT_ID>" \\
+  -H "Authorization: Bearer <YOUR_MONAI_API_KEY>" \\
   -d '{
     "project_id": "<PROJECT_ID>",
     "user_query": "I need help with Premium 360 plan",
@@ -32,9 +32,19 @@ export default function DocsWebhooks() {
     }
   }'`;
 
-  const eventExampleCurl = `curl -X POST "https://your-domain.com/api/ingest/event" \\
+  const embeddingExampleCurl = `curl -X POST "https://pecnrqvrennoqvewkpuq.supabase.co/functions/v1/ingest-embeddings" \\
   -H "Content-Type: application/json" \\
-  -H "X-MonAI-Project-ID: <PROJECT_ID>" \\
+  -H "Authorization: Bearer <YOUR_MONAI_API_KEY>" \\
+  -d '{
+    "project_id": "<PROJECT_ID>",
+    "vectors": [[0.1, 0.2, 0.3], [0.4, 0.5, 0.6]],
+    "interaction_id": null,
+    "dataset_id": null
+  }'`;
+
+  const eventExampleCurl = `curl -X POST "https://pecnrqvrennoqvewkpuq.supabase.co/functions/v1/ingest-event" \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer <YOUR_MONAI_API_KEY>" \\
   -d '{
     "project_id": "<PROJECT_ID>",
     "event_type": "metric_event",
@@ -113,6 +123,30 @@ export default function DocsWebhooks() {
 
           {/* Generic Events */}
           <div>
+            <h2 className="text-2xl font-semibold mb-4">Embeddings</h2>
+            <GlassCard className="p-6">
+              <p className="text-muted-foreground mb-4">
+                Send embedding vectors for clustering and drift analysis.
+              </p>
+              
+              <div className="bg-black/50 rounded-lg p-4 relative">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="absolute top-2 right-2"
+                  onClick={() => copyToClipboard(embeddingExampleCurl)}
+                >
+                  <Copy className="h-4 w-4" />
+                </Button>
+                <pre className="text-sm overflow-x-auto">
+                  <code className="text-green-400">{embeddingExampleCurl}</code>
+                </pre>
+              </div>
+            </GlassCard>
+          </div>
+
+          {/* Generic Events */}
+          <div>
             <h2 className="text-2xl font-semibold mb-4">Generic Events</h2>
             <GlassCard className="p-6">
               <p className="text-muted-foreground mb-4">
@@ -138,10 +172,30 @@ export default function DocsWebhooks() {
           {/* Authentication */}
           <GlassCard className="p-6">
             <h2 className="text-2xl font-semibold mb-4">Authentication</h2>
-            <p className="text-muted-foreground">
-              For the public beta, authentication is optional. In production, you'll use API keys 
-              via the <code className="bg-muted px-2 py-1 rounded">X-MonAI-API-Key</code> header.
-            </p>
+            <div className="space-y-4">
+              <p className="text-muted-foreground">
+                API keys can be generated from your project settings page. Authentication is optional 
+                but recommended for production use.
+              </p>
+              <div>
+                <h3 className="font-semibold mb-2">Using API Keys</h3>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Include your API key in the Authorization header as a Bearer token:
+                </p>
+                <code className="block bg-black/50 px-4 py-2 rounded text-sm">
+                  Authorization: Bearer mon_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                </code>
+              </div>
+              <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
+                <p className="text-sm text-yellow-500 font-semibold mb-2">
+                  🔒 Security Best Practice
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Never expose your API keys in client-side code. Always call MonAI endpoints 
+                  from your backend services.
+                </p>
+              </div>
+            </div>
           </GlassCard>
         </div>
       </div>

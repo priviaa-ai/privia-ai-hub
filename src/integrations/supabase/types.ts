@@ -114,32 +114,38 @@ export type Database = {
       monai_api_keys: {
         Row: {
           created_at: string
+          environment: string
           hashed_key: string
           id: string
-          is_active: boolean | null
-          label: string
+          is_active: boolean
+          last_four: string
           last_used_at: string | null
-          plain_key_preview: string
+          name: string
+          prefix: string
           project_id: string
         }
         Insert: {
           created_at?: string
+          environment?: string
           hashed_key: string
           id?: string
-          is_active?: boolean | null
-          label: string
+          is_active?: boolean
+          last_four: string
           last_used_at?: string | null
-          plain_key_preview: string
+          name: string
+          prefix: string
           project_id: string
         }
         Update: {
           created_at?: string
+          environment?: string
           hashed_key?: string
           id?: string
-          is_active?: boolean | null
-          label?: string
+          is_active?: boolean
+          last_four?: string
           last_used_at?: string | null
-          plain_key_preview?: string
+          name?: string
+          prefix?: string
           project_id?: string
         }
         Relationships: [
