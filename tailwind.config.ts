@@ -14,10 +14,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Clash Grotesk', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
-        accent: ['Space Mono', 'ui-monospace', 'monospace'],
-        mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+        sans: ['Inter Tight', 'Inter', 'sans-serif'],
+        heading: ['Space Grotesk', 'Inter', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+        metric: ['Space Mono', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border) / var(--border-opacity, 1))",
