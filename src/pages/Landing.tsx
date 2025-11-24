@@ -81,7 +81,7 @@ const Landing = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/monai/projects">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8">
-                Open Dashboard
+                Get Started
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
