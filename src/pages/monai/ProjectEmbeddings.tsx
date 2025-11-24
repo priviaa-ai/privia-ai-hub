@@ -77,6 +77,8 @@ export default function ProjectEmbeddings() {
         <PageHeader
           title="Embedding Explorer"
           subtitle="Visualize and analyze your embedding vectors"
+          showBack={true}
+          backTo="/monai/projects"
         />
 
         {embeddings.length === 0 ? (

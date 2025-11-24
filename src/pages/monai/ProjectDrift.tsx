@@ -225,6 +225,8 @@ export default function ProjectDrift() {
         <PageHeader
           title="Drift Dashboard"
           subtitle="Monitor data and model drift across your datasets"
+          showBack={true}
+          backTo="/monai/projects"
         />
 
         {/* Controls */}
