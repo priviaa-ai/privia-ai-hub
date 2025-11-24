@@ -2,7 +2,8 @@ import { Navigation } from "@/components/monai/Navigation";
 import { PageHeader } from "@/components/monai/PageHeader";
 import { GlassCard } from "@/components/monai/GlassCard";
 import { Link } from "react-router-dom";
-import { Webhook, Code2, Database, TrendingUp, Sparkles, AlertCircle } from "lucide-react";
+import { Webhook, Code2, Database, TrendingUp, Sparkles, AlertCircle, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const docSections = [
   {
@@ -47,6 +48,13 @@ export default function Docs() {
     <>
       <Navigation />
       <div className="container mx-auto px-6 py-12 max-w-4xl">
+        <Link to="/">
+          <Button variant="ghost" size="sm" className="mb-6">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Home
+          </Button>
+        </Link>
+        
         <PageHeader
           title="Documentation"
           subtitle="Everything you need to integrate MonAI into your AI systems"

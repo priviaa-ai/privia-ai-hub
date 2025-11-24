@@ -2,8 +2,9 @@ import { Navigation } from "@/components/monai/Navigation";
 import { PageHeader } from "@/components/monai/PageHeader";
 import { GlassCard } from "@/components/monai/GlassCard";
 import { Button } from "@/components/ui/button";
-import { Copy } from "lucide-react";
+import { Copy, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 export default function DocsSDK() {
   const { toast } = useToast();
@@ -70,6 +71,13 @@ console.log(data);`;
     <>
       <Navigation />
       <div className="container mx-auto px-6 py-12 max-w-4xl">
+        <Link to="/">
+          <Button variant="ghost" size="sm" className="mb-6">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Home
+          </Button>
+        </Link>
+
         <PageHeader
           title="SDK Examples"
           subtitle="Code snippets for Python, JavaScript, and TypeScript"
