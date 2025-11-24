@@ -137,7 +137,10 @@ const Projects = () => {
 
       <main className="container mx-auto px-6 py-12">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold">Projects</h1>
+          <div>
+            <h1 className="text-4xl font-bold">Projects</h1>
+            <p className="text-muted-foreground mt-2">Select a project to view its reliability dashboard.</p>
+          </div>
           
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>
