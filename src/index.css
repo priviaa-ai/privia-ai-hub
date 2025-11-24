@@ -90,14 +90,20 @@
 
   /* Typography system */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Helvetica Now Display', 'Helvetica Neue', 'Helvetica', 'Arial', -apple-system, sans-serif;
+    font-family: 'Clash Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-weight: 600;
     letter-spacing: -0.02em;
   }
 
-  /* Code and JSON logs use Menlo (matches OpenAI docs) */
+  /* Metrics use Space Mono */
+  .metric, .number, [class*="metric"], [class*="count"], [data-metric], .stats {
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-weight: 700;
+  }
+
+  /* Code uses JetBrains Mono */
   code, pre, kbd, samp, .code, .json-log {
-    font-family: 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+    font-family: 'JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
     font-weight: 400;
   }
 
