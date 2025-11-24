@@ -46,26 +46,40 @@ export default function MonaiProjects() {
 
   const loadProjects = async () => {
     try {
-      const { data, error } = await supabase
+      // Fetch all projects
+      const { data: projectsData, error: projectsError } = await supabase
         .from('monai_projects')
         .select('*')
         .order('is_demo', { ascending: false })
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (projectsError) throw projectsError;
+      if (!projectsData || projectsData.length === 0) {
+        setProjects([]);
+        return;
+      }
 
-      // Enrich with metrics
-      const enrichedProjects = await Promise.all((data || []).map(async (project) => {
-        // Get latest drift run
-        const { data: driftRuns } = await supabase
-          .from('monai_drift_runs')
-          .select('dsi, created_at')
-          .eq('project_id', project.id)
-          .order('created_at', { ascending: false })
-          .limit(1);
+      // Fetch all drift runs for all projects in a single query
+      const projectIds = projectsData.map(p => p.id);
+      const { data: driftRuns } = await supabase
+        .from('monai_drift_runs')
+        .select('project_id, dsi, created_at')
+        .in('project_id', projectIds)
+        .order('created_at', { ascending: false });
 
-        const driftScore = driftRuns?.[0]?.dsi || null;
-        const lastUpdated = driftRuns?.[0]?.created_at || project.created_at;
+      // Create a map of project_id to latest drift run
+      const driftMap = new Map<string, { dsi: number; created_at: string }>();
+      driftRuns?.forEach(run => {
+        if (!driftMap.has(run.project_id)) {
+          driftMap.set(run.project_id, { dsi: run.dsi, created_at: run.created_at });
+        }
+      });
+
+      // Enrich projects with metrics
+      const enrichedProjects = projectsData.map(project => {
+        const drift = driftMap.get(project.id);
+        const driftScore = drift?.dsi || null;
+        const lastUpdated = drift?.created_at || project.created_at;
         const reliabilityScore = driftScore ? Math.max(0, 100 - driftScore) : null;
 
         return {
@@ -74,7 +88,7 @@ export default function MonaiProjects() {
           driftScore,
           lastUpdated,
         };
-      }));
+      });
 
       setProjects(enrichedProjects);
     } catch (error: any) {
