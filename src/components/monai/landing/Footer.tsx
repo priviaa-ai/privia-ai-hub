@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Github } from "lucide-react";
-import priviaLogo from "@/assets/privia-logo.png";
+import priviaLogo from "@/assets/privia-logo-white.png";
 
 export const Footer = () => {
   const links = {
