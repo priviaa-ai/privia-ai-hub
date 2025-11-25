@@ -128,9 +128,21 @@ export const HeroSection = () => {
           <Button 
             size="default" 
             variant="outline" 
-            className="px-8 border-white/20 hover:bg-white/5 transition-all duration-300 ease-out hover:brightness-105 hover:scale-[1.02]"
+            className={`
+              relative px-8 group overflow-hidden
+              border-white/20 bg-transparent
+              transition-all duration-500 ease-out
+              hover:backdrop-blur-md
+              hover:border-white/40
+              
+              before:absolute before:inset-0 before:left-0
+              before:w-0 before:h-full
+              before:bg-white/5 before:backdrop-blur-md
+              before:transition-all before:duration-500 before:ease-out
+              group-hover:before:w-full
+            `}
           >
-            View Docs
+            <span className="relative z-10">View Docs</span>
           </Button>
         </Link>
       </motion.div>
