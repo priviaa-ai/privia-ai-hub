@@ -53,62 +53,64 @@ export function Navigation() {
 
       <div className="max-w-6xl mx-auto px-8 py-3">
         <div className="flex items-center justify-between">
-          {/* Logo - larger and more spacing */}
-          <Link 
-            to="/" 
-            className="flex items-center gap-0 group" 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          >
-            <img 
-              src={monaiLogo} 
-              alt="MonAI" 
-              className="w-12 h-12 object-contain transition-transform group-hover:scale-110 brightness-110"
-            />
-            <span 
-              className="text-[24px] text-white -ml-2 font-semibold tracking-tight brightness-110" 
-              style={{ fontFamily: 'Satoshi, sans-serif' }}
+          {/* Left side - Logo and nav links */}
+          <div className="flex items-center gap-8">
+            <Link 
+              to="/" 
+              className="flex items-center gap-0 group" 
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             >
-              MonAI
-            </span>
-          </Link>
-          
-          {/* Desktop nav links - center-right */}
-          <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => {
-              const isActive = location.pathname === link.path;
-              return (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={cn(
-                    "relative text-sm font-medium transition-all duration-200 group",
-                    isActive ? "text-white" : "hover:text-white"
-                  )}
-                  style={{
-                    color: isActive ? 'rgb(255, 255, 255)' : 'rgba(248, 250, 252, 0.78)',
-                    transition: 'color 200ms ease-out'
-                  }}
-                >
-                  <span>{link.label}</span>
-                  
-                  {/* Glowing underline pill on hover/active */}
-                  <span 
+              <img 
+                src={monaiLogo} 
+                alt="MonAI" 
+                className="w-12 h-12 object-contain transition-transform group-hover:scale-110 brightness-110"
+              />
+              <span 
+                className="text-[24px] text-white -ml-2 font-semibold tracking-tight brightness-110" 
+                style={{ fontFamily: 'Satoshi, sans-serif' }}
+              >
+                MonAI
+              </span>
+            </Link>
+            
+            {/* Desktop nav links */}
+            <div className="hidden lg:flex items-center gap-8">
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
                     className={cn(
-                      "absolute -bottom-1.5 left-1/2 -translate-x-1/2 h-[3px] w-[18px] rounded-full transition-all duration-200",
-                      isActive || "opacity-0 group-hover:opacity-100"
+                      "relative text-sm font-medium transition-all duration-200 group",
+                      isActive ? "text-white" : "hover:text-white"
                     )}
-                    style={{ 
-                      background: 'rgba(96, 165, 250, 0.9)',
-                      boxShadow: '0 0 8px rgba(96, 165, 250, 0.6)',
-                      opacity: isActive ? 1 : undefined
+                    style={{
+                      color: isActive ? 'rgb(255, 255, 255)' : 'rgba(248, 250, 252, 0.78)',
+                      transition: 'color 200ms ease-out'
                     }}
-                  />
-                </Link>
-              );
-            })}
+                  >
+                    <span>{link.label}</span>
+                    
+                    {/* Glowing underline pill on hover/active */}
+                    <span 
+                      className={cn(
+                        "absolute -bottom-1.5 left-1/2 -translate-x-1/2 h-[3px] w-[18px] rounded-full transition-all duration-200",
+                        isActive || "opacity-0 group-hover:opacity-100"
+                      )}
+                      style={{ 
+                        background: 'rgba(96, 165, 250, 0.9)',
+                        boxShadow: '0 0 8px rgba(96, 165, 250, 0.6)',
+                        opacity: isActive ? 1 : undefined
+                      }}
+                    />
+                  </Link>
+                );
+              })}
+            </div>
           </div>
 
-          {/* CTA Button - desktop */}
+          {/* Right side - CTA Button */}
           <div className="hidden lg:block">
             <PrimaryCtaButton to="/monai/projects" size="default" />
           </div>
