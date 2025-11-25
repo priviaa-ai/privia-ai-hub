@@ -12,17 +12,23 @@ export const DashboardPreview = () => {
       </div>
 
       <div className="max-w-5xl mx-auto">
-        <div className="relative group">
-          {/* Neon blue-purple glow */}
-          <div className="absolute -inset-[2px] bg-gradient-to-r from-[#5b6bff] via-[#a372ff] to-[#5b6bff] rounded-3xl opacity-60 blur-xl" />
+        <div className="relative">
+          {/* Subtle outer glow - whisper-light neon */}
+          <div 
+            className="absolute -inset-[30px] md:-inset-[40px] rounded-[32px] opacity-[0.35] md:opacity-[0.4]"
+            style={{
+              background: 'radial-gradient(circle at center, rgba(120, 70, 255, 0.55), rgba(0, 150, 255, 0.45))',
+              filter: 'blur(60px)'
+            }}
+          />
           
           {/* Glass-morphism container */}
-          <div className="relative rounded-3xl overflow-hidden border border-white/20 shadow-[0_20px_60px_-15px_rgba(91,107,255,0.5),0_10px_40px_-10px_rgba(163,114,255,0.3)] backdrop-blur-sm bg-white/[0.05]">
+          <div className="relative rounded-[20px] overflow-hidden border border-white/[0.15] backdrop-blur-sm bg-white/[0.05] shadow-[0_0_60px_rgba(120,70,255,0.3),0_0_80px_rgba(0,150,255,0.25)]">
             {/* Frosted glass overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent pointer-events-none" />
             
             {/* Feature Metrics screenshot */}
-            <div className="relative p-6 md:p-8 lg:p-12">
+            <div className="relative p-8 md:p-10 lg:p-12">
               <img 
                 src={featureMetricsReal} 
                 alt="MonAI feature level drift metrics with PSI, KL divergence, and drift status"
