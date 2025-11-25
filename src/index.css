@@ -104,6 +104,30 @@
   }
 }
 
+@keyframes aurora-drift {
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1);
+    opacity: 1;
+  }
+  33% {
+    transform: translate(8%, -5%) scale(1.05);
+    opacity: 0.85;
+  }
+  66% {
+    transform: translate(-5%, 8%) scale(0.98);
+    opacity: 0.9;
+  }
+}
+
+@keyframes particle-twinkle {
+  0%, 100% { 
+    opacity: 0.01;
+  }
+  50% { 
+    opacity: 0.02;
+  }
+}
+
 .animate-gradient-shift {
   animation: gradient-shift 8s ease-in-out infinite;
 }
@@ -126,6 +150,21 @@
 
 .animate-twinkle {
   animation: twinkle 2s ease-in-out infinite;
+}
+
+.animate-aurora-drift {
+  animation: aurora-drift 15s ease-in-out infinite;
+}
+
+.animate-particle-twinkle {
+  animation: particle-twinkle 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-aurora-drift,
+  .animate-particle-twinkle {
+    animation: none;
+  }
 }
 
 @layer base {
