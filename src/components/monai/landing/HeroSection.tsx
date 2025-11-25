@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Activity } from "lucide-react";
-import heroDashboard from "@/assets/real-hero-dashboard.png";
+import heroDashboard from "@/assets/hero-dashboard-framed.png";
 
 export const HeroSection = () => {
   return (
@@ -40,23 +40,17 @@ export const HeroSection = () => {
       {/* Real Dashboard Hero */}
       <div className="max-w-[70%] mx-auto mb-16 mt-12">
         <div className="relative group">
-          {/* Neon gradient glow border - MonAI brand colors */}
-          <div className="absolute -inset-[2px] bg-gradient-to-r from-[#5b6bff] via-[#a372ff] to-[#5b6bff] rounded-3xl opacity-70" />
-          
-          {/* Glassmorphic container with floating shadow */}
-          <div className="relative rounded-3xl overflow-hidden border border-white/20 shadow-[0_20px_60px_-15px_rgba(91,107,255,0.5),0_10px_40px_-10px_rgba(163,114,255,0.3)] bg-white/[0.1]">
-            {/* Frosted glass overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent z-10 pointer-events-none" />
-            
-            {/* Real dashboard screenshot - cropped to hide purple text at bottom */}
-            <div className="relative overflow-hidden" style={{ maxHeight: '680px' }}>
-              <img 
-                src={heroDashboard} 
-                alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"
-                className="w-full h-auto relative z-0"
-                style={{ objectFit: 'cover', objectPosition: 'top' }}
-              />
-            </div>
+          {/* Real dashboard screenshot - cropped to show only inner rectangle */}
+          <div className="relative overflow-hidden rounded-3xl shadow-[0_20px_60px_-15px_rgba(91,107,255,0.5),0_10px_40px_-10px_rgba(163,114,255,0.3)]">
+            <img 
+              src={heroDashboard} 
+              alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"
+              className="w-full h-auto"
+              style={{ 
+                clipPath: 'inset(8% 8% 14% 8%)',
+                transform: 'scale(1.18)'
+              }}
+            />
           </div>
           
           <div className="mt-8 text-base text-muted-foreground text-center">
