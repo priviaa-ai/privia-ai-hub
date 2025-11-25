@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Activity } from "lucide-react";
-import heroDashboard from "@/assets/hero-dashboard.png";
+import dashboardHero from "@/assets/dashboard-hero.png";
 
 export const HeroSection = () => {
   return (
@@ -37,22 +37,19 @@ export const HeroSection = () => {
         </Link>
       </div>
 
-      {/* Premium Dashboard Visualization */}
+      {/* Real Dashboard Screenshot */}
       <div className="max-w-5xl mx-auto mb-12">
         <div className="relative group">
-          {/* Neon glow effect */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-primary/40 via-accent/40 to-primary/40 rounded-2xl blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500" />
+          {/* Subtle neon glow */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-primary/30 via-accent/30 to-primary/30 rounded-2xl blur-lg opacity-60" />
           
-          {/* Dashboard image with glass effect */}
+          {/* Crisp dashboard screenshot with glass frame */}
           <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-background/60 z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/10 via-transparent to-background/10 z-10 pointer-events-none" />
             <img 
-              src={heroDashboard} 
+              src={dashboardHero} 
               alt="MonAI Drift Detection Dashboard"
-              className="w-full h-auto opacity-90 blur-[10px] scale-105"
-              style={{
-                filter: 'blur(10px) brightness(0.95)',
-              }}
+              className="w-full h-auto"
             />
           </div>
           
