@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Activity } from "lucide-react";
-import heroDashboard from "@/assets/hero-dashboard.png";
+import heroDashboard from "@/assets/dashboard-real.png";
 
 export const HeroSection = () => {
   return (
@@ -38,22 +38,25 @@ export const HeroSection = () => {
       </div>
 
       {/* Real Dashboard Hero */}
-      <div className="max-w-4xl mx-auto mb-16 mt-12">
+      <div className="max-w-[70%] mx-auto mb-16 mt-12">
         <div className="relative group">
-          {/* Neon gradient glow border */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-[hsl(237,100%,68%)] via-[hsl(270,60%,65%)] to-[hsl(237,100%,68%)] rounded-3xl opacity-60 blur-lg" />
+          {/* Neon gradient glow border - MonAI brand colors */}
+          <div className="absolute -inset-[2px] bg-gradient-to-r from-[#5b6bff] via-[#a372ff] to-[#5b6bff] rounded-3xl opacity-70 blur-xl" />
           
-          {/* Glassmorphic container */}
-          <div className="relative rounded-3xl overflow-hidden border border-white/20 shadow-[0_25px_100px_rgba(91,107,255,0.4)] backdrop-blur-[20px] bg-background/10">
+          {/* Glassmorphic container with floating shadow */}
+          <div className="relative rounded-3xl overflow-hidden border border-white/20 shadow-[0_20px_60px_-15px_rgba(91,107,255,0.5),0_10px_40px_-10px_rgba(163,114,255,0.3)] backdrop-blur-[20px] bg-white/[0.1]">
             {/* Frosted glass overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] via-transparent to-white/[0.02] z-10 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent z-10 pointer-events-none backdrop-blur-sm" />
             
-            {/* Real dashboard screenshot */}
-            <img 
-              src={heroDashboard} 
-              alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"
-              className="w-full h-auto"
-            />
+            {/* Real dashboard screenshot - cropped to show top 65% */}
+            <div className="relative overflow-hidden" style={{ maxHeight: '600px' }}>
+              <img 
+                src={heroDashboard} 
+                alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"
+                className="w-full h-auto relative z-0"
+                style={{ objectFit: 'cover', objectPosition: 'top' }}
+              />
+            </div>
           </div>
           
           <div className="mt-8 text-base text-muted-foreground text-center">
