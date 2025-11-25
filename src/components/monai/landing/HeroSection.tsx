@@ -10,9 +10,9 @@ const fadeUpVariants = {
   visible: { opacity: 1, y: 0 }
 };
 
-const scaleUpVariants = {
-  hidden: { opacity: 0, y: 60, scale: 0.95 },
-  visible: { opacity: 1, y: 0, scale: 1 }
+const dashboardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0 }
 };
 
 // Add fade sweep animation keyframes
@@ -47,7 +47,7 @@ export const HeroSection = () => {
         initial="hidden"
         animate="visible"
         variants={fadeUpVariants}
-        transition={{ duration: 0.5, delay: 0.1 }}
+        transition={{ duration: 0.4, delay: 0.05, ease: "easeOut" }}
         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8"
       >
         <Activity className="h-4 w-4 text-primary animate-pulse" />
@@ -58,7 +58,7 @@ export const HeroSection = () => {
         initial="hidden"
         animate="visible"
         variants={fadeUpVariants}
-        transition={{ duration: 0.6, delay: 0.3 }}
+        transition={{ duration: 0.7, delay: 0.25, ease: "easeOut" }}
         className="text-4xl sm:text-5xl lg:text-6xl font-medium mb-8 text-foreground leading-[1.15] max-w-[780px] mx-auto px-4"
       >
         Know when your AI drifts<br />before your users do
@@ -69,7 +69,7 @@ export const HeroSection = () => {
         initial="hidden"
         animate="visible"
         variants={fadeUpVariants}
-        transition={{ duration: 0.6, delay: 0.4 }}
+        transition={{ duration: 0.5, delay: 1.0, ease: "easeOut" }}
         className="flex justify-center mb-10 mt-10 px-4"
       >
         <div 
@@ -84,7 +84,7 @@ export const HeroSection = () => {
         initial="hidden"
         animate="visible"
         variants={fadeUpVariants}
-        transition={{ duration: 0.6, delay: 0.5 }}
+        transition={{ duration: 0.65, delay: 1.2, ease: "easeOut" }}
         className="text-sm sm:text-base lg:text-lg font-normal text-white mb-10 max-w-[780px] mx-auto leading-relaxed px-4"
       >
         MonAI monitors ML and LLM systems for drift, hallucinations, and behavior shifts in real time so teams can fix issues before they reach customers.
@@ -94,7 +94,7 @@ export const HeroSection = () => {
         initial="hidden"
         animate="visible"
         variants={fadeUpVariants}
-        transition={{ duration: 0.6, delay: 0.7 }}
+        transition={{ duration: 0.55, delay: 1.9, ease: "easeOut" }}
         className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
       >
         <Link to="/monai/projects" onClick={handleButtonClick}>
@@ -154,8 +154,8 @@ export const HeroSection = () => {
       <motion.div
         initial="hidden"
         animate="visible"
-        variants={scaleUpVariants}
-        transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        variants={dashboardVariants}
+        transition={{ duration: 0.7, delay: 2.25, ease: "easeOut" }}
         className="max-w-5xl mx-auto mb-16 mt-12 px-4"
       >
         <div className="relative">
