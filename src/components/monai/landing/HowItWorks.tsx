@@ -51,9 +51,9 @@ export const HowItWorks = () => {
               initial={{ opacity: 0, y: 12 }}
               animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               transition={{ duration: 0.45, delay: index * 0.1, ease: "easeOut" }}
-              className="flex flex-col items-center"
+              className="flex flex-col items-start"
             >
-              {/* Step number badge - separate from card */}
+              {/* Step number badge - aligned left */}
               <motion.div 
                 className="w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center font-medium text-sm text-white mb-4 cursor-default"
                 style={{
