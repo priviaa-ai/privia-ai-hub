@@ -10,6 +10,8 @@ import { StatusPill } from "@/components/monai/StatusPill";
 import { Button } from "@/components/ui/button";
 import { Settings, AlertCircle, TrendingUp, FileUp, MessageSquare } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { InteractiveWaveCard } from "@/components/monai/InteractiveWaveCard";
+import { ProjectActionsMenu } from "@/components/monai/ProjectActionsMenu";
 import emptyDriftImage from "@/assets/empty-drift.png";
 
 interface Project {
@@ -121,7 +123,7 @@ export default function ProjectOverview() {
           showBack={true}
           backTo="/monai/projects"
           actions={
-            <>
+            <div className="flex items-center gap-2">
               <Link to={`/monai/projects/${projectId}/drift`}>
                 <Button variant="outline">
                   <TrendingUp className="h-4 w-4 mr-2" />
@@ -134,7 +136,15 @@ export default function ProjectOverview() {
                   Settings
                 </Button>
               </Link>
-            </>
+              {project && (
+                <ProjectActionsMenu
+                  projectId={projectId!}
+                  projectName={project.name}
+                  onUpdate={loadProjectData}
+                  variant="page"
+                />
+              )}
+            </div>
           }
         />
 
@@ -142,7 +152,7 @@ export default function ProjectOverview() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <MetricCard
             label="Reliability Score"
-            value={reliabilityScore !== null ? Math.round(reliabilityScore) : "-"}
+            value={hasData && reliabilityScore !== null ? Math.round(reliabilityScore) : "-"}
             badge={reliabilityScore !== null && reliabilityScore > 90 ? "Healthy" : undefined}
             trend={reliabilityScore !== null && reliabilityScore > 90 ? "up" : "neutral"}
             trendValue={reliabilityScore !== null && reliabilityScore > 90 ? "+2%" : ""}

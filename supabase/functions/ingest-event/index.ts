@@ -8,12 +8,30 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+/**
+ * PUBLIC_BETA mode flag
+ * When true: API keys are optional but tracked if provided
+ * When false: API keys are required for all requests
+ */
+const PUBLIC_BETA = Deno.env.get('MONAI_PUBLIC_BETA') === 'true';
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    // API Key Validation (required unless PUBLIC_BETA)
+    const authHeader = req.headers.get('Authorization');
+    const hasApiKey = authHeader && authHeader.startsWith('Bearer ');
+    
+    if (!PUBLIC_BETA && !hasApiKey) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'API key required. Provide via Authorization: Bearer <API_KEY>' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const { 
       project_id, 
       event_type,
@@ -24,17 +42,17 @@ serve(async (req) => {
       throw new Error('Missing required fields: project_id, event_type');
     }
 
-    // Optional API key validation
-    const authHeader = req.headers.get('Authorization');
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-      const apiKey = authHeader.replace('Bearer ', '');
-      const validationResult = await validateApiKey(apiKey, project_id);
+    // Validate API key if provided
+    if (hasApiKey) {
+      const apiKey = authHeader!.replace('Bearer ', '');
+      const clientIp = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
+      const validationResult = await validateApiKey(apiKey, project_id, 'write', clientIp);
       
       if (!validationResult.valid) {
         console.error('API key validation failed:', validationResult.error);
         return new Response(
-          JSON.stringify({ error: 'Invalid or inactive API key' }),
-          { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          JSON.stringify({ success: false, error: validationResult.error }),
+          { status: validationResult.statusCode || 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
       console.log('API key validated successfully');
@@ -65,12 +83,12 @@ serve(async (req) => {
         success: true, 
         event,
       }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error: any) {
     console.error('Error in ingest-event:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ success: false, error: error.message }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

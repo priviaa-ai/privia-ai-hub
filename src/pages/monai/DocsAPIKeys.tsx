@@ -323,16 +323,20 @@ OLD_KEY = "mon_live_old_key_here"
             </GlassCard>
           </div>
 
-          {/* Rate Limits */}
           <GlassCard className="p-6">
             <h2 className="text-2xl font-semibold mb-4">Rate Limits</h2>
-            <p className="text-muted-foreground">
-              Currently, MonAI does not enforce rate limits during beta. However, we recommend 
-              implementing reasonable request throttling on your side to ensure smooth operation.
+            <p className="text-muted-foreground mb-4">
+              Default rate limiting: <strong>60 requests per minute</strong> per API key across all ingestion endpoints.
             </p>
-            <p className="text-sm text-muted-foreground mt-2">
-              Rate limiting will be introduced in future releases with per-key quotas.
-            </p>
+            <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+              <p className="text-sm text-blue-400 font-semibold mb-1">
+                ℹ️ Rate Limit Details
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Rate limits are enforced per API key using a sliding window approach. 
+                If you exceed the limit, you'll receive a 429 error. Wait for the current minute window to reset before retrying.
+              </p>
+            </div>
           </GlassCard>
         </div>
       </div>

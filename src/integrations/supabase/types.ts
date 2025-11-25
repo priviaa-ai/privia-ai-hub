@@ -456,8 +456,10 @@ export type Database = {
           default_model_type: string | null
           description: string | null
           id: string
+          is_archived: boolean | null
           is_demo: boolean | null
           name: string
+          project_type: string | null
           updated_at: string
         }
         Insert: {
@@ -465,8 +467,10 @@ export type Database = {
           default_model_type?: string | null
           description?: string | null
           id?: string
+          is_archived?: boolean | null
           is_demo?: boolean | null
           name: string
+          project_type?: string | null
           updated_at?: string
         }
         Update: {
@@ -474,11 +478,48 @@ export type Database = {
           default_model_type?: string | null
           description?: string | null
           id?: string
+          is_archived?: boolean | null
           is_demo?: boolean | null
           name?: string
+          project_type?: string | null
           updated_at?: string
         }
         Relationships: []
+      }
+      monai_rate_limits: {
+        Row: {
+          api_key_id: string
+          created_at: string
+          id: string
+          request_count: number
+          updated_at: string
+          window_start: string
+        }
+        Insert: {
+          api_key_id: string
+          created_at?: string
+          id?: string
+          request_count?: number
+          updated_at?: string
+          window_start: string
+        }
+        Update: {
+          api_key_id?: string
+          created_at?: string
+          id?: string
+          request_count?: number
+          updated_at?: string
+          window_start?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monai_rate_limits_api_key_id_fkey"
+            columns: ["api_key_id"]
+            isOneToOne: false
+            referencedRelation: "monai_api_keys"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       project_settings: {
         Row: {
