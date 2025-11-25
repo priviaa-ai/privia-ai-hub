@@ -56,13 +56,12 @@ export const HeroSection = () => {
         animate="visible"
         variants={fadeUpVariants}
         transition={{ duration: 0.6, delay: 0.4 }}
-        className="flex justify-center mb-8 px-4"
+        className="flex justify-center mb-10 mt-10 px-4"
       >
         <div 
-          className="h-[1px] w-[45%] sm:w-[40%] max-w-[350px] relative"
+          className="h-[1.5px] w-[320px] max-w-[90%] relative"
           style={{
-            background: 'rgba(255, 255, 255, 0.3)',
-            boxShadow: '0 0 20px rgba(255, 255, 255, 0.2), 0 0 40px rgba(255, 255, 255, 0.1)'
+            background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%)',
           }}
         />
       </motion.div>
@@ -85,41 +84,28 @@ export const HeroSection = () => {
         className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
       >
         <Link to="/monai/projects" onClick={handleButtonClick}>
-          <div className="relative inline-block">
-            {/* Ripple effect */}
-            {isClicked && (
-              <motion.div
-                initial={{ scale: 1, opacity: 0.6 }}
-                animate={{ scale: 2, opacity: 0 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="absolute inset-0 rounded-lg"
-                style={{
-                  background: 'radial-gradient(circle, rgba(120, 70, 255, 0.4), rgba(0, 150, 255, 0.3))',
-                  zIndex: 0
-                }}
-              />
-            )}
-            <Button 
-              size="default" 
-              className={`
-                relative bg-primary px-8 group overflow-hidden
-                transition-all duration-300 ease-out
-                hover:scale-105 hover:shadow-[0_0_30px_rgba(120,70,255,0.5),0_0_60px_rgba(0,150,255,0.3)]
-                active:scale-95
-                before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary before:via-accent before:to-primary
-                before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300
-                ${isClicked ? 'scale-95' : ''}
-              `}
-            >
-              <span className="relative z-10 flex items-center">
-                Start Monitoring
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </span>
-            </Button>
-          </div>
+          <Button 
+            size="default" 
+            className={`
+              relative bg-primary px-8 group overflow-hidden
+              transition-all duration-300 ease-out
+              hover:brightness-110 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(120,70,255,0.6),0_0_80px_rgba(0,150,255,0.4)]
+              active:scale-[0.98]
+              ${isClicked ? 'scale-[0.98]' : ''}
+            `}
+          >
+            <span className="relative z-10 flex items-center">
+              Start Monitoring
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+            </span>
+          </Button>
         </Link>
         <Link to="/docs">
-          <Button size="default" variant="outline" className="px-8 border-white/20 hover:bg-white/5">
+          <Button 
+            size="default" 
+            variant="outline" 
+            className="px-8 border-white/20 hover:bg-white/5 transition-all duration-300 ease-out hover:brightness-105 hover:scale-[1.02]"
+          >
             View Docs
           </Button>
         </Link>
