@@ -61,8 +61,8 @@ export const HeroSection = () => {
         <div 
           className="h-[1px] w-[45%] sm:w-[40%] max-w-[350px] relative"
           style={{
-            background: 'linear-gradient(90deg, rgba(120, 70, 255, 0.6), rgba(0, 150, 255, 0.6))',
-            boxShadow: '0 0 20px rgba(120, 70, 255, 0.4), 0 0 40px rgba(0, 150, 255, 0.3)'
+            background: 'rgba(255, 255, 255, 0.3)',
+            boxShadow: '0 0 20px rgba(255, 255, 255, 0.2), 0 0 40px rgba(255, 255, 255, 0.1)'
           }}
         />
       </motion.div>
