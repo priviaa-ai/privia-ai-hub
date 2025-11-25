@@ -54,7 +54,7 @@ export const HeroSection = () => {
               src={dashboardHero} 
               alt="MonAI Composite Dashboard - Metrics, DSI Trend, and Feature Drift"
               className="w-full h-auto"
-              style={{ filter: 'blur(6px)' }}
+              style={{ filter: 'blur(2px)' }}
             />
           </div>
           

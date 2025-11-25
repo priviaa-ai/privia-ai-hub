@@ -25,7 +25,7 @@ export const DashboardPreview = () => {
                 src={dashboardPreview} 
                 alt="MonAI Reliability Dashboard Composite"
                 className="w-full h-auto"
-                style={{ filter: 'blur(5px)' }}
+                style={{ filter: 'blur(2px)' }}
               />
             </div>
           </div>
