@@ -49,19 +49,13 @@ export const HeroSection = () => {
             }}
           />
           
-          {/* Glass-morphism container */}
-          <div className="relative rounded-[20px] overflow-hidden backdrop-blur-sm bg-white/[0.05] shadow-[0_0_60px_rgba(120,70,255,0.3),0_0_80px_rgba(0,150,255,0.25)]">
-            {/* Frosted glass overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent pointer-events-none" />
-            
-            {/* Dashboard screenshot */}
-            <div className="relative p-8 md:p-10 lg:p-12">
-              <img 
-                src={heroDashboard} 
-                alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"
-                className="w-full h-auto block rounded-xl"
-              />
-            </div>
+          {/* Dashboard screenshot */}
+          <div className="relative">
+            <img 
+              src={heroDashboard} 
+              alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"
+              className="w-full h-auto block rounded-xl"
+            />
           </div>
           
           <div className="mt-8 text-base text-muted-foreground text-center px-4">
