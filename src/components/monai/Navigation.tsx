@@ -19,11 +19,11 @@ export function Navigation() {
           <Link to="/" className="flex items-center gap-2 group">
             <img 
               src={monaiLogo} 
-              alt="MonAI" 
+              alt="Privia AI" 
               className="w-10 h-10 object-contain transition-transform group-hover:scale-110"
             />
             <span className="text-2xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              MonAI
+              Privia AI — MonAI
             </span>
           </Link>
           
