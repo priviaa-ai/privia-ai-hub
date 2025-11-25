@@ -25,13 +25,13 @@ export const HeroSection = () => {
       
       <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
         <Link to="/monai/projects">
-          <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 group">
+          <Button size="default" className="bg-primary hover:bg-primary/90 px-8 group">
             Start Monitoring
-            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </Link>
         <Link to="/docs">
-          <Button size="lg" variant="outline" className="text-lg px-8 border-white/20 hover:bg-white/5">
+          <Button size="default" variant="outline" className="px-8 border-white/20 hover:bg-white/5">
             View Docs
           </Button>
         </Link>

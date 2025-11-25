@@ -149,7 +149,7 @@ const Landing = () => {
         </div>
 
         {/* Final CTA */}
-        <div className="max-w-4xl mx-auto text-center mb-20">
+        <div className="max-w-4xl mx-auto text-center mb-12">
           <GlassCard className="p-12">
             <h2 className="text-4xl font-bold mb-4">Ready to monitor your AI?</h2>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
