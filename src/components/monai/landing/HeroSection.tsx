@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Activity } from "lucide-react";
 import heroDashboard from "@/assets/hero-dashboard-final.png";
+import miniAlerts from "@/assets/mini-alerts.png";
+import miniDriftChart from "@/assets/mini-drift-chart.png";
 import { motion } from "framer-motion";
 import { PrimaryCtaButton } from "@/components/ui/primary-cta-button";
 
@@ -21,8 +23,18 @@ const buttonVariants = {
 };
 
 const dashboardVariants = {
-  hidden: { opacity: 0, y: 80, scale: 0.97 },
-  visible: { opacity: 1, y: 0, scale: 1 }
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0 }
+};
+
+const glowVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 }
+};
+
+const secondaryCardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
 };
 
 export const HeroSection = () => {
@@ -122,38 +134,163 @@ export const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Real Dashboard Hero */}
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={dashboardVariants}
-        transition={{ duration: 0.7, delay: 3.05, ease: "easeOut" }}
-        className="max-w-5xl mx-auto mb-16 mt-12 px-4"
-      >
-        <div className="relative">
-          {/* Subtle outer glow - whisper-light neon */}
-          <div 
-            className="absolute -inset-[30px] md:-inset-[40px] rounded-[32px] opacity-[0.35] md:opacity-[0.4]"
+      {/* Premium AI Control Center Mockup */}
+      <div className="max-w-5xl mx-auto mb-16 mt-12 px-4">
+        <div className="relative min-h-[400px] lg:min-h-[500px]">
+          
+          {/* Secondary Card 1 - Alerts (top left, behind) */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={secondaryCardVariants}
+            transition={{ duration: 0.6, delay: 2.85, ease: "easeOut" }}
+            className="absolute top-[-20px] left-[-30px] lg:top-[-40px] lg:left-[-60px] w-[280px] lg:w-[380px] z-0 hidden md:block"
             style={{
-              background: 'radial-gradient(circle at center, rgba(120, 70, 255, 0.55), rgba(0, 150, 255, 0.45))',
-              filter: 'blur(60px)'
+              transform: 'rotate(-4deg)',
+              filter: 'blur(1.5px)'
             }}
-          />
-          
-          {/* Dashboard screenshot */}
-          <div className="relative">
-            <img 
-              src={heroDashboard} 
-              alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"
-              className="w-full h-auto block rounded-xl"
+          >
+            <div 
+              className="rounded-xl border overflow-hidden"
+              style={{
+                background: 'rgba(10, 15, 30, 0.4)',
+                borderColor: 'rgba(255, 255, 255, 0.08)',
+                backdropFilter: 'blur(12px)',
+                opacity: 0.6
+              }}
+            >
+              <img 
+                src={miniAlerts} 
+                alt="Alert monitoring"
+                className="w-full h-auto opacity-70"
+              />
+            </div>
+          </motion.div>
+
+          {/* Secondary Card 2 - Drift Chart (bottom right, behind) */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={secondaryCardVariants}
+            transition={{ duration: 0.6, delay: 2.95, ease: "easeOut" }}
+            className="absolute bottom-[-20px] right-[-30px] lg:bottom-[-40px] lg:right-[-60px] w-[280px] lg:w-[380px] z-0 hidden md:block"
+            style={{
+              transform: 'rotate(3deg)',
+              filter: 'blur(1.5px)'
+            }}
+          >
+            <div 
+              className="rounded-xl border overflow-hidden"
+              style={{
+                background: 'rgba(10, 15, 30, 0.4)',
+                borderColor: 'rgba(255, 255, 255, 0.08)',
+                backdropFilter: 'blur(12px)',
+                opacity: 0.6
+              }}
+            >
+              <img 
+                src={miniDriftChart} 
+                alt="Drift chart analysis"
+                className="w-full h-auto opacity-70"
+              />
+            </div>
+          </motion.div>
+
+          {/* Main Card with Glow */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={dashboardVariants}
+            transition={{ duration: 0.7, delay: 2.7, ease: "easeOut" }}
+            className="relative z-10"
+          >
+            {/* Animated Glow */}
+            <motion.div 
+              initial="hidden"
+              animate="visible"
+              variants={glowVariants}
+              transition={{ duration: 0.7, delay: 2.7, ease: "easeOut" }}
+              className="absolute -inset-[40px] md:-inset-[60px] rounded-[32px]"
+              style={{
+                background: 'radial-gradient(circle at center, rgba(120, 70, 255, 0.35), rgba(59, 130, 246, 0.25))',
+                filter: 'blur(80px)',
+                opacity: 0.4
+              }}
             />
-          </div>
-          
-          <div className="mt-8 text-base text-muted-foreground text-center px-4">
+            
+            {/* Glassmorphism Main Card */}
+            <div 
+              className="relative rounded-2xl border overflow-hidden"
+              style={{
+                background: 'rgba(15, 20, 35, 0.6)',
+                borderColor: 'rgba(255, 255, 255, 0.1)',
+                backdropFilter: 'blur(20px)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+              }}
+            >
+              <img 
+                src={heroDashboard} 
+                alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"
+                className="w-full h-auto block"
+              />
+              
+              {/* Live Status Badge - Top Right */}
+              <div 
+                className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-2"
+                style={{
+                  background: 'rgba(239, 68, 68, 0.15)',
+                  borderColor: 'rgba(239, 68, 68, 0.3)',
+                  border: '1px solid',
+                  backdropFilter: 'blur(12px)',
+                  boxShadow: '0 0 20px rgba(239, 68, 68, 0.3)',
+                  animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                }}
+              >
+                <div 
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{
+                    background: '#ef4444',
+                    boxShadow: '0 0 6px rgba(239, 68, 68, 0.8)'
+                  }}
+                />
+                <span className="text-red-100">High drift detected on 3 features</span>
+              </div>
+
+              {/* Live Status Badge - Bottom Left */}
+              <div 
+                className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-2"
+                style={{
+                  background: 'rgba(234, 179, 8, 0.15)',
+                  borderColor: 'rgba(234, 179, 8, 0.3)',
+                  border: '1px solid',
+                  backdropFilter: 'blur(12px)',
+                  boxShadow: '0 0 20px rgba(234, 179, 8, 0.25)',
+                  animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite 0.5s'
+                }}
+              >
+                <div 
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{
+                    background: '#eab308',
+                    boxShadow: '0 0 6px rgba(234, 179, 8, 0.8)'
+                  }}
+                />
+                <span className="text-yellow-100">DSI spike: 75 – critical</span>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={dashboardVariants}
+            transition={{ duration: 0.5, delay: 3.1, ease: "easeOut" }}
+            className="mt-8 text-base text-muted-foreground text-center px-4 relative z-10"
+          >
             Real-time model drift detection across your AI systems
-          </div>
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Trusted By Section */}
       <div className="text-center">
