@@ -41,8 +41,72 @@ export const HeroSection = () => {
 
   return (
     <div className="max-w-6xl mx-auto text-center mb-32 relative">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] animate-pulse" />
+      {/* Premium Aurora Background - Hero Only */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        {/* Vignette */}
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse at center, transparent 0%, rgba(8, 10, 20, 0.6) 70%, rgba(8, 10, 20, 0.9) 100%)'
+          }}
+        />
+        
+        {/* Aurora Orb 1 - Deep Blue */}
+        <div 
+          className="absolute top-[15%] left-[10%] w-[500px] h-[500px] rounded-full animate-aurora-drift"
+          style={{
+            background: 'radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%)',
+            filter: 'blur(80px)',
+            animationDelay: '0s'
+          }}
+        />
+        
+        {/* Aurora Orb 2 - Violet */}
+        <div 
+          className="absolute top-[25%] right-[15%] w-[600px] h-[600px] rounded-full animate-aurora-drift"
+          style={{
+            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.07) 0%, transparent 70%)',
+            filter: 'blur(90px)',
+            animationDelay: '5s'
+          }}
+        />
+        
+        {/* Aurora Orb 3 - Soft Cyan */}
+        <div 
+          className="absolute bottom-[10%] left-[50%] w-[550px] h-[550px] rounded-full animate-aurora-drift"
+          style={{
+            background: 'radial-gradient(circle, rgba(34, 211, 238, 0.06) 0%, transparent 70%)',
+            filter: 'blur(85px)',
+            animationDelay: '10s'
+          }}
+        />
+        
+        {/* Center Glow Behind Headline */}
+        <div 
+          className="absolute top-[30%] left-1/2 -translate-x-1/2 w-[700px] h-[300px]"
+          style={{
+            background: 'radial-gradient(ellipse, rgba(120, 70, 255, 0.12) 0%, transparent 60%)',
+            filter: 'blur(100px)'
+          }}
+        />
+        
+        {/* Particle Noise Layer */}
+        <div 
+          className="absolute inset-0 opacity-[0.015] animate-particle-twinkle pointer-events-none"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
+            backgroundRepeat: 'repeat',
+            mixBlendMode: 'screen'
+          }}
+        />
+        
+        {/* Depth Fog */}
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom, transparent 0%, rgba(8, 10, 20, 0.3) 100%)'
+          }}
+        />
       </div>
       
       <motion.div
@@ -135,7 +199,15 @@ export const HeroSection = () => {
       </div>
 
       {/* Premium AI Control Center Mockup */}
-      <div className="max-w-5xl mx-auto mb-16 mt-12 px-4">
+      <div className="max-w-5xl mx-auto mb-16 mt-12 px-4 relative">
+        {/* Bottom-to-Top Fade for Dashboard Blend */}
+        <div 
+          className="absolute bottom-0 left-0 right-0 h-[200px] pointer-events-none -z-10"
+          style={{
+            background: 'linear-gradient(to top, rgba(8, 10, 20, 0.8) 0%, transparent 100%)'
+          }}
+        />
+        
         <div className="relative min-h-[400px] lg:min-h-[500px]">
           
           {/* Secondary Card 1 - Alerts (top left, behind) */}
