@@ -43,14 +43,7 @@ export const HeroSection = () => {
     <div className="max-w-6xl mx-auto text-center mb-32 relative">
       {/* Premium Aurora Background - Hero Only */}
       <div 
-        className="absolute -z-10 overflow-hidden"
-        style={{
-          top: '-100px',
-          bottom: '-40px',
-          left: '-40px',
-          right: '-40px',
-          borderRadius: '32px',
-        }}
+        className="absolute -z-10 overflow-hidden -top-[60px] -bottom-[24px] -left-[20px] -right-[20px] md:-top-[80px] md:-bottom-[32px] md:-left-[32px] md:-right-[32px] lg:-top-[100px] lg:-bottom-[40px] lg:-left-[40px] lg:-right-[40px] rounded-[24px] md:rounded-[28px] lg:rounded-[32px]"
       >
         {/* Vignette */}
         <div 
