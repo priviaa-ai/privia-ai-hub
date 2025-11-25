@@ -15,7 +15,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useToast } from "@/hooks/use-toast";
 import { Upload, Play, TrendingUp } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import emptyDriftImage from "@/assets/empty-drift.png";
+import { InteractiveWaveCard } from "@/components/monai/InteractiveWaveCard";
 
 interface Dataset {
   id: string;
@@ -405,11 +405,9 @@ export default function ProjectDrift() {
 
         {!selectedRun && driftRuns.length === 0 && (
           <GlassCard className="p-12 text-center">
-            <img
-              src={emptyDriftImage}
-              alt="No drift runs"
-              className="mx-auto mb-6 w-80 h-48 object-contain opacity-60"
-            />
+            <div className="mx-auto mb-6 max-w-2xl">
+              <InteractiveWaveCard />
+            </div>
             <TrendingUp className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-2xl font-semibold mb-2">No Drift Runs Yet</h3>
             <p className="text-muted-foreground mb-4">

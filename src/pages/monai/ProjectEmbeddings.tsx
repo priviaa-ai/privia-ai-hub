@@ -5,7 +5,7 @@ import { ProjectTabs } from "@/components/monai/ProjectTabs";
 import { PageHeader } from "@/components/monai/PageHeader";
 import { GlassCard } from "@/components/monai/GlassCard";
 import { supabase } from "@/integrations/supabase/client";
-import emptyLogsImage from "@/assets/empty-logs.png";
+import { InteractiveNetworkCard } from "@/components/monai/InteractiveNetworkCard";
 
 interface EmbeddingVector {
   id: string;
@@ -83,11 +83,9 @@ export default function ProjectEmbeddings() {
 
         {embeddings.length === 0 ? (
           <GlassCard className="p-12 text-center">
-            <img
-              src={emptyLogsImage}
-              alt="No embeddings"
-              className="mx-auto mb-6 w-64 h-40 object-contain opacity-60"
-            />
+            <div className="mx-auto mb-6 max-w-2xl">
+              <InteractiveNetworkCard />
+            </div>
             <h3 className="text-2xl font-semibold mb-2">No Embeddings Yet</h3>
             <p className="text-muted-foreground mb-6">
               Start sending embedding vectors to visualize them here.

@@ -88,6 +88,22 @@
   100% { transform: translateX(-60%) translateY(-5px); }
 }
 
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes twinkle {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+
 .animate-gradient-shift {
   animation: gradient-shift 8s ease-in-out infinite;
 }
@@ -98,6 +114,18 @@
 
 .animate-wave-delayed {
   animation: wave-delayed 16s linear infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-bounce-slow {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-twinkle {
+  animation: twinkle 2s ease-in-out infinite;
 }
 
 @layer base {
