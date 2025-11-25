@@ -1,9 +1,9 @@
 import { TrendingUp, Sparkles, Bell, Network } from "lucide-react";
 import { GlassCard } from "@/components/monai/GlassCard";
-import miniDriftChart from "@/assets/mini-drift-chart.png";
-import miniLlmSparkline from "@/assets/mini-llm-sparkline.png";
-import miniAlerts from "@/assets/mini-alerts.png";
-import miniEmbeddings from "@/assets/mini-embeddings.png";
+import cropDsiChart from "@/assets/crop-dsi-chart.png";
+import cropMetrics from "@/assets/crop-metrics.png";
+import cropControls from "@/assets/crop-controls.png";
+import cropFeatureTable from "@/assets/crop-feature-table.png";
 
 const features = [
   {
@@ -11,28 +11,28 @@ const features = [
     title: "Drift Detection",
     description: "Monitor statistical and semantic drift using PSI, KL divergence, and embedding changes.",
     color: "primary",
-    image: miniDriftChart,
+    image: cropDsiChart,
   },
   {
     icon: Sparkles,
     title: "LLM Behavior Monitoring",
     description: "Track hallucinations, tone shifts, safety violations, and reasoning anomalies.",
     color: "accent",
-    image: miniLlmSparkline,
+    image: cropMetrics,
   },
   {
     icon: Bell,
     title: "Real-Time Alerts",
     description: "Get notified instantly when reliability issues emerge via Slack, email, or webhooks.",
     color: "warning",
-    image: miniAlerts,
+    image: cropControls,
   },
   {
     icon: Network,
     title: "Embedding Drift",
     description: "Detect semantic shifts in embedding clusters and vector distributions.",
     color: "success",
-    image: miniEmbeddings,
+    image: cropFeatureTable,
   }
 ];
 
@@ -59,12 +59,14 @@ export const ValuePropositions = () => {
                 {feature.description}
               </p>
               
-              {/* Mini visual preview */}
-              <div className="mt-4 rounded-lg overflow-hidden border border-white/5">
+              {/* Mini visual preview with glass styling */}
+              <div className="mt-4 rounded-lg overflow-hidden border border-white/20 relative group-hover:scale-105 transition-transform">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent z-10 pointer-events-none" />
                 <img 
                   src={feature.image} 
                   alt={`${feature.title} visualization`}
                   className="w-full h-auto"
+                  style={{ filter: 'blur(8px)' }}
                 />
               </div>
             </GlassCard>
