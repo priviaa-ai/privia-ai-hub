@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Activity } from "lucide-react";
 import heroDashboard from "@/assets/hero-dashboard-final.png";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const fadeUpVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -15,6 +16,13 @@ const scaleUpVariants = {
 };
 
 export const HeroSection = () => {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleButtonClick = () => {
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 400);
+  };
+
   return (
     <div className="max-w-6xl mx-auto text-center mb-32 relative">
       <div className="absolute inset-0 -z-10">
@@ -47,7 +55,7 @@ export const HeroSection = () => {
         animate="visible"
         variants={fadeUpVariants}
         transition={{ duration: 0.6, delay: 0.5 }}
-        className="text-base sm:text-lg lg:text-xl font-medium text-muted-foreground/80 mb-10 max-w-[780px] mx-auto leading-relaxed px-4"
+        className="text-sm sm:text-base lg:text-lg font-normal text-muted-foreground/70 mb-10 max-w-[780px] mx-auto leading-relaxed px-4"
       >
         MonAI monitors ML and LLM systems for drift, hallucinations, and behavior shifts in real time so teams can fix issues before they reach customers.
       </motion.p>
@@ -59,11 +67,39 @@ export const HeroSection = () => {
         transition={{ duration: 0.6, delay: 0.7 }}
         className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
       >
-        <Link to="/monai/projects">
-          <Button size="default" className="bg-primary hover:bg-primary/90 px-8 group">
-            Start Monitoring
-            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </Button>
+        <Link to="/monai/projects" onClick={handleButtonClick}>
+          <div className="relative inline-block">
+            {/* Ripple effect */}
+            {isClicked && (
+              <motion.div
+                initial={{ scale: 1, opacity: 0.6 }}
+                animate={{ scale: 2, opacity: 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="absolute inset-0 rounded-lg"
+                style={{
+                  background: 'radial-gradient(circle, rgba(120, 70, 255, 0.4), rgba(0, 150, 255, 0.3))',
+                  zIndex: 0
+                }}
+              />
+            )}
+            <Button 
+              size="default" 
+              className={`
+                relative bg-primary px-8 group overflow-hidden
+                transition-all duration-300 ease-out
+                hover:scale-105 hover:shadow-[0_0_30px_rgba(120,70,255,0.5),0_0_60px_rgba(0,150,255,0.3)]
+                active:scale-95
+                before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary before:via-accent before:to-primary
+                before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300
+                ${isClicked ? 'scale-95' : ''}
+              `}
+            >
+              <span className="relative z-10 flex items-center">
+                Start Monitoring
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </Button>
+          </div>
         </Link>
         <Link to="/docs">
           <Button size="default" variant="outline" className="px-8 border-white/20 hover:bg-white/5">
