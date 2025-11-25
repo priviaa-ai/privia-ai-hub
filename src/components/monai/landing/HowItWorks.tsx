@@ -6,19 +6,16 @@ const steps = [
     icon: Plug,
     title: "Connect your project",
     description: "Integrate MonAI with your ML or LLM application in minutes using our SDK or API.",
-    screenshot: "bg-gradient-to-br from-primary/20 to-accent/20"
   },
   {
     icon: Upload,
     title: "Ingest datasets or LLM events",
     description: "Stream your production data, embeddings, and LLM interactions to MonAI.",
-    screenshot: "bg-gradient-to-br from-accent/20 to-success/20"
   },
   {
     icon: BarChart3,
     title: "Monitor drift and behavior in real-time",
     description: "Get instant insights and alerts when reliability issues emerge in production.",
-    screenshot: "bg-gradient-to-br from-success/20 to-primary/20"
   }
 ];
 
@@ -42,20 +39,8 @@ export const HowItWorks = () => {
               </div>
               
               <div className="mb-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center mb-4">
-                  <Icon className="h-6 w-6 text-primary" />
-                </div>
-              </div>
-
-              <div className={`${step.screenshot} rounded-lg h-32 mb-4 flex items-center justify-center border border-white/10`}>
-                <div className="flex gap-1">
-                  {[65, 45, 70, 55, 80, 60, 85, 75].map((height, i) => (
-                    <div
-                      key={i}
-                      className="w-1 bg-gradient-to-t from-primary to-accent rounded"
-                      style={{ height: `${height}px` }}
-                    />
-                  ))}
+                <div className="w-16 h-16 rounded-lg bg-primary/20 flex items-center justify-center">
+                  <Icon className="h-8 w-8 text-primary" />
                 </div>
               </div>
 
