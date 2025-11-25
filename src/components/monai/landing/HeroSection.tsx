@@ -130,14 +130,16 @@ export const HeroSection = () => {
             variant="outline" 
             className={`
               relative px-8 group overflow-hidden
-              border-white/20 bg-transparent
+              bg-white/10 border border-white/30
               transition-all duration-500 ease-out
+              
+              hover:bg-transparent
               hover:backdrop-blur-md
               hover:border-white/40
               
               before:absolute before:inset-0 before:left-0
               before:w-0 before:h-full
-              before:bg-white/5 before:backdrop-blur-md
+              before:bg-transparent before:backdrop-blur-md
               before:transition-all before:duration-500 before:ease-out
               group-hover:before:w-full
             `}
