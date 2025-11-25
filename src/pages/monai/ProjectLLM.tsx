@@ -9,7 +9,7 @@ import { GlassCard } from "@/components/monai/GlassCard";
 import { StatusPill } from "@/components/monai/StatusPill";
 import { Sparkles, AlertTriangle } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import emptyLlmImage from "@/assets/empty-llm.png";
+import { InteractiveChatCard } from "@/components/monai/InteractiveChatCard";
 
 interface LLMInteraction {
   id: string;
@@ -254,11 +254,9 @@ export default function ProjectLLM() {
             </div>
           ) : (
             <div className="text-center py-12">
-              <img
-                src={emptyLlmImage}
-                alt="No LLM interactions"
-                className="mx-auto mb-6 w-80 h-48 object-contain opacity-60"
-              />
+              <div className="mx-auto mb-6 max-w-2xl">
+                <InteractiveChatCard />
+              </div>
               <Sparkles className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-2xl font-semibold mb-2">No LLM Interactions Yet</h3>
               <p className="text-muted-foreground">
