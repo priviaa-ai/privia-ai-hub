@@ -48,7 +48,10 @@ export const HeroSection = () => {
           bottom: "-40px",
           left: "-40px",
           right: "-40px",
-          borderRadius: "32px",
+          borderTopLeftRadius: "32px",
+          borderTopRightRadius: "32px",
+          borderBottomLeftRadius: "0px",
+          borderBottomRightRadius: "0px",
         }}
       >
         {/* Base dark layer for depth */}
@@ -169,11 +172,9 @@ export const HeroSection = () => {
 
         {/* Bottom fade to blend into page background */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-[160px] md:h-[200px] pointer-events-none"
+          className="absolute bottom-0 left-0 right-0 h-[200px] pointer-events-none"
           style={{
-            background: "linear-gradient(to bottom, rgba(8,10,20,0) 0%, rgba(8,10,20,0.35) 40%, rgba(8,10,20,0.75) 75%, rgba(8,10,20,1) 100%)",
-            borderBottomLeftRadius: "inherit",
-            borderBottomRightRadius: "inherit",
+            background: "linear-gradient(to bottom, transparent 0%, rgba(8,10,20,0.9) 80%, rgba(8,10,20,1) 100%)",
           }}
         />
       </div>
