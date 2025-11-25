@@ -44,7 +44,7 @@ export const HeroSection = () => {
       <div
         className="absolute -z-10 overflow-hidden"
         style={{
-          top: "20px",
+          top: "100px",
           bottom: "-40px",
           left: "-40px",
           right: "-40px",
