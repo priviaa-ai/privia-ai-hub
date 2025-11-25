@@ -39,9 +39,9 @@ export function PageHeader({ title, subtitle, actions, className, showBack, back
       )}
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
-          <h1 className="text-4xl font-bold mb-2">{title}</h1>
+          <h1 className="mb-2">{title}</h1>
           {subtitle && (
-            <p className="text-muted-foreground text-lg">{subtitle}</p>
+            <p className="text-description">{subtitle}</p>
           )}
         </div>
         {actions && (

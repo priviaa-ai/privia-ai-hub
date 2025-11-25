@@ -85,11 +85,11 @@ export default function Pricing() {
               )}
               
               <div className="mb-6">
-                <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                <p className="text-muted-foreground text-sm mb-4">{plan.description}</p>
+                <h3 className="text-2xl font-medium mb-2">{plan.name}</h3>
+                <p className="text-muted-foreground/80 text-sm mb-4 font-medium">{plan.description}</p>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold">{plan.price}</span>
-                  {plan.price !== "Custom" && <span className="text-muted-foreground">/mo</span>}
+                  <span className="text-4xl font-medium">{plan.price}</span>
+                  {plan.price !== "Custom" && <span className="text-muted-foreground/80 font-medium">/mo</span>}
                 </div>
               </div>
 
@@ -97,7 +97,7 @@ export default function Pricing() {
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2 text-sm">
                     <Check className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
-                    <span>{feature}</span>
+                    <span className="font-medium text-foreground/90">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -113,7 +113,7 @@ export default function Pricing() {
         </div>
 
         <div className="mt-12 text-center">
-          <p className="text-muted-foreground mb-4">
+          <p className="text-muted-foreground/80 font-medium mb-4">
             Need help choosing? <a href="mailto:sales@monai.dev" className="text-primary hover:underline">Contact our team</a>
           </p>
         </div>

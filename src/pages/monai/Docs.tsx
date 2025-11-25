@@ -67,14 +67,14 @@ export default function Docs() {
         />
 
         <div className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6">Getting Started</h2>
+          <h3 className="text-2xl font-medium mb-6">Getting Started</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {docSections.map((section) => (
               <Link key={section.path} to={section.path}>
                 <GlassCard hover className="p-6 h-full">
                   <section.icon className="h-8 w-8 text-primary mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">{section.title}</h3>
-                  <p className="text-muted-foreground">{section.description}</p>
+                  <h4 className="text-xl font-medium mb-2">{section.title}</h4>
+                  <p className="text-sm font-medium text-muted-foreground/80 leading-relaxed">{section.description}</p>
                 </GlassCard>
               </Link>
             ))}
@@ -82,15 +82,15 @@ export default function Docs() {
         </div>
 
         <div>
-          <h2 className="text-2xl font-semibold mb-6">Core Concepts</h2>
+          <h3 className="text-2xl font-medium mb-6">Core Concepts</h3>
           <div className="space-y-4">
             {concepts.map((concept) => (
               <GlassCard key={concept.title} className="p-6">
                 <div className="flex gap-4">
                   <concept.icon className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">{concept.title}</h3>
-                    <p className="text-muted-foreground">{concept.description}</p>
+                    <h4 className="text-lg font-medium mb-2">{concept.title}</h4>
+                    <p className="text-sm font-medium text-muted-foreground/80 leading-relaxed">{concept.description}</p>
                   </div>
                 </div>
               </GlassCard>
