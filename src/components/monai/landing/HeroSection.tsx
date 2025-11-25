@@ -42,7 +42,7 @@ export const HeroSection = () => {
     <div className="max-w-6xl mx-auto text-center mb-32 relative">
       {/* Premium Aurora Background - Hero Only */}
       <div
-        className="absolute -z-10 overflow-hidden -top-[60px] -bottom-[24px] -left-[20px] -right-[20px] rounded-[24px] md:-top-[80px] md:-bottom-[32px] md:-left-[32px] md:-right-[32px] md:rounded-[28px] lg:-top-[100px] lg:-bottom-[40px] lg:-left-[40px] lg:-right-[40px] lg:rounded-[32px]"
+        className="absolute -z-10 overflow-hidden -top-[20px] -bottom-[24px] -left-[20px] -right-[20px] rounded-[24px] md:-top-[28px] md:-bottom-[32px] md:-left-[32px] md:-right-[32px] md:rounded-[28px] lg:-top-[36px] lg:-bottom-[40px] lg:-left-[40px] lg:-right-[40px] lg:rounded-[32px]"
       >
         {/* Base dark layer for depth */}
         <div 
