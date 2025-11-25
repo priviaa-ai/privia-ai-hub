@@ -38,14 +38,14 @@ export const HowItWorks = () => {
                 {index + 1}
               </div>
               
-              <div className="mb-4">
+              <div className="mb-4 flex justify-center">
                 <div className="w-16 h-16 rounded-lg bg-primary/20 flex items-center justify-center">
                   <Icon className="h-8 w-8 text-primary" />
                 </div>
               </div>
 
-              <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="text-xl font-semibold mb-2 text-center">{step.title}</h3>
+              <p className="text-sm text-muted-foreground text-center">
                 {step.description}
               </p>
             </GlassCard>
