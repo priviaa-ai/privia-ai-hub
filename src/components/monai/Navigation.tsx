@@ -16,13 +16,13 @@ export function Navigation() {
     <nav className="border-b border-white/5 backdrop-blur-2xl bg-white/[0.02] sticky top-0 z-50 shadow-lg shadow-black/10">
       <div className="container mx-auto px-6 py-5">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-1 group" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <Link to="/" className="flex items-center gap-0 group" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <img 
               src={monaiLogo} 
               alt="MonAI" 
               className="w-12 h-12 object-contain transition-transform group-hover:scale-110"
             />
-            <span className="text-2xl text-white" style={{ fontFamily: 'Satoshi, sans-serif' }}>
+            <span className="text-2xl text-white -ml-1" style={{ fontFamily: 'Satoshi, sans-serif' }}>
               MonAI
             </span>
           </Link>
