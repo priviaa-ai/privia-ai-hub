@@ -15,6 +15,18 @@ const scaleUpVariants = {
   visible: { opacity: 1, y: 0, scale: 1 }
 };
 
+// Add shimmer animation keyframes via style tag
+const shimmerKeyframes = `
+  @keyframes shimmer {
+    0%, 100% { 
+      background-position: -200% center;
+    }
+    50% { 
+      background-position: 200% center;
+    }
+  }
+`;
+
 export const HeroSection = () => {
   const [isClicked, setIsClicked] = useState(false);
 
@@ -24,7 +36,9 @@ export const HeroSection = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto text-center mb-32 relative">
+    <>
+      <style>{shimmerKeyframes}</style>
+      <div className="max-w-6xl mx-auto text-center mb-32 relative">
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] animate-pulse" />
       </div>
@@ -88,15 +102,25 @@ export const HeroSection = () => {
             size="default" 
             className={`
               relative bg-primary px-8 group overflow-hidden
-              transition-all duration-300 ease-out
-              hover:brightness-110 hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(120,70,255,0.6),0_0_80px_rgba(0,150,255,0.4)]
-              active:scale-[0.98]
+              transition-all duration-[240ms] ease-out
+              hover:-translate-y-0.5 hover:scale-[1.02]
+              hover:shadow-[0_8px_30px_rgba(120,70,255,0.35),0_0_60px_rgba(0,150,255,0.25)]
+              active:scale-[0.98] active:translate-y-0
+              active:shadow-[0_4px_20px_rgba(120,70,255,0.25),0_0_40px_rgba(0,150,255,0.15)]
               ${isClicked ? 'scale-[0.98]' : ''}
+              before:absolute before:inset-0 before:opacity-0 
+              before:bg-gradient-to-br before:from-[#7846ff] before:via-[#5a35d9] before:to-[#0096ff]
+              before:transition-opacity before:duration-[240ms]
+              hover:before:opacity-100
+              before:animate-[shimmer_2s_ease-in-out_infinite]
             `}
+            style={{
+              backgroundImage: 'linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary)))',
+            }}
           >
             <span className="relative z-10 flex items-center">
               Start Monitoring
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+              <ArrowRight className="ml-2 h-4 w-4 opacity-80 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all duration-[240ms] ease-out" />
             </span>
           </Button>
         </Link>
@@ -155,6 +179,7 @@ export const HeroSection = () => {
           ))}
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
