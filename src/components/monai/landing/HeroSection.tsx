@@ -42,14 +42,14 @@ export const HeroSection = () => {
     <div className="max-w-6xl mx-auto text-center mb-32 relative">
       {/* Premium Aurora Background - Hero Only */}
       <div
-        className="
-      pointer-events-none
-      absolute inset-x-0
-      -top-24  -bottom-10
-      mx-auto max-w-6xl
-      overflow-hidden rounded-[32px]
-      -z-10
-    "
+        className="absolute -z-10 overflow-hidden"
+        style={{
+          top: "-20px",
+          bottom: "-40px",
+          left: "-40px",
+          right: "-40px",
+          borderRadius: "32px",
+        }}
       >
         {/* Aurora Orb 1 - Deep Blue */}
         <div
