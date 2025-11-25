@@ -35,3 +35,21 @@ verify_jwt = false
 
 [functions.api-keys-revoke]
 verify_jwt = false
+
+[functions.ingest-llm]
+verify_jwt = false
+
+[functions.process-drift-runs]
+verify_jwt = false
+
+[functions.score-llm-batch]
+verify_jwt = false
+
+[functions.create-dataset-run]
+verify_jwt = false
+
+[functions.ingest-embedding]
+verify_jwt = false
+
+[functions.project-metrics]
+verify_jwt = false

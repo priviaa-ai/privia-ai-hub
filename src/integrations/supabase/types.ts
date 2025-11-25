@@ -14,6 +14,64 @@ export type Database = {
   }
   public: {
     Tables: {
+      dataset_runs: {
+        Row: {
+          baseline_dataset_id: string | null
+          completed_at: string | null
+          created_at: string | null
+          current_dataset_id: string | null
+          error_message: string | null
+          id: string
+          label: string | null
+          project_id: string
+          status: string | null
+        }
+        Insert: {
+          baseline_dataset_id?: string | null
+          completed_at?: string | null
+          created_at?: string | null
+          current_dataset_id?: string | null
+          error_message?: string | null
+          id?: string
+          label?: string | null
+          project_id: string
+          status?: string | null
+        }
+        Update: {
+          baseline_dataset_id?: string | null
+          completed_at?: string | null
+          created_at?: string | null
+          current_dataset_id?: string | null
+          error_message?: string | null
+          id?: string
+          label?: string | null
+          project_id?: string
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dataset_runs_baseline_dataset_id_fkey"
+            columns: ["baseline_dataset_id"]
+            isOneToOne: false
+            referencedRelation: "monai_datasets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dataset_runs_current_dataset_id_fkey"
+            columns: ["current_dataset_id"]
+            isOneToOne: false
+            referencedRelation: "monai_datasets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dataset_runs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "monai_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       drift_runs: {
         Row: {
           baseline_id: string
@@ -57,6 +115,89 @@ export type Database = {
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      llm_scores: {
+        Row: {
+          created_at: string | null
+          explanation: string | null
+          hallucination_score: number | null
+          id: string
+          llm_event_id: string
+          project_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          explanation?: string | null
+          hallucination_score?: number | null
+          id?: string
+          llm_event_id: string
+          project_id: string
+        }
+        Update: {
+          created_at?: string | null
+          explanation?: string | null
+          hallucination_score?: number | null
+          id?: string
+          llm_event_id?: string
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "llm_scores_llm_event_id_fkey"
+            columns: ["llm_event_id"]
+            isOneToOne: false
+            referencedRelation: "monai_llm_interactions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "llm_scores_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "monai_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      llm_summary_daily: {
+        Row: {
+          avg_hallucination_score: number | null
+          created_at: string | null
+          date: string
+          high_events: number | null
+          high_hallucination_fraction: number | null
+          id: string
+          project_id: string
+          total_events: number | null
+        }
+        Insert: {
+          avg_hallucination_score?: number | null
+          created_at?: string | null
+          date: string
+          high_events?: number | null
+          high_hallucination_fraction?: number | null
+          id?: string
+          project_id: string
+          total_events?: number | null
+        }
+        Update: {
+          avg_hallucination_score?: number | null
+          created_at?: string | null
+          date?: string
+          high_events?: number | null
+          high_hallucination_fraction?: number | null
+          id?: string
+          project_id?: string
+          total_events?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "llm_summary_daily_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "monai_projects"
             referencedColumns: ["id"]
           },
         ]
@@ -120,6 +261,7 @@ export type Database = {
           hashed_key: string
           id: string
           is_active: boolean
+          key_hash: string | null
           last_four: string
           last_ip: string | null
           last_used_at: string | null
@@ -137,6 +279,7 @@ export type Database = {
           hashed_key: string
           id?: string
           is_active?: boolean
+          key_hash?: string | null
           last_four: string
           last_ip?: string | null
           last_used_at?: string | null
@@ -154,6 +297,7 @@ export type Database = {
           hashed_key?: string
           id?: string
           is_active?: boolean
+          key_hash?: string | null
           last_four?: string
           last_ip?: string | null
           last_used_at?: string | null
@@ -408,6 +552,7 @@ export type Database = {
       }
       monai_llm_interactions: {
         Row: {
+          confidence: number | null
           created_at: string
           hallucination_score: number | null
           id: string
@@ -416,9 +561,11 @@ export type Database = {
           output_text: string
           project_id: string
           safety_flags_json: Json | null
+          status: string | null
           tone: string | null
         }
         Insert: {
+          confidence?: number | null
           created_at?: string
           hallucination_score?: number | null
           id?: string
@@ -427,9 +574,11 @@ export type Database = {
           output_text: string
           project_id: string
           safety_flags_json?: Json | null
+          status?: string | null
           tone?: string | null
         }
         Update: {
+          confidence?: number | null
           created_at?: string
           hallucination_score?: number | null
           id?: string
@@ -438,6 +587,7 @@ export type Database = {
           output_text?: string
           project_id?: string
           safety_flags_json?: Json | null
+          status?: string | null
           tone?: string | null
         }
         Relationships: [
@@ -455,33 +605,48 @@ export type Database = {
           created_at: string
           default_model_type: string | null
           description: string | null
+          dsi_threshold: number | null
+          email_alert: string | null
+          hallucination_threshold: number | null
           id: string
           is_archived: boolean | null
           is_demo: boolean | null
           name: string
+          owner_user_id: string | null
           project_type: string | null
+          slack_webhook_url: string | null
           updated_at: string
         }
         Insert: {
           created_at?: string
           default_model_type?: string | null
           description?: string | null
+          dsi_threshold?: number | null
+          email_alert?: string | null
+          hallucination_threshold?: number | null
           id?: string
           is_archived?: boolean | null
           is_demo?: boolean | null
           name: string
+          owner_user_id?: string | null
           project_type?: string | null
+          slack_webhook_url?: string | null
           updated_at?: string
         }
         Update: {
           created_at?: string
           default_model_type?: string | null
           description?: string | null
+          dsi_threshold?: number | null
+          email_alert?: string | null
+          hallucination_threshold?: number | null
           id?: string
           is_archived?: boolean | null
           is_demo?: boolean | null
           name?: string
+          owner_user_id?: string | null
           project_type?: string | null
+          slack_webhook_url?: string | null
           updated_at?: string
         }
         Relationships: []
