@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Activity } from "lucide-react";
-import heroDashboard from "@/assets/hero-dashboard-framed.png";
+import heroDashboard from "@/assets/hero-dashboard-final.png";
 
 export const HeroSection = () => {
   return (
@@ -46,14 +46,6 @@ export const HeroSection = () => {
               src={heroDashboard} 
               alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"
               className="w-full h-auto block"
-              style={{ 
-                clipPath: 'inset(8.5% 8.5% 25% 8.5% round 20px)',
-                transform: 'scale(1.195)',
-                marginTop: '-8.5%',
-                marginBottom: '-25%',
-                marginLeft: '-8.5%',
-                marginRight: '-8.5%'
-              }}
             />
           </div>
           
