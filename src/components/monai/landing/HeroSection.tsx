@@ -39,16 +39,20 @@ export const HeroSection = () => {
 
       {/* Real Dashboard Hero */}
       <div className="max-w-[70%] mx-auto mb-16 mt-12">
-        <div className="relative group">
-          {/* Real dashboard screenshot - cropped to show only inner rectangle */}
-          <div className="relative overflow-hidden rounded-3xl shadow-[0_20px_60px_-15px_rgba(91,107,255,0.5),0_10px_40px_-10px_rgba(163,114,255,0.3)]">
+        <div className="relative">
+          {/* Clean dashboard screenshot with soft shadow */}
+          <div className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
             <img 
               src={heroDashboard} 
               alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"
-              className="w-full h-auto"
+              className="w-full h-auto block"
               style={{ 
-                clipPath: 'inset(8% 8% 14% 8%)',
-                transform: 'scale(1.18)'
+                clipPath: 'inset(8.5% 8.5% 25% 8.5% round 20px)',
+                transform: 'scale(1.195)',
+                marginTop: '-8.5%',
+                marginBottom: '-25%',
+                marginLeft: '-8.5%',
+                marginRight: '-8.5%'
               }}
             />
           </div>
