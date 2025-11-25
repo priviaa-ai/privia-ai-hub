@@ -1,17 +1,31 @@
 import { GlassCard } from "@/components/monai/GlassCard";
 import featureMetricsReal from "@/assets/feature-metrics-real.png";
+import { motion } from "framer-motion";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 export const DashboardPreview = () => {
+  const { ref, isVisible } = useScrollReveal();
+
   return (
-    <div className="max-w-6xl mx-auto mb-32 px-4">
-      <div className="text-center mb-12">
+    <div ref={ref} className="max-w-6xl mx-auto mb-32 px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-12"
+      >
         <h2 className="text-3xl sm:text-4xl font-bold mb-4">Your AI Reliability Dashboard</h2>
         <p className="text-xl text-muted-foreground">
           Everything you need to monitor AI systems in one place
         </p>
-      </div>
+      </motion.div>
 
-      <div className="max-w-5xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+        transition={{ duration: 0.7, delay: 0.2 }}
+        className="max-w-5xl mx-auto"
+      >
         <div className="relative">
           {/* Subtle outer glow - whisper-light neon */}
           <div 
@@ -31,7 +45,7 @@ export const DashboardPreview = () => {
             />
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

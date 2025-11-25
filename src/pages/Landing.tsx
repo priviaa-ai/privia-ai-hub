@@ -9,6 +9,8 @@ import { HowItWorks } from "@/components/monai/landing/HowItWorks";
 import { FeatureDeepDive } from "@/components/monai/landing/FeatureDeepDive";
 import { DashboardPreview } from "@/components/monai/landing/DashboardPreview";
 import { Footer } from "@/components/monai/landing/Footer";
+import { motion } from "framer-motion";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const plans = [
   {
@@ -68,6 +70,8 @@ const plans = [
 ];
 
 const Landing = () => {
+  const pricingRef = useScrollReveal();
+
   return (
     <>
       <Navigation />
@@ -92,52 +96,63 @@ const Landing = () => {
         </div>
 
         {/* Pricing Plans */}
-        <div className="max-w-6xl mx-auto mb-20">
-          <div className="text-center mb-12">
+        <div ref={pricingRef.ref} className="max-w-6xl mx-auto mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={pricingRef.isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
             <h2 className="text-4xl font-bold mb-4">Pricing</h2>
             <p className="text-xl text-muted-foreground">
               Choose the plan that fits your AI monitoring needs
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {plans.map((plan) => (
-              <GlassCard
+            {plans.map((plan, index) => (
+              <motion.div
                 key={plan.name}
-                hover
-                className={`p-6 relative ${plan.popular ? 'border-primary/50' : ''}`}
+                initial={{ opacity: 0, y: 30 }}
+                animate={pricingRef.isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary rounded-full text-xs font-medium">
-                    Popular
-                  </div>
-                )}
-                
-                <div className="mb-6">
-                  <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                  <p className="text-muted-foreground text-sm mb-4">{plan.description}</p>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-bold">{plan.price}</span>
-                    {plan.price !== "Custom" && <span className="text-muted-foreground">/mo</span>}
-                  </div>
-                </div>
-
-                <ul className="space-y-3 mb-6">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2 text-sm">
-                      <Check className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <Button
-                  className={`w-full ${plan.popular ? 'bg-primary hover:bg-primary/90' : ''}`}
-                  variant={plan.popular ? "default" : "outline"}
+                <GlassCard
+                  hover
+                  className={`p-6 relative ${plan.popular ? 'border-primary/50' : ''}`}
                 >
-                  {plan.price === "Custom" ? "Contact Sales" : "Get Started"}
-                </Button>
-              </GlassCard>
+                  {plan.popular && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary rounded-full text-xs font-medium">
+                      Popular
+                    </div>
+                  )}
+                  
+                  <div className="mb-6">
+                    <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
+                    <p className="text-muted-foreground text-sm mb-4">{plan.description}</p>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-4xl font-bold">{plan.price}</span>
+                      {plan.price !== "Custom" && <span className="text-muted-foreground">/mo</span>}
+                    </div>
+                  </div>
+
+                  <ul className="space-y-3 mb-6">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-2 text-sm">
+                        <Check className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button
+                    className={`w-full ${plan.popular ? 'bg-primary hover:bg-primary/90' : ''}`}
+                    variant={plan.popular ? "default" : "outline"}
+                  >
+                    {plan.price === "Custom" ? "Contact Sales" : "Get Started"}
+                  </Button>
+                </GlassCard>
+              </motion.div>
             ))}
           </div>
 
