@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Linkedin } from "lucide-react";
 
 export const Footer = () => {
   const links = {
@@ -68,8 +69,8 @@ export const Footer = () => {
             <a href="https://x.com/PriviaAI" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               𝕏
             </a>
-            <a href="http://linkedin.com/company/privia-ai/" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              LinkedIn
+            <a href="http://linkedin.com/company/privia-ai/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Linkedin className="h-5 w-5" />
             </a>
           </div>
         </div>
