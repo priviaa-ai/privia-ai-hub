@@ -172,11 +172,19 @@ export const HeroSection = () => {
 
         {/* Fog fade layer to blend bottom into page background */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-[260px] pointer-events-none"
+          className="absolute bottom-0 left-0 right-0 h-[320px] pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse at bottom, rgba(12,15,25,0.75) 0%, rgba(12,15,25,0.55) 30%, rgba(12,15,25,0.35) 55%, rgba(12,15,25,0.15) 75%, transparent 100%)",
-            filter: "blur(40px)",
-            opacity: 0.9,
+            background: "radial-gradient(ellipse 120% 80% at 50% 100%, rgba(8,10,20,1) 0%, rgba(8,10,20,0.95) 20%, rgba(8,10,20,0.7) 40%, rgba(8,10,20,0.4) 60%, rgba(8,10,20,0.15) 80%, transparent 100%)",
+          }}
+        />
+        
+        {/* Secondary soft blur layer for corner blending */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-[200px] pointer-events-none"
+          style={{
+            background: "linear-gradient(to top, rgba(8,10,20,1) 0%, rgba(8,10,20,0.8) 30%, rgba(8,10,20,0.3) 60%, transparent 100%)",
+            borderBottomLeftRadius: "inherit",
+            borderBottomRightRadius: "inherit",
           }}
         />
       </div>
