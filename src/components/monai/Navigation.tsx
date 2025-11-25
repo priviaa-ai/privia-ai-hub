@@ -4,6 +4,7 @@ import monaiLogo from "@/assets/monai-logo.png";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import { PrimaryCtaButton } from "@/components/ui/primary-cta-button";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -36,8 +37,8 @@ export function Navigation() {
       )}
       style={{
         background: isScrolled 
-          ? 'linear-gradient(to right, rgba(4, 6, 22, 0.90), rgba(11, 18, 36, 0.90))'
-          : 'linear-gradient(to right, rgba(4, 6, 22, 0.70), rgba(11, 18, 36, 0.70))',
+          ? 'linear-gradient(to right, rgba(4, 6, 22, 0.60), rgba(11, 18, 36, 0.60))'
+          : 'linear-gradient(to right, rgba(4, 6, 22, 0.40), rgba(11, 18, 36, 0.40))',
         borderColor: 'transparent',
         transition: 'background 300ms ease-out'
       }}
@@ -50,7 +51,7 @@ export function Navigation() {
         }}
       />
 
-      <div className="container mx-auto px-8 py-5">
+      <div className="max-w-6xl mx-auto px-8 py-5">
         <div className="flex items-center justify-between">
           {/* Logo - larger and more spacing */}
           <Link 
@@ -109,27 +110,7 @@ export function Navigation() {
 
           {/* CTA Button - desktop */}
           <div className="hidden lg:block">
-            <Link to="/monai/projects">
-              <Button
-                size="sm"
-                className={cn(
-                  "relative px-6 h-9 group overflow-hidden rounded-full",
-                  "border border-transparent",
-                  "transition-all duration-160 ease-out",
-                  "hover:scale-[1.02] active:scale-[0.98]",
-                  "shadow-[0_0_20px_rgba(59,130,246,0.3)]",
-                  "hover:shadow-[0_0_28px_rgba(59,130,246,0.5),inset_0_0_20px_rgba(96,165,250,0.15)]"
-                )}
-                style={{
-                  background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)'
-                }}
-              >
-                <span className="relative z-10 flex items-center text-white text-sm font-medium">
-                  Start monitoring
-                  <ArrowRight className="ml-2 h-3.5 w-3.5 group-hover:translate-x-1 transition-transform duration-160" />
-                </span>
-              </Button>
-            </Link>
+            <PrimaryCtaButton to="/monai/projects" size="default" />
           </div>
 
           {/* Mobile menu button */}
@@ -146,7 +127,7 @@ export function Navigation() {
           <div 
             className="lg:hidden mt-4 p-4 rounded-2xl backdrop-blur-[24px]"
             style={{
-              background: 'linear-gradient(to right, rgba(4, 6, 22, 0.95), rgba(11, 18, 36, 0.95))',
+              background: 'linear-gradient(to right, rgba(4, 6, 22, 0.75), rgba(11, 18, 36, 0.75))',
               border: '1px solid rgba(96, 165, 250, 0.2)'
             }}
           >
@@ -172,18 +153,9 @@ export function Navigation() {
                 );
               })}
               
-              <Link to="/monai/projects" className="mt-2" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button
-                  size="sm"
-                  className="w-full rounded-full text-white shadow-[0_0_20px_rgba(59,130,246,0.3)]"
-                  style={{
-                    background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)'
-                  }}
-                >
-                  Start monitoring
-                  <ArrowRight className="ml-2 h-3.5 w-3.5" />
-                </Button>
-              </Link>
+              <div className="mt-2" onClick={() => setIsMobileMenuOpen(false)}>
+                <PrimaryCtaButton to="/monai/projects" size="default" className="w-full" />
+              </div>
             </div>
           </div>
         )}
