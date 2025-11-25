@@ -22,7 +22,7 @@ export function Navigation() {
               alt="MonAI" 
               className="w-10 h-10 object-contain transition-transform group-hover:scale-110"
             />
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+            <span className="text-2xl font-bold text-white">
               MonAI
             </span>
           </Link>
