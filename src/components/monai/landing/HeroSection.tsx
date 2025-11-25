@@ -37,24 +37,29 @@ export const HeroSection = () => {
         </Link>
       </div>
 
-      {/* Real Dashboard Screenshot */}
+      {/* Composite Dashboard Hero */}
       <div className="max-w-5xl mx-auto mb-12">
         <div className="relative group">
-          {/* Subtle neon glow */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-primary/30 via-accent/30 to-primary/30 rounded-2xl blur-lg opacity-60" />
+          {/* Neon blue/purple gradient glow behind */}
+          <div className="absolute -inset-4 bg-gradient-to-r from-primary/40 via-accent/50 to-primary/40 rounded-3xl blur-2xl opacity-70" />
           
-          {/* Crisp dashboard screenshot with glass frame */}
-          <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+          {/* Glass container with composite dashboard */}
+          <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_80px_rgba(59,130,246,0.3)] backdrop-blur-sm">
+            {/* Slight overlay for glass effect with gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-background/10 via-transparent to-background/10 z-10 pointer-events-none" />
+            <div className="absolute inset-0 bg-white/[0.02] z-10 pointer-events-none" />
+            
+            {/* Dashboard image with subtle blur for brand aesthetic */}
             <img 
               src={dashboardHero} 
-              alt="MonAI Drift Detection Dashboard"
+              alt="MonAI Composite Dashboard - Metrics, DSI Trend, and Feature Drift"
               className="w-full h-auto"
+              style={{ filter: 'blur(6px)' }}
             />
           </div>
           
           <div className="mt-6 text-sm text-muted-foreground text-center">
-            Real-time drift detection across your AI systems
+            Real AI reliability monitoring from MonAI
           </div>
         </div>
       </div>
