@@ -29,25 +29,28 @@ export function Navigation() {
     <nav 
       className={cn(
         "sticky top-0 z-50 transition-all duration-300",
-        "border-b backdrop-blur-[18px]",
+        "border-b backdrop-blur-[24px]",
         isScrolled 
-          ? "shadow-[0_8px_32px_rgba(0,0,0,0.12)]" 
+          ? "shadow-[0_8px_32px_rgba(0,0,0,0.18)]" 
           : "shadow-none"
       )}
       style={{
-        background: 'rgba(6, 10, 25, 0.92)',
-        borderColor: 'rgba(255, 255, 255, 0.04)',
+        background: isScrolled 
+          ? 'linear-gradient(to right, rgba(4, 6, 22, 0.90), rgba(11, 18, 36, 0.90))'
+          : 'linear-gradient(to right, rgba(4, 6, 22, 0.70), rgba(11, 18, 36, 0.70))',
+        borderColor: 'transparent',
+        transition: 'background 300ms ease-out'
       }}
     >
-      {/* Thin gradient glow line at bottom */}
+      {/* Subtle blue glow line at bottom */}
       <div 
-        className="absolute bottom-0 left-0 right-0 h-[1px] opacity-40"
+        className="absolute bottom-0 left-0 right-0 h-[1px]"
         style={{
-          background: 'linear-gradient(90deg, rgba(59, 130, 246, 0.5) 0%, rgba(147, 51, 234, 0.5) 100%)'
+          background: 'rgba(96, 165, 250, 0.3)',
         }}
       />
 
-      <div className="container mx-auto px-8 py-4">
+      <div className="container mx-auto px-8 py-5">
         <div className="flex items-center justify-between">
           {/* Logo - larger and more spacing */}
           <Link 
@@ -58,10 +61,10 @@ export function Navigation() {
             <img 
               src={monaiLogo} 
               alt="MonAI" 
-              className="w-14 h-14 object-contain transition-transform group-hover:scale-110"
+              className="w-16 h-16 object-contain transition-transform group-hover:scale-110 brightness-110"
             />
             <span 
-              className="text-[26px] text-white -ml-2 font-semibold tracking-tight" 
+              className="text-[28px] text-white -ml-2 font-semibold tracking-tight brightness-110" 
               style={{ fontFamily: 'Satoshi, sans-serif' }}
             >
               MonAI
@@ -77,27 +80,26 @@ export function Navigation() {
                   key={link.path}
                   to={link.path}
                   className={cn(
-                    "relative text-sm font-medium transition-all duration-300 group",
-                    "text-gray-300 hover:text-white"
+                    "relative text-sm font-medium transition-all duration-200 group",
+                    isActive ? "text-white" : "hover:text-white"
                   )}
+                  style={{
+                    color: isActive ? 'rgb(255, 255, 255)' : 'rgba(248, 250, 252, 0.78)',
+                    transition: 'color 200ms ease-out'
+                  }}
                 >
-                  {/* Active pill background */}
-                  {isActive && (
-                    <span 
-                      className="absolute inset-0 -inset-x-3 -inset-y-1.5 rounded-full -z-10"
-                      style={{ background: 'rgba(88, 120, 255, 0.12)' }}
-                    />
-                  )}
+                  <span>{link.label}</span>
                   
-                  <span className={isActive ? "text-white" : ""}>
-                    {link.label}
-                  </span>
-                  
-                  {/* Hover underline gradient */}
+                  {/* Glowing underline pill on hover/active */}
                   <span 
-                    className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-[2px] w-0 group-hover:w-3/4 transition-all duration-300 rounded-full"
+                    className={cn(
+                      "absolute -bottom-1.5 left-1/2 -translate-x-1/2 h-[3px] w-[18px] rounded-full transition-all duration-200",
+                      isActive || "opacity-0 group-hover:opacity-100"
+                    )}
                     style={{ 
-                      background: 'linear-gradient(90deg, rgba(59, 130, 246, 0.8), rgba(147, 51, 234, 0.8))' 
+                      background: 'rgba(96, 165, 250, 0.9)',
+                      boxShadow: '0 0 8px rgba(96, 165, 250, 0.6)',
+                      opacity: isActive ? 1 : undefined
                     }}
                   />
                 </Link>
@@ -112,20 +114,19 @@ export function Navigation() {
                 size="sm"
                 className={cn(
                   "relative px-6 h-9 group overflow-hidden rounded-full",
-                  "bg-[#1e3a8a] border border-transparent",
-                  "transition-all duration-250 ease-out",
-                  "hover:shadow-[0_0_24px_rgba(59,130,246,0.4)]",
-                  "active:scale-[0.97]",
-                  "before:absolute before:inset-0 before:left-0",
-                  "before:w-0 before:h-full",
-                  "before:bg-gradient-to-r before:from-blue-600 before:to-purple-600",
-                  "before:transition-all before:duration-250 before:ease-out",
-                  "hover:before:w-full"
+                  "border border-transparent",
+                  "transition-all duration-160 ease-out",
+                  "hover:scale-[1.02] active:scale-[0.98]",
+                  "shadow-[0_0_20px_rgba(59,130,246,0.3)]",
+                  "hover:shadow-[0_0_28px_rgba(59,130,246,0.5),inset_0_0_20px_rgba(96,165,250,0.15)]"
                 )}
+                style={{
+                  background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)'
+                }}
               >
                 <span className="relative z-10 flex items-center text-white text-sm font-medium">
                   Start monitoring
-                  <ArrowRight className="ml-2 h-3.5 w-3.5 group-hover:translate-x-1 transition-transform duration-250" />
+                  <ArrowRight className="ml-2 h-3.5 w-3.5 group-hover:translate-x-1 transition-transform duration-160" />
                 </span>
               </Button>
             </Link>
@@ -143,10 +144,10 @@ export function Navigation() {
         {/* Mobile menu dropdown */}
         {isMobileMenuOpen && (
           <div 
-            className="lg:hidden mt-4 p-4 rounded-2xl backdrop-blur-[18px]"
+            className="lg:hidden mt-4 p-4 rounded-2xl backdrop-blur-[24px]"
             style={{
-              background: 'rgba(6, 10, 25, 0.95)',
-              border: '1px solid rgba(255, 255, 255, 0.06)'
+              background: 'linear-gradient(to right, rgba(4, 6, 22, 0.95), rgba(11, 18, 36, 0.95))',
+              border: '1px solid rgba(96, 165, 250, 0.2)'
             }}
           >
             <div className="flex flex-col gap-4">
@@ -158,12 +159,13 @@ export function Navigation() {
                     to={link.path}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={cn(
-                      "px-4 py-2 rounded-lg text-sm font-medium transition-all",
-                      isActive 
-                        ? "text-white" 
-                        : "text-gray-300 hover:text-white"
+                      "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                      isActive ? "text-white" : "hover:text-white"
                     )}
-                    style={isActive ? { background: 'rgba(88, 120, 255, 0.12)' } : {}}
+                    style={{
+                      color: isActive ? 'rgb(255, 255, 255)' : 'rgba(248, 250, 252, 0.78)',
+                      background: isActive ? 'rgba(96, 165, 250, 0.15)' : 'transparent'
+                    }}
                   >
                     {link.label}
                   </Link>
@@ -173,7 +175,10 @@ export function Navigation() {
               <Link to="/monai/projects" className="mt-2" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button
                   size="sm"
-                  className="w-full rounded-full bg-[#1e3a8a] hover:bg-[#2563eb] text-white"
+                  className="w-full rounded-full text-white shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+                  style={{
+                    background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)'
+                  }}
                 >
                   Start monitoring
                   <ArrowRight className="ml-2 h-3.5 w-3.5" />
