@@ -65,13 +65,10 @@ export const Footer = () => {
             © 2025 MonAI. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Twitter
+            <a href="https://x.com/PriviaAI" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              𝕏
             </a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              GitHub
-            </a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <a href="http://linkedin.com/company/privia-ai/" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               LinkedIn
             </a>
           </div>
