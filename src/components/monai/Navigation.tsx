@@ -20,9 +20,9 @@ export function Navigation() {
             <img 
               src={monaiLogo} 
               alt="MonAI" 
-              className="w-10 h-10 object-contain transition-transform group-hover:scale-110"
+              className="w-12 h-12 object-contain transition-transform group-hover:scale-110"
             />
-            <span className="text-2xl font-bold text-white">
+            <span className="text-2xl font-bold text-white" style={{ fontFamily: 'Satoshi, sans-serif' }}>
               MonAI
             </span>
           </Link>
