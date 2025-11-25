@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Activity } from "lucide-react";
+import heroDashboard from "@/assets/hero-dashboard.png";
 
 export const HeroSection = () => {
   return (
@@ -36,20 +37,26 @@ export const HeroSection = () => {
         </Link>
       </div>
 
-      {/* Static Drift Chart */}
-      <div className="max-w-3xl mx-auto mb-12">
-        <div className="glass-card p-8 relative overflow-hidden">
-          <div className="relative z-10 flex items-end justify-between h-32 gap-2">
-            {[40, 65, 45, 70, 55, 80, 60, 85, 75, 90, 70, 95].map((height, i) => (
-              <div
-                key={i}
-                className="flex-1 bg-gradient-to-t from-primary to-accent rounded-t"
-                style={{ height: `${height}%` }}
-              />
-            ))}
+      {/* Premium Dashboard Visualization */}
+      <div className="max-w-5xl mx-auto mb-12">
+        <div className="relative group">
+          {/* Neon glow effect */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-primary/40 via-accent/40 to-primary/40 rounded-2xl blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          {/* Dashboard image with glass effect */}
+          <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-background/60 z-10" />
+            <img 
+              src={heroDashboard} 
+              alt="MonAI Drift Detection Dashboard"
+              className="w-full h-auto opacity-90 blur-[10px] scale-105"
+              style={{
+                filter: 'blur(10px) brightness(0.95)',
+              }}
+            />
           </div>
           
-          <div className="mt-4 text-sm text-muted-foreground text-center">
+          <div className="mt-6 text-sm text-muted-foreground text-center">
             Real-time drift detection across your AI systems
           </div>
         </div>
