@@ -50,8 +50,8 @@ export const HeroSection = () => {
           right: "-40px",
           borderTopLeftRadius: "32px",
           borderTopRightRadius: "32px",
-          borderBottomLeftRadius: "0px",
-          borderBottomRightRadius: "0px",
+          borderBottomLeftRadius: "32px",
+          borderBottomRightRadius: "32px",
         }}
       >
         {/* Base dark layer for depth */}
