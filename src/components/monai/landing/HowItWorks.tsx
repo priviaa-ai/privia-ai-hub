@@ -34,7 +34,7 @@ export const HowItWorks = () => {
         initial={{ opacity: 0, y: 12 }}
         animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="text-center mb-12 px-4"
+        className="text-center mb-8 px-4"
       >
         <h2 className="heading-spacing">How MonAI Works</h2>
         <p className="text-description max-w-[780px] mx-auto">
@@ -51,31 +51,29 @@ export const HowItWorks = () => {
               initial={{ opacity: 0, y: 12 }}
               animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               transition={{ duration: 0.45, delay: index * 0.1, ease: "easeOut" }}
+              className="flex flex-col items-center"
             >
-              <GlassCard className="p-6 pt-8 relative group">
-                {/* Premium step number indicator - centered above */}
-                <div className="flex justify-center mb-5">
-                  <motion.div 
-                    className="w-11 h-11 rounded-xl flex items-center justify-center font-normal text-base transition-all duration-300 cursor-default"
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.04)',
-                      border: '1px solid rgba(255, 255, 255, 0.12)',
-                      boxShadow: '0 0 12px rgba(120, 70, 255, 0.25)',
-                      color: 'rgba(255, 255, 255, 0.85)',
-                    }}
-                    whileHover={{
-                      scale: 1.05,
-                      borderColor: 'rgba(255, 255, 255, 0.25)',
-                      boxShadow: '0 0 16px rgba(120, 70, 255, 0.35)',
-                    }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                  >
-                    {index + 1}
-                  </motion.div>
-                </div>
-                
+              {/* Step number badge - separate from card */}
+              <motion.div 
+                className="w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center font-medium text-sm text-white mb-4 cursor-default"
+                style={{
+                  background: 'linear-gradient(180deg, rgba(129, 140, 248, 0.6) 0%, rgba(88, 101, 242, 0.25) 100%)',
+                  border: '1px solid rgba(255, 255, 255, 0.18)',
+                  boxShadow: '0 0 22px rgba(129, 140, 248, 0.45)',
+                }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: '0 0 28px rgba(129, 140, 248, 0.55)',
+                }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
+              >
+                {index + 1}
+              </motion.div>
+
+              {/* Icon card */}
+              <GlassCard className="p-6 w-full group">
                 {/* Premium glassmorphism icon container */}
-                <div className="mb-5 flex justify-center">
+                <div className="mb-4 flex justify-center">
                   <div 
                     className="w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:shadow-[0_0_24px_rgba(79,103,255,0.25)]"
                     style={{
