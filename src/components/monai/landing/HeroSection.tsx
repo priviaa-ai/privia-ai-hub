@@ -170,11 +170,13 @@ export const HeroSection = () => {
           }}
         />
 
-        {/* Bottom fade to blend into page background */}
+        {/* Fog fade layer to blend bottom into page background */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-[200px] pointer-events-none"
+          className="absolute bottom-0 left-0 right-0 h-[260px] pointer-events-none"
           style={{
-            background: "linear-gradient(to bottom, transparent 0%, rgba(8,10,20,0.9) 80%, rgba(8,10,20,1) 100%)",
+            background: "radial-gradient(ellipse at bottom, rgba(12,15,25,0.75) 0%, rgba(12,15,25,0.55) 30%, rgba(12,15,25,0.35) 55%, rgba(12,15,25,0.15) 75%, transparent 100%)",
+            filter: "blur(40px)",
+            opacity: 0.9,
           }}
         />
       </div>
