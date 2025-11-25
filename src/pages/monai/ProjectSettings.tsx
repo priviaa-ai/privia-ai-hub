@@ -5,7 +5,7 @@ import { ProjectTabs } from "@/components/monai/ProjectTabs";
 import { PageHeader } from "@/components/monai/PageHeader";
 import { GlassCard } from "@/components/monai/GlassCard";
 import { Button } from "@/components/ui/button";
-import { Copy, Eye, EyeOff, Trash2 } from "lucide-react";
+import { Copy, Eye, EyeOff, Trash2, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -60,6 +60,13 @@ interface ApiKey {
   usage_count?: number;
 }
 
+interface ProjectSettings {
+  dsi_threshold: number;
+  hallucination_threshold: number;
+  slack_webhook_url: string | null;
+  email_alert: string | null;
+}
+
 export default function ProjectSettings() {
   const { projectId } = useParams();
   const { toast } = useToast();
@@ -73,12 +80,74 @@ export default function ProjectSettings() {
   const [newKey, setNewKey] = useState<{ display_key: string; name: string } | null>(null);
   const [showKey, setShowKey] = useState(false);
   const [revokeKeyId, setRevokeKeyId] = useState<string | null>(null);
+  
+  // Project settings state
+  const [settings, setSettings] = useState<ProjectSettings>({
+    dsi_threshold: 0.3,
+    hallucination_threshold: 0.3,
+    slack_webhook_url: null,
+    email_alert: null,
+  });
+  const [savingSettings, setSavingSettings] = useState(false);
 
   useEffect(() => {
     if (projectId) {
       loadApiKeys();
+      loadProjectSettings();
     }
   }, [projectId]);
+
+  const loadProjectSettings = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('monai_projects')
+        .select('dsi_threshold, hallucination_threshold, slack_webhook_url, email_alert')
+        .eq('id', projectId)
+        .single();
+
+      if (!error && data) {
+        setSettings({
+          dsi_threshold: data.dsi_threshold ?? 0.3,
+          hallucination_threshold: data.hallucination_threshold ?? 0.3,
+          slack_webhook_url: data.slack_webhook_url,
+          email_alert: data.email_alert,
+        });
+      }
+    } catch (error) {
+      console.error('Error loading project settings:', error);
+    }
+  };
+
+  const saveProjectSettings = async () => {
+    try {
+      setSavingSettings(true);
+      const { error } = await supabase
+        .from('monai_projects')
+        .update({
+          dsi_threshold: settings.dsi_threshold,
+          hallucination_threshold: settings.hallucination_threshold,
+          slack_webhook_url: settings.slack_webhook_url || null,
+          email_alert: settings.email_alert || null,
+        })
+        .eq('id', projectId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Settings saved",
+        description: "Project settings have been updated successfully.",
+      });
+    } catch (error: any) {
+      console.error('Error saving settings:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save settings",
+        variant: "destructive",
+      });
+    } finally {
+      setSavingSettings(false);
+    }
+  };
 
   const loadApiKeys = async () => {
     try {
@@ -89,7 +158,7 @@ export default function ProjectSettings() {
       const response = await fetch(url, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
           'Content-Type': 'application/json',
         },
       });
@@ -292,6 +361,98 @@ print(response.json())`;
                   <Copy className="h-4 w-4" />
                 </Button>
               </div>
+            </div>
+          </div>
+        </GlassCard>
+
+        {/* Alert Thresholds */}
+        <GlassCard className="p-6 mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-semibold">Alert Thresholds</h2>
+            <Button onClick={saveProjectSettings} disabled={savingSettings}>
+              <Save className="h-4 w-4 mr-2" />
+              {savingSettings ? "Saving..." : "Save Settings"}
+            </Button>
+          </div>
+          <p className="text-muted-foreground mb-6">
+            Configure thresholds for drift and hallucination alerts. When these thresholds are exceeded, 
+            MonAI will create alerts and send notifications via configured channels.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <Label htmlFor="dsiThreshold">DSI Threshold</Label>
+              <Input
+                id="dsiThreshold"
+                type="number"
+                step="0.01"
+                min="0"
+                max="1"
+                value={settings.dsi_threshold}
+                onChange={(e) => setSettings({ ...settings, dsi_threshold: parseFloat(e.target.value) || 0.3 })}
+                className="mt-1"
+              />
+              <p className="text-xs text-muted-foreground mt-1">
+                Drift Severity Index threshold (0-1). Default: 0.3
+              </p>
+            </div>
+            
+            <div>
+              <Label htmlFor="hallucinationThreshold">Hallucination Threshold</Label>
+              <Input
+                id="hallucinationThreshold"
+                type="number"
+                step="0.01"
+                min="0"
+                max="1"
+                value={settings.hallucination_threshold}
+                onChange={(e) => setSettings({ ...settings, hallucination_threshold: parseFloat(e.target.value) || 0.3 })}
+                className="mt-1"
+              />
+              <p className="text-xs text-muted-foreground mt-1">
+                High hallucination fraction threshold (0-1). Default: 0.3
+              </p>
+            </div>
+          </div>
+        </GlassCard>
+
+        {/* Notifications */}
+        <GlassCard className="p-6 mb-8">
+          <h2 className="text-2xl font-semibold mb-4">Notifications</h2>
+          <p className="text-muted-foreground mb-6">
+            Configure notification channels for alerts. MonAI will send notifications when drift or 
+            hallucination thresholds are exceeded.
+          </p>
+          
+          <div className="space-y-6">
+            <div>
+              <Label htmlFor="slackWebhook">Slack Webhook URL</Label>
+              <Input
+                id="slackWebhook"
+                type="url"
+                placeholder="https://hooks.slack.com/services/..."
+                value={settings.slack_webhook_url || ""}
+                onChange={(e) => setSettings({ ...settings, slack_webhook_url: e.target.value })}
+                className="mt-1"
+              />
+              <p className="text-xs text-muted-foreground mt-1">
+                Incoming webhook URL for Slack notifications. <a href="https://api.slack.com/messaging/webhooks" target="_blank" className="text-primary hover:underline">Learn more</a>
+              </p>
+            </div>
+            
+            <div>
+              <Label htmlFor="emailAlert">Email Alert Address</Label>
+              <Input
+                id="emailAlert"
+                type="email"
+                placeholder="alerts@example.com"
+                value={settings.email_alert || ""}
+                onChange={(e) => setSettings({ ...settings, email_alert: e.target.value })}
+                className="mt-1"
+              />
+              <p className="text-xs text-muted-foreground mt-1">
+                Email address to receive alert notifications (coming soon)
+              </p>
             </div>
           </div>
         </GlassCard>
