@@ -97,15 +97,14 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const adminToken = Deno.env.get("MONAI_ADMIN_TOKEN");
 
-    // Optional admin auth check
-    if (adminToken) {
-      const authHeader = req.headers.get("authorization");
-      if (!authHeader || authHeader !== `Bearer ${adminToken}`) {
-        return new Response(
-          JSON.stringify({ error: "Unauthorized" }),
-          { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
-      }
+    // REQUIRED admin auth check - this is an internal admin endpoint
+    const authHeader = req.headers.get("authorization");
+    if (!adminToken || !authHeader || authHeader !== `Bearer ${adminToken}`) {
+      console.error("Unauthorized: Missing or invalid admin token");
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
