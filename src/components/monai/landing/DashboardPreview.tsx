@@ -22,19 +22,13 @@ export const DashboardPreview = () => {
             }}
           />
           
-          {/* Glass-morphism container */}
-          <div className="relative rounded-[20px] overflow-hidden backdrop-blur-sm bg-white/[0.05] shadow-[0_0_60px_rgba(120,70,255,0.3),0_0_80px_rgba(0,150,255,0.25)]">
-            {/* Frosted glass overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent pointer-events-none" />
-            
-            {/* Feature Metrics screenshot */}
-            <div className="relative p-8 md:p-10 lg:p-12">
-              <img 
-                src={featureMetricsReal} 
-                alt="MonAI feature level drift metrics with PSI, KL divergence, and drift status"
-                className="w-full h-auto block rounded-xl"
-              />
-            </div>
+          {/* Feature Metrics screenshot */}
+          <div className="relative">
+            <img 
+              src={featureMetricsReal} 
+              alt="MonAI feature level drift metrics with PSI, KL divergence, and drift status"
+              className="w-full h-auto block rounded-xl"
+            />
           </div>
         </div>
       </div>
