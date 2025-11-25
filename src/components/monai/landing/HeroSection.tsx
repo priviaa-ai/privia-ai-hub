@@ -42,71 +42,121 @@ export const HeroSection = () => {
     <div className="max-w-6xl mx-auto text-center mb-32 relative">
       {/* Premium Aurora Background - Hero Only */}
       <div
-        className="absolute -z-10 overflow-hidden"
-        style={{
-          top: "100px",
-          bottom: "-40px",
-          left: "-40px",
-          right: "-40px",
-          borderRadius: "32px",
-        }}
+        className="absolute -z-10 overflow-hidden -top-[60px] -bottom-[24px] -left-[20px] -right-[20px] rounded-[24px] md:-top-[80px] md:-bottom-[32px] md:-left-[32px] md:-right-[32px] md:rounded-[28px] lg:-top-[100px] lg:-bottom-[40px] lg:-left-[40px] lg:-right-[40px] lg:rounded-[32px]"
       >
-        {/* Aurora Orb 1 - Deep Blue */}
-        <div
-          className="absolute top-[15%] left-[10%] w-[500px] h-[500px] rounded-full animate-aurora-drift"
+        {/* Base dark layer for depth */}
+        <div 
+          className="absolute inset-0 pointer-events-none"
           style={{
-            background: "radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%)",
-            filter: "blur(80px)",
-            animationDelay: "0s",
+            background: 'radial-gradient(ellipse at 50% 40%, rgba(15, 18, 35, 0.3) 0%, rgba(8, 10, 20, 0.7) 100%)',
+            borderRadius: 'inherit'
           }}
         />
 
-        {/* Aurora Orb 2 - Violet */}
-        <div
-          className="absolute top-[25%] right-[15%] w-[600px] h-[600px] rounded-full animate-aurora-drift"
+        {/* Premium Vignette - soft edges */}
+        <div 
+          className="absolute inset-0 pointer-events-none"
           style={{
-            background: "radial-gradient(circle, rgba(139, 92, 246, 0.07) 0%, transparent 70%)",
-            filter: "blur(90px)",
-            animationDelay: "5s",
+            background: 'radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, transparent 40%, rgba(8, 10, 20, 0.5) 70%, rgba(8, 10, 20, 0.85) 100%)',
+            borderRadius: 'inherit'
           }}
         />
 
-        {/* Aurora Orb 3 - Soft Cyan */}
+        {/* Aurora Orb 1 - Deep Blue (6% opacity) */}
         <div
-          className="absolute bottom-[10%] left-[50%] w-[550px] h-[550px] rounded-full animate-aurora-drift"
+          className="absolute top-[10%] left-[5%] w-[350px] h-[350px] md:w-[450px] md:h-[450px] lg:w-[550px] lg:h-[550px] rounded-full md:animate-aurora-drift"
           style={{
-            background: "radial-gradient(circle, rgba(34, 211, 238, 0.06) 0%, transparent 70%)",
-            filter: "blur(85px)",
-            animationDelay: "10s",
+            background: 'radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 65%)',
+            filter: 'blur(70px)',
+            animationDelay: '0s'
           }}
         />
 
-        {/* Center Glow Behind Headline */}
+        {/* Aurora Orb 2 - Violet (5.5% opacity) */}
         <div
-          className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[700px] h-[300px]"
+          className="absolute top-[20%] right-[10%] w-[400px] h-[400px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] rounded-full md:animate-aurora-drift"
           style={{
-            background: "radial-gradient(ellipse, rgba(120, 70, 255, 0.12) 0%, transparent 60%)",
-            filter: "blur(100px)",
+            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.055) 0%, transparent 65%)',
+            filter: 'blur(80px)',
+            animationDelay: '5s'
           }}
         />
 
-        {/* Particle Noise Layer */}
+        {/* Aurora Orb 3 - Soft Cyan (5% opacity) */}
         <div
-          className="absolute inset-0 opacity-[0.015] animate-particle-twinkle pointer-events-none"
+          className="absolute bottom-[15%] left-[35%] w-[350px] h-[350px] md:w-[450px] md:h-[450px] lg:w-[500px] lg:h-[500px] rounded-full md:animate-aurora-drift"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
-            backgroundRepeat: "repeat",
-            mixBlendMode: "screen",
-            borderRadius: "inherit",
+            background: 'radial-gradient(circle, rgba(34, 211, 238, 0.05) 0%, transparent 60%)',
+            filter: 'blur(75px)',
+            animationDelay: '10s'
           }}
         />
 
-        {/* Depth Fog */}
+        {/* Aurora Orb 4 - Deep Purple accent (very faint, desktop only) */}
+        <div
+          className="absolute top-[45%] right-[20%] w-[350px] h-[350px] lg:w-[400px] lg:h-[400px] rounded-full md:animate-aurora-drift hidden md:block"
+          style={{
+            background: 'radial-gradient(circle, rgba(99, 60, 180, 0.045) 0%, transparent 60%)',
+            filter: 'blur(65px)',
+            animationDelay: '7.5s'
+          }}
+        />
+
+        {/* Center Glow Behind Headline - enhanced */}
+        <div
+          className="absolute top-[12%] left-1/2 -translate-x-1/2 w-[400px] h-[200px] md:w-[600px] md:h-[260px] lg:w-[750px] lg:h-[300px]"
+          style={{
+            background: 'radial-gradient(ellipse, rgba(120, 70, 255, 0.08) 0%, rgba(80, 100, 220, 0.04) 40%, transparent 70%)',
+            filter: 'blur(70px)'
+          }}
+        />
+
+        {/* Secondary center glow - adds depth */}
+        <div
+          className="absolute top-[22%] left-1/2 -translate-x-1/2 w-[300px] h-[150px] md:w-[450px] md:h-[200px]"
+          style={{
+            background: 'radial-gradient(ellipse, rgba(100, 140, 255, 0.055) 0%, transparent 60%)',
+            filter: 'blur(55px)'
+          }}
+        />
+
+        {/* Particle Noise Layer - 1-2% opacity, no animation on mobile */}
+        <div
+          className="absolute inset-0 opacity-[0.012] md:animate-particle-twinkle pointer-events-none"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
+            backgroundRepeat: 'repeat',
+            mixBlendMode: 'screen',
+            borderRadius: 'inherit'
+          }}
+        />
+
+        {/* Fine grain texture overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.018] pointer-events-none"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.65' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' /%3E%3C/svg%3E")`,
+            backgroundRepeat: 'repeat',
+            mixBlendMode: 'overlay',
+            borderRadius: 'inherit'
+          }}
+        />
+
+        {/* Depth Fog - bottom to top fade for dashboard blend */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: "linear-gradient(to bottom, transparent 0%, rgba(8, 10, 20, 0.3) 100%)",
-            borderRadius: "inherit",
+            background: 'linear-gradient(to top, rgba(8, 10, 20, 0.35) 0%, rgba(8, 10, 20, 0.12) 30%, transparent 55%)',
+            borderRadius: 'inherit'
+          }}
+        />
+
+        {/* Top subtle fade */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(8, 10, 20, 0.2) 0%, transparent 20%)',
+            borderRadius: 'inherit'
           }}
         />
       </div>
