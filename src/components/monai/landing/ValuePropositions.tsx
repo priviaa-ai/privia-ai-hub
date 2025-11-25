@@ -1,4 +1,3 @@
-import { TrendingUp, Sparkles, Bell, Network } from "lucide-react";
 import { GlassCard } from "@/components/monai/GlassCard";
 import realDriftChart from "@/assets/real-drift-chart.png";
 import realFeatureTable from "@/assets/real-feature-table.png";
@@ -6,34 +5,36 @@ import realDemoProject from "@/assets/real-demo-project.png";
 import cropFeatureTable from "@/assets/crop-feature-table.png";
 import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import {
+  DriftDetectionIcon,
+  LLMBehaviorIcon,
+  RealTimeAlertsIcon,
+  EmbeddingDriftIcon,
+} from "@/components/monai/icons/FeatureIcons";
 
 const features = [
   {
-    icon: TrendingUp,
+    Icon: DriftDetectionIcon,
     title: "Drift Detection",
     description: "Monitor statistical and semantic drift using PSI, KL divergence, and embedding changes.",
-    color: "primary",
     image: realDriftChart,
   },
   {
-    icon: Sparkles,
+    Icon: LLMBehaviorIcon,
     title: "LLM Behavior Monitoring",
     description: "Track hallucinations, tone shifts, safety violations, and reasoning anomalies.",
-    color: "accent",
     image: realFeatureTable,
   },
   {
-    icon: Bell,
+    Icon: RealTimeAlertsIcon,
     title: "Real-Time Alerts",
     description: "Get notified instantly when reliability issues emerge via Slack, email, or webhooks.",
-    color: "warning",
     image: realDemoProject,
   },
   {
-    icon: Network,
+    Icon: EmbeddingDriftIcon,
     title: "Embedding Drift",
     description: "Detect semantic shifts in embedding clusters and vector distributions.",
-    color: "success",
     image: cropFeatureTable,
   }
 ];
@@ -44,9 +45,9 @@ export const ValuePropositions = () => {
   return (
     <div ref={ref} className="max-w-6xl mx-auto mb-32">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-        transition={{ duration: 0.6 }}
+        initial={{ opacity: 0, y: 12 }}
+        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
         className="text-center mb-12 px-4"
       >
         <h2 className="heading-spacing">Complete AI Observability</h2>
@@ -57,17 +58,20 @@ export const ValuePropositions = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {features.map((feature, index) => {
-          const Icon = feature.icon;
+          const Icon = feature.Icon;
           return (
             <motion.div
               key={feature.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+              transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
             >
               <GlassCard hover className="p-6 text-center group">
-                <div className={`w-12 h-12 rounded-full bg-${feature.color}/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
-                  <Icon className={`h-6 w-6 text-${feature.color}`} />
+                <div className="flex items-center justify-center mb-4">
+                  <Icon 
+                    size={32} 
+                    className="text-white/50 group-hover:text-white/80 transition-colors duration-300" 
+                  />
                 </div>
                 <h3 className="text-xl font-medium mb-2">{feature.title}</h3>
                 <p className="text-sm font-medium text-muted-foreground/80 mb-4 leading-relaxed">
