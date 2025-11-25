@@ -15,10 +15,10 @@ export const DashboardPreview = () => {
         <GlassCard className="p-8 group hover:scale-[1.02] transition-transform duration-300">
           <div className="relative">
             {/* Neon gradient glow */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-[hsl(237,100%,68%)] via-[hsl(270,60%,65%)] to-[hsl(237,100%,68%)] rounded-xl opacity-50 blur-lg" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-[hsl(237,100%,68%)] via-[hsl(270,60%,65%)] to-[hsl(237,100%,68%)] rounded-xl opacity-50" />
             
             {/* Dashboard crop with glass aesthetic */}
-            <div className="relative rounded-xl overflow-hidden border border-white/20 shadow-[0_15px_60px_rgba(91,107,255,0.3)] backdrop-blur-sm">
+            <div className="relative rounded-xl overflow-hidden border border-white/20 shadow-[0_15px_60px_rgba(91,107,255,0.3)]">
               <div className="absolute inset-0 bg-gradient-to-t from-background/5 via-transparent to-background/5 z-10 pointer-events-none" />
               <div className="absolute inset-0 bg-white/[0.02] z-10 pointer-events-none" />
               <img 
