@@ -15,14 +15,14 @@ const scaleUpVariants = {
   visible: { opacity: 1, y: 0, scale: 1 }
 };
 
-// Add sweep animation keyframes
+// Add fade sweep animation keyframes
 const sweepKeyframes = `
-  @keyframes sweep-to-glass {
+  @keyframes fade-sweep {
     0% { 
-      transform: translateX(-100%);
+      width: 0%;
     }
     100% { 
-      transform: translateX(100%);
+      width: 100%;
     }
   }
 `;
@@ -102,27 +102,30 @@ export const HeroSection = () => {
             size="default" 
             className={`
               relative px-8 group overflow-hidden
-              transition-all duration-[250ms] ease-out
+              transition-all duration-300 ease-out
               border border-transparent
               active:scale-[0.98]
               ${isClicked ? 'scale-[0.98]' : ''}
               
-              bg-gradient-to-r from-[#7846ff] to-[#0096ff]
+              bg-[#38bdf8]
               
-              hover:bg-none hover:backdrop-blur-md
-              hover:border-white/45
-              hover:shadow-[inset_0_1px_20px_rgba(255,255,255,0.1)]
+              hover:border-white/40
               
-              after:absolute after:inset-0 after:opacity-0
-              after:bg-gradient-to-r after:from-transparent after:via-white/20 after:to-transparent
-              after:transition-all after:duration-[250ms] after:ease-out
+              before:absolute before:inset-0 before:bg-transparent
+              before:backdrop-blur-sm before:border before:border-white/40
+              before:w-0 before:left-0
+              before:transition-none
+              group-hover:before:animate-[fade-sweep_400ms_ease-out_forwards]
+              
+              after:absolute after:inset-0 after:bg-transparent
+              after:backdrop-blur-sm after:opacity-0
+              after:transition-opacity after:duration-200 after:delay-300
               group-hover:after:opacity-100
-              group-hover:after:animate-[sweep-to-glass_250ms_ease-out_forwards]
             `}
           >
-            <span className="relative z-10 flex items-center text-white group-hover:brightness-110 transition-all duration-[250ms]">
+            <span className="relative z-10 flex items-center text-white transition-all duration-300">
               Start Monitoring
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1.5 transition-all duration-[250ms] ease-out" />
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1.5 transition-all duration-300 ease-out" />
             </span>
           </Button>
         </Link>
