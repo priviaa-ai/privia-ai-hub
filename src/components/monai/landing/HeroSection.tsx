@@ -41,12 +41,12 @@ export const HeroSection = () => {
       <div className="max-w-[70%] mx-auto mb-16 mt-12">
         <div className="relative group">
           {/* Neon gradient glow border - MonAI brand colors */}
-          <div className="absolute -inset-[2px] bg-gradient-to-r from-[#5b6bff] via-[#a372ff] to-[#5b6bff] rounded-3xl opacity-70 blur-xl" />
+          <div className="absolute -inset-[2px] bg-gradient-to-r from-[#5b6bff] via-[#a372ff] to-[#5b6bff] rounded-3xl opacity-70" />
           
           {/* Glassmorphic container with floating shadow */}
-          <div className="relative rounded-3xl overflow-hidden border border-white/20 shadow-[0_20px_60px_-15px_rgba(91,107,255,0.5),0_10px_40px_-10px_rgba(163,114,255,0.3)] backdrop-blur-[20px] bg-white/[0.1]">
+          <div className="relative rounded-3xl overflow-hidden border border-white/20 shadow-[0_20px_60px_-15px_rgba(91,107,255,0.5),0_10px_40px_-10px_rgba(163,114,255,0.3)] bg-white/[0.1]">
             {/* Frosted glass overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent z-10 pointer-events-none backdrop-blur-sm" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent z-10 pointer-events-none" />
             
             {/* Real dashboard screenshot - cropped to show top 65% */}
             <div className="relative overflow-hidden" style={{ maxHeight: '600px' }}>
