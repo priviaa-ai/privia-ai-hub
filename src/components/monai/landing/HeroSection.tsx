@@ -38,18 +38,27 @@ export const HeroSection = () => {
       </div>
 
       {/* Real Dashboard Hero */}
-      <div className="max-w-[70%] mx-auto mb-16 mt-12">
-        <div className="relative">
-          {/* Clean dashboard screenshot with soft shadow */}
-          <div className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
-            <img 
-              src={heroDashboard} 
-              alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"
-              className="w-full h-auto block"
-            />
+      <div className="max-w-5xl mx-auto mb-16 mt-12 px-4">
+        <div className="relative group">
+          {/* Neon blue-purple glow */}
+          <div className="absolute -inset-[2px] bg-gradient-to-r from-[#5b6bff] via-[#a372ff] to-[#5b6bff] rounded-3xl opacity-60 blur-xl" />
+          
+          {/* Glass-morphism container */}
+          <div className="relative rounded-3xl overflow-hidden border border-white/20 shadow-[0_20px_60px_-15px_rgba(91,107,255,0.5),0_10px_40px_-10px_rgba(163,114,255,0.3)] backdrop-blur-sm bg-white/[0.05]">
+            {/* Frosted glass overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent pointer-events-none" />
+            
+            {/* Dashboard screenshot */}
+            <div className="relative p-4 md:p-6 lg:p-8">
+              <img 
+                src={heroDashboard} 
+                alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"
+                className="w-full h-auto block rounded-xl"
+              />
+            </div>
           </div>
           
-          <div className="mt-8 text-base text-muted-foreground text-center">
+          <div className="mt-8 text-base text-muted-foreground text-center px-4">
             Real-time model drift detection across your AI systems
           </div>
         </div>
