@@ -15,15 +15,15 @@ export const HeroSection = () => {
         <span className="text-sm text-foreground/80">Enterprise-Grade Monitoring</span>
       </div>
 
-      <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 text-foreground leading-tight">
+      <h1 className="text-3xl lg:text-5xl font-semibold mb-4 text-foreground leading-tight">
         AI Reliability Monitoring for ML and LLM Systems
       </h1>
       
-      <p className="text-xl sm:text-2xl text-muted-foreground mb-6 max-w-3xl mx-auto">
+      <p className="text-base text-muted-foreground mb-6 max-w-2xl mx-auto">
         Detect drift, hallucinations, anomalies, and behavior shifts before they impact customers.
       </p>
       
-      <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+      <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
         <Link to="/monai/projects">
           <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 group">
             Start Monitoring
