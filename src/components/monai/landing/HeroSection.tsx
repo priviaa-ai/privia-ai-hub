@@ -102,25 +102,20 @@ export const HeroSection = () => {
             size="default" 
             className={`
               relative px-8 group overflow-hidden
-              transition-all duration-300 ease-out
-              border border-transparent
+              bg-[#1e3a8a] border border-transparent
+              transition-all duration-500 ease-out
               active:scale-[0.98]
               ${isClicked ? 'scale-[0.98]' : ''}
               
-              bg-[#38bdf8]
-              
+              hover:bg-transparent
+              hover:backdrop-blur-md
               hover:border-white/40
               
-              before:absolute before:inset-0 before:bg-transparent
-              before:backdrop-blur-sm before:border before:border-white/40
-              before:w-0 before:left-0
-              before:transition-none
-              group-hover:before:animate-[fade-sweep_400ms_ease-out_forwards]
-              
-              after:absolute after:inset-0 after:bg-transparent
-              after:backdrop-blur-sm after:opacity-0
-              after:transition-opacity after:duration-200 after:delay-300
-              group-hover:after:opacity-100
+              before:absolute before:inset-0 before:left-0
+              before:w-0 before:h-full
+              before:bg-transparent before:backdrop-blur-md
+              before:transition-all before:duration-500 before:ease-out
+              group-hover:before:w-full
             `}
           >
             <span className="relative z-10 flex items-center text-white transition-all duration-300">
