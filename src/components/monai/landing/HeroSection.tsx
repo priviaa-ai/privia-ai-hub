@@ -37,7 +37,7 @@ export const HeroSection = () => {
         animate="visible"
         variants={fadeUpVariants}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="text-3xl lg:text-4xl font-semibold mb-3 text-foreground leading-tight max-w-[720px] mx-auto"
+        className="text-4xl sm:text-5xl lg:text-6xl font-medium mb-6 text-foreground leading-[1.15] max-w-[780px] mx-auto px-4"
       >
         Know when your AI drifts<br />before your users do
       </motion.h1>
@@ -47,7 +47,7 @@ export const HeroSection = () => {
         animate="visible"
         variants={fadeUpVariants}
         transition={{ duration: 0.6, delay: 0.5 }}
-        className="text-base lg:text-lg text-muted-foreground mb-8 max-w-[720px] mx-auto"
+        className="text-base sm:text-lg lg:text-xl font-medium text-muted-foreground/80 mb-10 max-w-[780px] mx-auto leading-relaxed px-4"
       >
         MonAI monitors ML and LLM systems for drift, hallucinations, and behavior shifts in real time so teams can fix issues before they reach customers.
       </motion.p>
