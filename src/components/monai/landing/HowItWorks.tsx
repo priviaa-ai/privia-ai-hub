@@ -49,15 +49,11 @@ export const HowItWorks = () => {
 
               <div className={`${step.screenshot} rounded-lg h-32 mb-4 flex items-center justify-center border border-white/10`}>
                 <div className="flex gap-1">
-                  {[...Array(8)].map((_, i) => (
+                  {[65, 45, 70, 55, 80, 60, 85, 75].map((height, i) => (
                     <div
                       key={i}
                       className="w-1 bg-gradient-to-t from-primary to-accent rounded"
-                      style={{
-                        height: `${Math.random() * 60 + 20}px`,
-                        animation: `float ${2 + i * 0.2}s ease-in-out infinite`,
-                        animationDelay: `${i * 0.1}s`
-                      }}
+                      style={{ height: `${height}px` }}
                     />
                   ))}
                 </div>

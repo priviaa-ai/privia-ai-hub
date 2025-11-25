@@ -150,20 +150,17 @@ const Landing = () => {
 
         {/* Final CTA */}
         <div className="max-w-4xl mx-auto text-center mb-20">
-          <GlassCard className="p-12 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 animate-gradient-shift" />
-            <div className="relative z-10">
-              <h2 className="text-4xl font-bold mb-4">Ready to monitor your AI?</h2>
-              <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Start tracking drift and reliability issues in minutes
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/monai/projects">
-                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8">
-                    Get Started Free
-                  </Button>
-                </Link>
-              </div>
+          <GlassCard className="p-12">
+            <h2 className="text-4xl font-bold mb-4">Ready to monitor your AI?</h2>
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Start tracking drift and reliability issues in minutes
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/monai/projects">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8">
+                  Get Started Free
+                </Button>
+              </Link>
             </div>
           </GlassCard>
         </div>

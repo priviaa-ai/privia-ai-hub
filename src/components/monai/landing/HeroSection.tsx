@@ -14,7 +14,7 @@ export const HeroSection = () => {
         <span className="text-sm text-foreground/80">Enterprise AI Reliability Platform</span>
       </div>
 
-      <h1 className="text-5xl sm:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient-shift">
+      <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-foreground">
         AI Reliability Monitoring for ML and LLM Systems
       </h1>
       
@@ -36,21 +36,15 @@ export const HeroSection = () => {
         </Link>
       </div>
 
-      {/* Animated Drift Chart */}
+      {/* Static Drift Chart */}
       <div className="max-w-3xl mx-auto mb-12">
-        <div className="glass-card p-8 relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 animate-gradient-shift" />
-          
+        <div className="glass-card p-8 relative overflow-hidden">
           <div className="relative z-10 flex items-end justify-between h-32 gap-2">
             {[40, 65, 45, 70, 55, 80, 60, 85, 75, 90, 70, 95].map((height, i) => (
               <div
                 key={i}
-                className="flex-1 bg-gradient-to-t from-primary to-accent rounded-t transition-all duration-1000 hover:opacity-80"
-                style={{
-                  height: `${height}%`,
-                  animation: `float ${2 + i * 0.1}s ease-in-out infinite`,
-                  animationDelay: `${i * 0.1}s`
-                }}
+                className="flex-1 bg-gradient-to-t from-primary to-accent rounded-t"
+                style={{ height: `${height}%` }}
               />
             ))}
           </div>
