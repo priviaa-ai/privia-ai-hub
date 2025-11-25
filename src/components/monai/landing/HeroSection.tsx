@@ -42,12 +42,22 @@ export const HeroSection = () => {
   return (
     <div className="max-w-6xl mx-auto text-center mb-32 relative">
       {/* Premium Aurora Background - Hero Only */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
+      <div 
+        className="absolute -z-10 overflow-hidden"
+        style={{
+          top: '-100px',
+          bottom: '-40px',
+          left: '-40px',
+          right: '-40px',
+          borderRadius: '32px',
+        }}
+      >
         {/* Vignette */}
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'radial-gradient(ellipse at center, transparent 0%, rgba(8, 10, 20, 0.6) 70%, rgba(8, 10, 20, 0.9) 100%)'
+            background: 'radial-gradient(ellipse at center, transparent 0%, rgba(8, 10, 20, 0.6) 70%, rgba(8, 10, 20, 0.9) 100%)',
+            borderRadius: 'inherit'
           }}
         />
         
@@ -83,7 +93,7 @@ export const HeroSection = () => {
         
         {/* Center Glow Behind Headline */}
         <div 
-          className="absolute top-[30%] left-1/2 -translate-x-1/2 w-[700px] h-[300px]"
+          className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[700px] h-[300px]"
           style={{
             background: 'radial-gradient(ellipse, rgba(120, 70, 255, 0.12) 0%, transparent 60%)',
             filter: 'blur(100px)'
@@ -96,7 +106,8 @@ export const HeroSection = () => {
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
             backgroundRepeat: 'repeat',
-            mixBlendMode: 'screen'
+            mixBlendMode: 'screen',
+            borderRadius: 'inherit'
           }}
         />
         
@@ -104,7 +115,8 @@ export const HeroSection = () => {
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'linear-gradient(to bottom, transparent 0%, rgba(8, 10, 20, 0.3) 100%)'
+            background: 'linear-gradient(to bottom, transparent 0%, rgba(8, 10, 20, 0.3) 100%)',
+            borderRadius: 'inherit'
           }}
         />
       </div>
