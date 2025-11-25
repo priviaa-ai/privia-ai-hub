@@ -136,6 +136,7 @@ export const HeroSection = () => {
               hover:bg-transparent
               hover:backdrop-blur-md
               hover:border-white/40
+              hover:scale-105
               
               before:absolute before:inset-0 before:left-0
               before:w-0 before:h-full
