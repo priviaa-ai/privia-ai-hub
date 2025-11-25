@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Github } from "lucide-react";
+import priviaLogo from "@/assets/privia-logo.png";
 
 export const Footer = () => {
   const links = {
@@ -9,12 +10,12 @@ export const Footer = () => {
       { label: "Contact", href: "#" }
     ],
     Products: [
-      { label: "MonAI – AI Reliability Monitoring", href: "/" },
-      { label: "Verity – AI Truth Checker", href: "#" },
-      { label: "Privy – Digital Privacy Copilot", href: "#" },
-      { label: "DataVault – Secure Identity & Access", href: "#" },
-      { label: "Lens AI – AI Content Detection", href: "#" },
-      { label: "Cogni AI – Cognitive Training", href: "#" }
+      { label: "MonAI", href: "/" },
+      { label: "Verity", href: "#" },
+      { label: "Privy", href: "#" },
+      { label: "DataVault", href: "#" },
+      { label: "Lens AI", href: "#" },
+      { label: "Cogni AI", href: "#" }
     ],
     Resources: [
       { label: "Docs", href: "/docs" },
@@ -37,9 +38,16 @@ export const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
           {/* Brand Section */}
           <div className="col-span-1 sm:col-span-2 lg:col-span-1">
-            <h3 className="text-2xl font-medium mb-3 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              Privia AI
-            </h3>
+            <div className="flex items-center gap-3 mb-3">
+              <img 
+                src={priviaLogo} 
+                alt="Privia AI Logo" 
+                className="h-8 w-auto opacity-90"
+              />
+              <h3 className="text-2xl font-medium bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                Privia AI
+              </h3>
+            </div>
             <p className="text-sm font-medium text-muted-foreground/80 leading-relaxed">
               The Trust & Reliability Layer for the AI era
             </p>
