@@ -83,9 +83,9 @@ const Landing = () => {
         <DashboardPreview />
 
         {/* Pricing Preview CTA */}
-        <div className="max-w-4xl mx-auto text-center mb-32">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Simple pricing for every AI team</h2>
-          <p className="text-xl text-muted-foreground mb-8">
+        <div className="max-w-4xl mx-auto text-center section-spacing px-4">
+          <h2 className="heading-spacing">Simple pricing for every AI team</h2>
+          <p className="text-description mb-8 max-w-[780px] mx-auto">
             Choose the plan that fits your monitoring needs
           </p>
           <Link to="/pricing">
@@ -101,10 +101,10 @@ const Landing = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={pricingRef.isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            className="text-center mb-12 px-4"
           >
-            <h2 className="text-4xl font-bold mb-4">Pricing</h2>
-            <p className="text-xl text-muted-foreground">
+            <h2 className="heading-spacing">Pricing</h2>
+            <p className="text-description max-w-[780px] mx-auto">
               Choose the plan that fits your AI monitoring needs
             </p>
           </motion.div>
@@ -128,11 +128,11 @@ const Landing = () => {
                   )}
                   
                   <div className="mb-6">
-                    <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                    <p className="text-muted-foreground text-sm mb-4">{plan.description}</p>
+                    <h3 className="text-2xl font-medium mb-2">{plan.name}</h3>
+                    <p className="text-muted-foreground/80 text-sm mb-4 font-medium">{plan.description}</p>
                     <div className="flex items-baseline gap-1">
-                      <span className="text-4xl font-bold">{plan.price}</span>
-                      {plan.price !== "Custom" && <span className="text-muted-foreground">/mo</span>}
+                      <span className="text-4xl font-medium">{plan.price}</span>
+                      {plan.price !== "Custom" && <span className="text-muted-foreground/80 font-medium">/mo</span>}
                     </div>
                   </div>
 
@@ -140,7 +140,7 @@ const Landing = () => {
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-2 text-sm">
                         <Check className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
-                        <span>{feature}</span>
+                        <span className="font-medium text-foreground/90">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -156,18 +156,18 @@ const Landing = () => {
             ))}
           </div>
 
-          <div className="mt-8 text-center">
-            <p className="text-muted-foreground">
+          <div className="mt-8 text-center px-4">
+            <p className="text-muted-foreground/80 font-medium">
               Need help choosing? <a href="mailto:support@priviaai.com" className="text-primary hover:underline">Contact our team</a>
             </p>
           </div>
         </div>
 
         {/* Final CTA */}
-        <div className="max-w-4xl mx-auto text-center mb-12">
-          <GlassCard className="p-12">
-            <h2 className="text-4xl font-bold mb-4">Ready to monitor your AI?</h2>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+        <div className="max-w-4xl mx-auto text-center mb-12 px-4">
+          <GlassCard className="p-8 sm:p-12">
+            <h2 className="heading-spacing">Ready to monitor your AI?</h2>
+            <p className="text-description mb-8 max-w-[780px] mx-auto">
               Start tracking drift and reliability issues in minutes
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

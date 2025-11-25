@@ -24,8 +24,8 @@ export const FeatureDeepDive = () => {
                 <span className="text-xs font-medium">Drift Detection</span>
               </div>
               
-              <h2 className="text-3xl font-bold mb-4">Detect Drift Early</h2>
-              <p className="text-muted-foreground mb-6">
+              <h3 className="mb-4">Detect Drift Early</h3>
+              <p className="text-description mb-6">
                 Catch data and model drift before it impacts your users. Monitor statistical distributions and semantic changes across your ML pipeline.
               </p>
               
@@ -38,7 +38,7 @@ export const FeatureDeepDive = () => {
                 ].map((feature) => (
                   <li key={feature} className="flex items-start gap-2">
                     <CheckCircle2 className="h-5 w-5 text-success mt-0.5 flex-shrink-0" />
-                    <span className="text-sm">{feature}</span>
+                    <span className="text-sm font-medium text-foreground/90">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -142,8 +142,8 @@ export const FeatureDeepDive = () => {
                 <span className="text-xs font-medium">LLM Monitoring</span>
               </div>
               
-              <h2 className="text-3xl font-bold mb-4">Monitor LLM Behavior</h2>
-              <p className="text-muted-foreground mb-6">
+              <h3 className="mb-4">Monitor LLM Behavior</h3>
+              <p className="text-description mb-6">
                 Track every interaction for quality, safety, and reliability. Identify hallucinations and behavior anomalies in real-time.
               </p>
               
@@ -156,7 +156,7 @@ export const FeatureDeepDive = () => {
                 ].map((feature) => (
                   <li key={feature} className="flex items-start gap-2">
                     <CheckCircle2 className="h-5 w-5 text-success mt-0.5 flex-shrink-0" />
-                    <span className="text-sm">{feature}</span>
+                    <span className="text-sm font-medium text-foreground/90">{feature}</span>
                   </li>
                 ))}
               </ul>

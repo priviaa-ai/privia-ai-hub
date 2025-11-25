@@ -27,28 +27,28 @@ export const Footer = () => {
             <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
               MonAI
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm font-medium text-muted-foreground/80 leading-relaxed">
               Enterprise AI reliability monitoring for ML and LLM systems
             </p>
           </div>
 
           {Object.entries(links).map(([category, items]) => (
             <div key={category}>
-              <h4 className="font-semibold mb-4">{category}</h4>
+              <h4 className="font-medium mb-4">{category}</h4>
               <ul className="space-y-2">
                 {items.map((item) => (
                   <li key={item.label}>
                     {item.href.startsWith('/') ? (
                       <Link 
                         to={item.href} 
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        className="text-sm font-medium text-muted-foreground/80 hover:text-foreground transition-colors"
                       >
                         {item.label}
                       </Link>
                     ) : (
                       <a 
                         href={item.href} 
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        className="text-sm font-medium text-muted-foreground/80 hover:text-foreground transition-colors"
                       >
                         {item.label}
                       </a>
@@ -61,7 +61,7 @@ export const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm font-medium text-muted-foreground/80">
             © 2025 MonAI. All rights reserved.
           </p>
           <div className="flex gap-6 items-center">

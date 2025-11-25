@@ -30,10 +30,10 @@ export const HowItWorks = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-12"
+        className="text-center mb-12 px-4"
       >
-        <h2 className="text-3xl sm:text-4xl font-bold mb-4">How MonAI Works</h2>
-        <p className="text-xl text-muted-foreground">
+        <h2 className="heading-spacing">How MonAI Works</h2>
+        <p className="text-description max-w-[780px] mx-auto">
           Start monitoring in three simple steps
         </p>
       </motion.div>
@@ -59,8 +59,8 @@ export const HowItWorks = () => {
                   </div>
                 </div>
 
-                <h3 className="text-xl font-semibold mb-2 text-center">{step.title}</h3>
-                <p className="text-sm text-muted-foreground text-center">
+                <h3 className="text-xl font-medium mb-2 text-center">{step.title}</h3>
+                <p className="text-sm font-medium text-muted-foreground/80 text-center leading-relaxed">
                   {step.description}
                 </p>
               </GlassCard>

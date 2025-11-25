@@ -25,7 +25,7 @@ export function MetricCard({ label, value, badge, trend, trendValue, className }
         </div>
         
         <div className="flex items-baseline gap-3">
-          <span className="text-4xl font-bold bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
+          <span className="text-4xl font-medium bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
             {value}
           </span>
           

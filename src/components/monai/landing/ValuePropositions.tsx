@@ -47,10 +47,10 @@ export const ValuePropositions = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-12"
+        className="text-center mb-12 px-4"
       >
-        <h2 className="text-4xl sm:text-5xl font-bold mb-4">Complete AI Observability</h2>
-        <p className="text-lg sm:text-xl text-muted-foreground">
+        <h2 className="heading-spacing">Complete AI Observability</h2>
+        <p className="text-description max-w-[780px] mx-auto">
           Monitor every aspect of your ML and LLM systems
         </p>
       </motion.div>
@@ -69,8 +69,8 @@ export const ValuePropositions = () => {
                 <div className={`w-12 h-12 rounded-full bg-${feature.color}/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
                   <Icon className={`h-6 w-6 text-${feature.color}`} />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-                <p className="text-sm text-muted-foreground mb-4">
+                <h3 className="text-xl font-medium mb-2">{feature.title}</h3>
+                <p className="text-sm font-medium text-muted-foreground/80 mb-4 leading-relaxed">
                   {feature.description}
                 </p>
                 
