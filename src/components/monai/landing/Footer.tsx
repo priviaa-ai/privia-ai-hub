@@ -38,13 +38,13 @@ export const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
           {/* Brand Section */}
           <div className="col-span-1 sm:col-span-2 lg:col-span-1">
-            <div className="flex items-center gap-3 mb-3">
+            <div className="flex items-center gap-2 mb-3">
               <img 
                 src={priviaLogo} 
                 alt="Privia AI Logo" 
-                className="h-8 w-auto opacity-90"
+                className="h-10 w-auto"
               />
-              <h3 className="text-2xl font-medium bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+              <h3 className="text-2xl font-medium text-white">
                 Privia AI
               </h3>
             </div>
