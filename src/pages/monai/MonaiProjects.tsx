@@ -20,6 +20,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Pagination,
   PaginationContent,
   PaginationItem,
@@ -27,6 +34,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { ProjectActionsMenu } from "@/components/monai/ProjectActionsMenu";
+import { Switch } from "@/components/ui/switch";
 
 interface Project {
   id: string;
@@ -35,6 +44,8 @@ interface Project {
   created_at: string;
   default_model_type: string;
   is_demo: boolean;
+  is_archived: boolean;
+  project_type: string;
   reliabilityScore?: number;
   driftScore?: number;
   lastUpdated?: string;
@@ -47,35 +58,48 @@ export default function MonaiProjects() {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newProjectName, setNewProjectName] = useState("");
+  const [projectType, setProjectType] = useState<string>("hybrid");
   const [creating, setCreating] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  const [showArchived, setShowArchived] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
     setLoading(true);
     loadProjects();
-  }, [currentPage]);
+  }, [currentPage, showArchived]);
 
   const loadProjects = async () => {
     try {
-      // Get total count
-      const { count } = await supabase
+      // Get total count with archive filter
+      const countQuery = supabase
         .from('monai_projects')
         .select('*', { count: 'exact', head: true });
       
+      if (!showArchived) {
+        countQuery.eq('is_archived', false);
+      }
+      
+      const { count } = await countQuery;
       setTotalCount(count || 0);
 
-      // Fetch paginated projects
+      // Fetch paginated projects with archive filter
       const from = (currentPage - 1) * PROJECTS_PER_PAGE;
       const to = from + PROJECTS_PER_PAGE - 1;
 
-      const { data: projectsData, error: projectsError } = await supabase
+      const projectsQuery = supabase
         .from('monai_projects')
         .select('*')
         .order('is_demo', { ascending: false })
         .order('created_at', { ascending: false })
         .range(from, to);
+      
+      if (!showArchived) {
+        projectsQuery.eq('is_archived', false);
+      }
+
+      const { data: projectsData, error: projectsError } = await projectsQuery;
 
       if (projectsError) throw projectsError;
       if (!projectsData || projectsData.length === 0) {
@@ -145,6 +169,7 @@ export default function MonaiProjects() {
           name: newProjectName.trim(),
           description: null,
           default_model_type: 'llm',
+          project_type: projectType,
         })
         .select()
         .single();
@@ -157,6 +182,7 @@ export default function MonaiProjects() {
       });
 
       setNewProjectName("");
+      setProjectType("hybrid");
       setDialogOpen(false);
       setCurrentPage(1);
       loadProjects();
@@ -195,45 +221,70 @@ export default function MonaiProjects() {
           showBack
           backTo="/"
           actions={
-            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-              <DialogTrigger asChild>
-                <Button className="bg-primary hover:bg-primary/90">
-                  <Plus className="h-4 w-4 mr-2" />
-                  New Project
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Create New Project</DialogTitle>
-                  <DialogDescription>
-                    Set up a new project to monitor your AI systems
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="space-y-4 py-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Project Name</Label>
-                    <Input
-                      id="name"
-                      placeholder="My AI Project"
-                      value={newProjectName}
-                      onChange={(e) => setNewProjectName(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' && !creating) {
-                          createProject();
-                        }
-                      }}
-                    />
-                  </div>
-                  <Button 
-                    onClick={createProject} 
-                    disabled={creating}
-                    className="w-full"
-                  >
-                    {creating ? "Creating..." : "Create Project"}
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Label htmlFor="show-archived" className="text-sm text-muted-foreground">
+                  Show archived
+                </Label>
+                <Switch
+                  id="show-archived"
+                  checked={showArchived}
+                  onCheckedChange={setShowArchived}
+                />
+              </div>
+              <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button className="bg-primary hover:bg-primary/90">
+                    <Plus className="h-4 w-4 mr-2" />
+                    New Project
                   </Button>
-                </div>
-              </DialogContent>
-            </Dialog>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Create New Project</DialogTitle>
+                    <DialogDescription>
+                      Set up a new project to monitor your AI systems
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Project Name</Label>
+                      <Input
+                        id="name"
+                        placeholder="My AI Project"
+                        value={newProjectName}
+                        onChange={(e) => setNewProjectName(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && !creating) {
+                            createProject();
+                          }
+                        }}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="project-type">Project Type</Label>
+                      <Select value={projectType} onValueChange={setProjectType}>
+                        <SelectTrigger id="project-type">
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="ml">ML</SelectItem>
+                          <SelectItem value="llm">LLM</SelectItem>
+                          <SelectItem value="hybrid">Hybrid</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <Button 
+                      onClick={createProject} 
+                      disabled={creating}
+                      className="w-full"
+                    >
+                      {creating ? "Creating..." : "Create Project"}
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
           }
         />
 
@@ -261,15 +312,27 @@ export default function MonaiProjects() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((project) => (
-              <Link key={project.id} to={`/monai/projects/${project.id}`}>
-                <GlassCard hover className="p-6 h-full">
+              <GlassCard key={project.id} hover className="p-6 h-full relative">
+                <div className="absolute top-4 right-4 z-10">
+                  <ProjectActionsMenu
+                    projectId={project.id}
+                    projectName={project.name}
+                    isArchived={project.is_archived}
+                    onUpdate={loadProjects}
+                    variant="card"
+                  />
+                </div>
+                <Link to={`/monai/projects/${project.id}`} className="block">
                   <div className="flex flex-col gap-4">
-                    <div className="flex items-start justify-between">
+                    <div className="flex items-start justify-between pr-8">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <h3 className="text-2xl font-semibold">{project.name}</h3>
                           {project.is_demo && (
                             <StatusPill variant="info">Demo</StatusPill>
+                          )}
+                          {project.is_archived && (
+                            <StatusPill variant="attention">Archived</StatusPill>
                           )}
                         </div>
                         {project.description && (
@@ -308,11 +371,13 @@ export default function MonaiProjects() {
                     </div>
 
                     <div className="flex items-center gap-4 text-xs text-muted-foreground pt-2 border-t border-white/5">
+                      <span>Type: {project.project_type?.toUpperCase() || 'Hybrid'}</span>
+                      <span>•</span>
                       <span>Last updated: {new Date(project.lastUpdated || project.created_at).toLocaleDateString()}</span>
                     </div>
                   </div>
-                </GlassCard>
-              </Link>
+                </Link>
+              </GlassCard>
             ))}
           </div>
         )}
