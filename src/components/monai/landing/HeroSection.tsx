@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Activity } from "lucide-react";
+import { Activity } from "lucide-react";
 import heroDashboard from "@/assets/hero-dashboard-final.png";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { PrimaryCtaButton } from "@/components/ui/primary-cta-button";
 
 const headlineVariants = {
   hidden: { opacity: 0, y: 24 },
@@ -25,30 +25,10 @@ const dashboardVariants = {
   visible: { opacity: 1, y: 0, scale: 1 }
 };
 
-// Add fade sweep animation keyframes
-const sweepKeyframes = `
-  @keyframes fade-sweep {
-    0% { 
-      width: 0%;
-    }
-    100% { 
-      width: 100%;
-    }
-  }
-`;
-
 export const HeroSection = () => {
-  const [isClicked, setIsClicked] = useState(false);
-
-  const handleButtonClick = () => {
-    setIsClicked(true);
-    setTimeout(() => setIsClicked(false), 400);
-  };
 
   return (
-    <>
-      <style>{sweepKeyframes}</style>
-      <div className="max-w-6xl mx-auto text-center mb-32 relative">
+    <div className="max-w-6xl mx-auto text-center mb-32 relative">
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] animate-pulse" />
       </div>
@@ -107,33 +87,7 @@ export const HeroSection = () => {
           variants={buttonVariants}
           transition={{ duration: 0.5, delay: 2.1, ease: "easeOut" }}
         >
-          <Link to="/monai/projects" onClick={handleButtonClick}>
-            <Button
-            size="default" 
-            className={`
-              relative px-8 group overflow-hidden
-              bg-[#1e3a8a] border border-transparent
-              transition-all duration-500 ease-out
-              active:scale-[0.98]
-              ${isClicked ? 'scale-[0.98]' : ''}
-              
-              hover:bg-transparent
-              hover:backdrop-blur-md
-              hover:border-white/40
-              
-              before:absolute before:inset-0 before:left-0
-              before:w-0 before:h-full
-              before:bg-transparent before:backdrop-blur-md
-              before:transition-all before:duration-500 before:ease-out
-              group-hover:before:w-full
-            `}
-          >
-            <span className="relative z-10 flex items-center text-white transition-all duration-300">
-              Start Monitoring
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1.5 transition-all duration-300 ease-out" />
-            </span>
-          </Button>
-        </Link>
+          <PrimaryCtaButton to="/monai/projects" size="default" />
         </motion.div>
         <motion.div
           initial="hidden"
@@ -212,7 +166,6 @@ export const HeroSection = () => {
           ))}
         </div>
       </div>
-      </div>
-    </>
+    </div>
   );
 };
