@@ -143,7 +143,7 @@ const Landing = () => {
 
           <div className="mt-8 text-center">
             <p className="text-muted-foreground">
-              Need help choosing? <a href="mailto:sales@monai.dev" className="text-primary hover:underline">Contact our team</a>
+              Need help choosing? <a href="mailto:support@priviaai.com" className="text-primary hover:underline">Contact our team</a>
             </p>
           </div>
         </div>
