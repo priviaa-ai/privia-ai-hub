@@ -23,7 +23,7 @@ export const DashboardPreview = () => {
           />
           
           {/* Glass-morphism container */}
-          <div className="relative rounded-[20px] overflow-hidden border border-white/[0.15] backdrop-blur-sm bg-white/[0.05] shadow-[0_0_60px_rgba(120,70,255,0.3),0_0_80px_rgba(0,150,255,0.25)]">
+          <div className="relative rounded-[20px] overflow-hidden backdrop-blur-sm bg-white/[0.05] shadow-[0_0_60px_rgba(120,70,255,0.3),0_0_80px_rgba(0,150,255,0.25)]">
             {/* Frosted glass overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent pointer-events-none" />
             
