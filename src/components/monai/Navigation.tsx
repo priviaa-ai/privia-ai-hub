@@ -22,7 +22,7 @@ export function Navigation() {
               alt="MonAI" 
               className="w-12 h-12 object-contain transition-transform group-hover:scale-110"
             />
-            <span className="text-2xl text-white -ml-2" style={{ fontFamily: 'Satoshi, sans-serif' }}>
+            <span className="text-2xl text-white -ml-2 font-semibold" style={{ fontFamily: 'Satoshi, sans-serif' }}>
               MonAI
             </span>
           </Link>
