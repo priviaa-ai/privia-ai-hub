@@ -53,7 +53,6 @@ export const HeroSection = () => {
               src={heroDashboard} 
               alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"
               className="w-full h-auto"
-              style={{ filter: 'blur(10px)' }}
             />
           </div>
           
