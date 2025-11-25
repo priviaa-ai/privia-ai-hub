@@ -1,5 +1,7 @@
 import { GlassCard } from "@/components/monai/GlassCard";
 import { Plug, Upload, BarChart3 } from "lucide-react";
+import { motion } from "framer-motion";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const steps = [
   {
@@ -20,35 +22,49 @@ const steps = [
 ];
 
 export const HowItWorks = () => {
+  const { ref, isVisible } = useScrollReveal();
+
   return (
-    <div className="max-w-6xl mx-auto mb-32">
-      <div className="text-center mb-12">
+    <div ref={ref} className="max-w-6xl mx-auto mb-32">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-12"
+      >
         <h2 className="text-3xl sm:text-4xl font-bold mb-4">How MonAI Works</h2>
         <p className="text-xl text-muted-foreground">
           Start monitoring in three simple steps
         </p>
-      </div>
+      </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {steps.map((step, index) => {
           const Icon = step.icon;
           return (
-            <GlassCard key={step.title} className="p-6 relative">
-              <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary flex items-center justify-center font-bold text-sm">
-                {index + 1}
-              </div>
-              
-              <div className="mb-4 flex justify-center">
-                <div className="w-16 h-16 rounded-lg bg-primary/20 flex items-center justify-center">
-                  <Icon className="h-8 w-8 text-primary" />
+            <motion.div
+              key={step.title}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+            >
+              <GlassCard className="p-6 relative">
+                <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary flex items-center justify-center font-bold text-sm">
+                  {index + 1}
                 </div>
-              </div>
+                
+                <div className="mb-4 flex justify-center">
+                  <div className="w-16 h-16 rounded-lg bg-primary/20 flex items-center justify-center">
+                    <Icon className="h-8 w-8 text-primary" />
+                  </div>
+                </div>
 
-              <h3 className="text-xl font-semibold mb-2 text-center">{step.title}</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                {step.description}
-              </p>
-            </GlassCard>
+                <h3 className="text-xl font-semibold mb-2 text-center">{step.title}</h3>
+                <p className="text-sm text-muted-foreground text-center">
+                  {step.description}
+                </p>
+              </GlassCard>
+            </motion.div>
           );
         })}
       </div>

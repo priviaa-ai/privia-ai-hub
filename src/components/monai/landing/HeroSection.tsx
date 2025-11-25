@@ -2,6 +2,17 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Activity } from "lucide-react";
 import heroDashboard from "@/assets/hero-dashboard-final.png";
+import { motion } from "framer-motion";
+
+const fadeUpVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+};
+
+const scaleUpVariants = {
+  hidden: { opacity: 0, y: 60, scale: 0.95 },
+  visible: { opacity: 1, y: 0, scale: 1 }
+};
 
 export const HeroSection = () => {
   return (
@@ -10,20 +21,44 @@ export const HeroSection = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] animate-pulse" />
       </div>
       
-      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={fadeUpVariants}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8"
+      >
         <Activity className="h-4 w-4 text-primary animate-pulse" />
         <span className="text-sm text-foreground/80">Enterprise-Grade Monitoring</span>
-      </div>
+      </motion.div>
 
-      <h1 className="text-3xl lg:text-5xl font-semibold mb-4 text-foreground leading-tight">
+      <motion.h1
+        initial="hidden"
+        animate="visible"
+        variants={fadeUpVariants}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="text-3xl lg:text-5xl font-semibold mb-4 text-foreground leading-tight"
+      >
         AI Reliability Monitoring for ML and LLM Systems
-      </h1>
+      </motion.h1>
       
-      <p className="text-base text-muted-foreground mb-6 max-w-2xl mx-auto">
+      <motion.p
+        initial="hidden"
+        animate="visible"
+        variants={fadeUpVariants}
+        transition={{ duration: 0.6, delay: 0.5 }}
+        className="text-base text-muted-foreground mb-6 max-w-2xl mx-auto"
+      >
         Detect drift, hallucinations, anomalies, and behavior shifts before they impact customers.
-      </p>
+      </motion.p>
       
-      <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={fadeUpVariants}
+        transition={{ duration: 0.6, delay: 0.7 }}
+        className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+      >
         <Link to="/monai/projects">
           <Button size="default" className="bg-primary hover:bg-primary/90 px-8 group">
             Start Monitoring
@@ -35,10 +70,16 @@ export const HeroSection = () => {
             View Docs
           </Button>
         </Link>
-      </div>
+      </motion.div>
 
       {/* Real Dashboard Hero */}
-      <div className="max-w-5xl mx-auto mb-16 mt-12 px-4">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={scaleUpVariants}
+        transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        className="max-w-5xl mx-auto mb-16 mt-12 px-4"
+      >
         <div className="relative">
           {/* Subtle outer glow - whisper-light neon */}
           <div 
@@ -62,7 +103,7 @@ export const HeroSection = () => {
             Real-time model drift detection across your AI systems
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Trusted By Section */}
       <div className="text-center">
