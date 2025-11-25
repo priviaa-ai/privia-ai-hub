@@ -65,7 +65,7 @@ export const Footer = () => {
             © 2025 MonAI. All rights reserved.
           </p>
           <div className="flex gap-6 items-center">
-            <a href="https://x.com/PriviaAI" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <a href="https://x.com/PriviaAI" target="_blank" rel="noopener noreferrer" className="text-lg text-muted-foreground hover:text-foreground transition-colors">
               𝕏
             </a>
             <a href="http://linkedin.com/company/privia-ai/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
