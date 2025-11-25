@@ -542,14 +542,14 @@ print(response.json())`;
             <div>
               <Label htmlFor="expires">Expiration (Optional)</Label>
               <Select 
-                value={expiresInDays?.toString() || ''} 
-                onValueChange={(value) => setExpiresInDays(value ? parseInt(value) : null)}
+                value={expiresInDays?.toString() || 'never'} 
+                onValueChange={(value) => setExpiresInDays(value === 'never' ? null : parseInt(value))}
               >
                 <SelectTrigger className="mt-1">
                   <SelectValue placeholder="Never expires" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Never expires</SelectItem>
+                  <SelectItem value="never">Never expires</SelectItem>
                   <SelectItem value="30">30 days</SelectItem>
                   <SelectItem value="90">90 days</SelectItem>
                   <SelectItem value="180">180 days</SelectItem>
