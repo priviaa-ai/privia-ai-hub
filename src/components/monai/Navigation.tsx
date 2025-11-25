@@ -51,7 +51,7 @@ export function Navigation() {
         }}
       />
 
-      <div className="max-w-6xl mx-auto px-8 py-5">
+      <div className="max-w-6xl mx-auto px-8 py-3">
         <div className="flex items-center justify-between">
           {/* Logo - larger and more spacing */}
           <Link 
@@ -62,10 +62,10 @@ export function Navigation() {
             <img 
               src={monaiLogo} 
               alt="MonAI" 
-              className="w-16 h-16 object-contain transition-transform group-hover:scale-110 brightness-110"
+              className="w-12 h-12 object-contain transition-transform group-hover:scale-110 brightness-110"
             />
             <span 
-              className="text-[28px] text-white -ml-2 font-semibold tracking-tight brightness-110" 
+              className="text-[24px] text-white -ml-2 font-semibold tracking-tight brightness-110" 
               style={{ fontFamily: 'Satoshi, sans-serif' }}
             >
               MonAI
@@ -73,7 +73,7 @@ export function Navigation() {
           </Link>
           
           {/* Desktop nav links - center-right */}
-          <div className="hidden lg:flex items-center gap-10">
+          <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
               return (
