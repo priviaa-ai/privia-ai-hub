@@ -25,7 +25,6 @@ export const DashboardPreview = () => {
                 src={cropFeatureTable} 
                 alt="MonAI Feature Metrics Table"
                 className="w-full h-auto"
-                style={{ filter: 'blur(8px)' }}
               />
             </div>
           </div>

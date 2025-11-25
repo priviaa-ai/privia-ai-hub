@@ -66,7 +66,6 @@ export const ValuePropositions = () => {
                   src={feature.image} 
                   alt={`${feature.title} visualization`}
                   className="w-full h-auto"
-                  style={{ filter: 'blur(8px)' }}
                 />
               </div>
             </GlassCard>
