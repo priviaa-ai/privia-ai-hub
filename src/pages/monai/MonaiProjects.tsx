@@ -72,15 +72,12 @@ export default function MonaiProjects() {
 
   const loadProjects = async () => {
     try {
-      // When showing archived, fetch ALL projects (both active and archived)
-      // Otherwise, only fetch active projects
+      // showArchived = false: show only active projects (is_archived = false)
+      // showArchived = true: show only archived projects (is_archived = true)
       const countQuery = supabase
         .from('monai_projects')
-        .select('*', { count: 'exact', head: true });
-      
-      if (!showArchived) {
-        countQuery.eq('is_archived', false);
-      }
+        .select('*', { count: 'exact', head: true })
+        .eq('is_archived', showArchived);
       
       const { count } = await countQuery;
       setTotalCount(count || 0);
@@ -92,13 +89,10 @@ export default function MonaiProjects() {
       const projectsQuery = supabase
         .from('monai_projects')
         .select('*')
+        .eq('is_archived', showArchived)
         .order('is_demo', { ascending: false })
         .order('created_at', { ascending: false })
         .range(from, to);
-
-      if (!showArchived) {
-        projectsQuery.eq('is_archived', false);
-      }
 
       const { data: projectsData, error: projectsError } = await projectsQuery;
 
@@ -311,155 +305,82 @@ export default function MonaiProjects() {
             </div>
           </GlassCard>
         ) : (
-          <>
-            {/* Active Projects */}
-            {!showArchived || projects.some(p => !p.is_archived) ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {projects.filter(p => !p.is_archived).map((project) => (
-                  <GlassCard key={project.id} hover className="p-6 h-full relative">
-                    <div className="absolute top-4 right-4 z-10">
-                      <ProjectActionsMenu
-                        projectId={project.id}
-                        projectName={project.name}
-                        isArchived={project.is_archived}
-                        onUpdate={loadProjects}
-                        variant="card"
-                      />
-                    </div>
-                    <Link to={`/monai/projects/${project.id}`} className="block">
-                      <div className="flex flex-col gap-4">
-                        <div className="flex items-start justify-between pr-8">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <h3 className="text-2xl font-semibold">{project.name}</h3>
-                              {project.is_demo && (
-                                <StatusPill variant="info">Demo</StatusPill>
-                              )}
-                            </div>
-                            {project.description && (
-                              <p className="text-sm text-muted-foreground">{project.description}</p>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
-                          <div>
-                            <p className="text-xs text-muted-foreground mb-1">Reliability Score</p>
-                            <div className="flex items-center gap-2">
-                              <p className="text-2xl font-bold">
-                                {project.reliabilityScore !== null && project.reliabilityScore !== undefined
-                                  ? Math.round(project.reliabilityScore)
-                                  : "-"}
-                              </p>
-                              {project.reliabilityScore && project.reliabilityScore > 85 && (
-                                <TrendingUp className="h-4 w-4 text-success" />
-                              )}
-                            </div>
-                          </div>
-                          <div>
-                            <p className="text-xs text-muted-foreground mb-1">Drift Score</p>
-                            <div className="flex items-center gap-2">
-                              <p className="text-2xl font-bold">
-                                {project.driftScore !== null && project.driftScore !== undefined
-                                  ? Math.round(project.driftScore)
-                                  : "-"}
-                              </p>
-                              {project.driftScore && project.driftScore < 30 && (
-                                <TrendingDown className="h-4 w-4 text-success" />
-                              )}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-4 text-xs text-muted-foreground pt-2 border-t border-white/5">
-                          <span>Type: {project.project_type?.toUpperCase() || 'Hybrid'}</span>
-                          <span>•</span>
-                          <span>Last updated: {new Date(project.lastUpdated || project.created_at).toLocaleDateString()}</span>
-                        </div>
-                      </div>
-                    </Link>
-                  </GlassCard>
-                ))}
-              </div>
-            ) : null}
-
-            {/* Archived Projects */}
-            {showArchived && projects.some(p => p.is_archived) && (
-              <div className="mt-12">
-                <h2 className="text-lg font-semibold text-muted-foreground mb-6">Archived Projects</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {projects.filter(p => p.is_archived).map((project) => (
-                    <GlassCard key={project.id} hover className="p-6 h-full relative opacity-70">
-                      <div className="absolute top-4 right-4 z-10">
-                        <ProjectActionsMenu
-                          projectId={project.id}
-                          projectName={project.name}
-                          isArchived={project.is_archived}
-                          onUpdate={loadProjects}
-                          variant="card"
-                        />
-                      </div>
-                      <Link to={`/monai/projects/${project.id}`} className="block">
-                        <div className="flex flex-col gap-4">
-                          <div className="flex items-start justify-between pr-8">
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-2">
-                                <h3 className="text-2xl font-semibold">{project.name}</h3>
-                                <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-muted text-muted-foreground">
-                                  Archived
-                                </span>
-                                {project.is_demo && (
-                                  <StatusPill variant="info">Demo</StatusPill>
-                                )}
-                              </div>
-                              {project.description && (
-                                <p className="text-sm text-muted-foreground">{project.description}</p>
-                              )}
-                            </div>
-                          </div>
-
-                          <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
-                            <div>
-                              <p className="text-xs text-muted-foreground mb-1">Reliability Score</p>
-                              <div className="flex items-center gap-2">
-                                <p className="text-2xl font-bold">
-                                  {project.reliabilityScore !== null && project.reliabilityScore !== undefined
-                                    ? Math.round(project.reliabilityScore)
-                                    : "-"}
-                                </p>
-                                {project.reliabilityScore && project.reliabilityScore > 85 && (
-                                  <TrendingUp className="h-4 w-4 text-success" />
-                                )}
-                              </div>
-                            </div>
-                            <div>
-                              <p className="text-xs text-muted-foreground mb-1">Drift Score</p>
-                              <div className="flex items-center gap-2">
-                                <p className="text-2xl font-bold">
-                                  {project.driftScore !== null && project.driftScore !== undefined
-                                    ? Math.round(project.driftScore)
-                                    : "-"}
-                                </p>
-                                {project.driftScore && project.driftScore < 30 && (
-                                  <TrendingDown className="h-4 w-4 text-success" />
-                                )}
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-4 text-xs text-muted-foreground pt-2 border-t border-white/5">
-                            <span>Type: {project.project_type?.toUpperCase() || 'Hybrid'}</span>
-                            <span>•</span>
-                            <span>Last updated: {new Date(project.lastUpdated || project.created_at).toLocaleDateString()}</span>
-                          </div>
-                        </div>
-                      </Link>
-                    </GlassCard>
-                  ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {projects.map((project) => (
+              <GlassCard 
+                key={project.id} 
+                hover 
+                className={`p-6 h-full relative ${project.is_archived ? 'opacity-70' : ''}`}
+              >
+                <div className="absolute top-4 right-4 z-10">
+                  <ProjectActionsMenu
+                    projectId={project.id}
+                    projectName={project.name}
+                    isArchived={project.is_archived}
+                    onUpdate={loadProjects}
+                    variant="card"
+                  />
                 </div>
-              </div>
-            )}
-          </>
+                <Link to={`/monai/projects/${project.id}`} className="block">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-start justify-between pr-8">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="text-2xl font-semibold">{project.name}</h3>
+                          {project.is_archived && (
+                            <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-muted text-muted-foreground">
+                              Archived
+                            </span>
+                          )}
+                          {project.is_demo && (
+                            <StatusPill variant="info">Demo</StatusPill>
+                          )}
+                        </div>
+                        {project.description && (
+                          <p className="text-sm text-muted-foreground">{project.description}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
+                      <div>
+                        <p className="text-xs text-muted-foreground mb-1">Reliability Score</p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-2xl font-bold">
+                            {project.reliabilityScore !== null && project.reliabilityScore !== undefined
+                              ? Math.round(project.reliabilityScore)
+                              : "-"}
+                          </p>
+                          {project.reliabilityScore && project.reliabilityScore > 85 && (
+                            <TrendingUp className="h-4 w-4 text-success" />
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground mb-1">Drift Score</p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-2xl font-bold">
+                            {project.driftScore !== null && project.driftScore !== undefined
+                              ? Math.round(project.driftScore)
+                              : "-"}
+                          </p>
+                          {project.driftScore && project.driftScore < 30 && (
+                            <TrendingDown className="h-4 w-4 text-success" />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-xs text-muted-foreground pt-2 border-t border-white/5">
+                      <span>Type: {project.project_type?.toUpperCase() || 'Hybrid'}</span>
+                      <span>•</span>
+                      <span>Last updated: {new Date(project.lastUpdated || project.created_at).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                </Link>
+              </GlassCard>
+            ))}
+          </div>
         )}
 
         {totalCount > PROJECTS_PER_PAGE && (
