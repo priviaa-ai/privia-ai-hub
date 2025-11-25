@@ -50,18 +50,28 @@ export const HowItWorks = () => {
               key={step.title}
               initial={{ opacity: 0, y: 12 }}
               animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-              transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+              transition={{ duration: 0.45, delay: index * 0.1, ease: "easeOut" }}
             >
-              <GlassCard className="p-6 relative group">
-                {/* Step number badge */}
-                <div 
-                  className="absolute -top-3 -left-3 w-7 h-7 rounded-full flex items-center justify-center font-semibold text-sm text-white"
-                  style={{
-                    background: 'linear-gradient(135deg, #4F67FF 0%, #7A5CFF 100%)',
-                    boxShadow: '0 4px 12px rgba(79, 103, 255, 0.3)',
-                  }}
-                >
-                  {index + 1}
+              <GlassCard className="p-6 pt-8 relative group">
+                {/* Premium step number indicator - centered above */}
+                <div className="flex justify-center mb-5">
+                  <motion.div 
+                    className="w-11 h-11 rounded-xl flex items-center justify-center font-normal text-base transition-all duration-300 cursor-default"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.04)',
+                      border: '1px solid rgba(255, 255, 255, 0.12)',
+                      boxShadow: '0 0 12px rgba(120, 70, 255, 0.25)',
+                      color: 'rgba(255, 255, 255, 0.85)',
+                    }}
+                    whileHover={{
+                      scale: 1.05,
+                      borderColor: 'rgba(255, 255, 255, 0.25)',
+                      boxShadow: '0 0 16px rgba(120, 70, 255, 0.35)',
+                    }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
+                  >
+                    {index + 1}
+                  </motion.div>
                 </div>
                 
                 {/* Premium glassmorphism icon container */}
