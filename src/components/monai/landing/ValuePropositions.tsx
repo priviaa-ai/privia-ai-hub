@@ -67,11 +67,20 @@ export const ValuePropositions = () => {
               transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
             >
               <GlassCard hover className="p-6 text-center group">
-                <div className="flex items-center justify-center mb-4">
-                  <Icon 
-                    size={32} 
-                    className="text-white/50 group-hover:text-white/80 transition-colors duration-300" 
-                  />
+                {/* Premium glassmorphism icon container */}
+                <div className="flex items-center justify-center mb-5">
+                  <div 
+                    className="w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:shadow-[0_0_24px_rgba(79,103,255,0.25)]"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                    }}
+                  >
+                    <Icon 
+                      size={28} 
+                      className="text-white/[0.85] transition-colors duration-300" 
+                    />
+                  </div>
                 </div>
                 <h3 className="text-xl font-medium mb-2">{feature.title}</h3>
                 <p className="text-sm font-medium text-muted-foreground/80 mb-4 leading-relaxed">
@@ -79,8 +88,8 @@ export const ValuePropositions = () => {
                 </p>
                 
                 {/* Mini visual preview with glass styling */}
-                <div className="mt-4 rounded-lg overflow-hidden border border-white/20 relative group-hover:scale-105 transition-transform">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent z-10 pointer-events-none" />
+                <div className="mt-4 rounded-lg overflow-hidden border border-white/10 relative group-hover:border-white/20 transition-colors duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent z-10 pointer-events-none" />
                   <img 
                     src={feature.image} 
                     alt={`${feature.title} visualization`}
