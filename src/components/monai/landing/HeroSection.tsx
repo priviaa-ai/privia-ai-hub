@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Activity } from "lucide-react";
-import heroDashboard from "@/assets/dashboard-real.png";
+import heroDashboard from "@/assets/real-hero-dashboard.png";
 
 export const HeroSection = () => {
   return (
@@ -48,8 +48,8 @@ export const HeroSection = () => {
             {/* Frosted glass overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-transparent z-10 pointer-events-none" />
             
-            {/* Real dashboard screenshot - cropped to show top 65% */}
-            <div className="relative overflow-hidden" style={{ maxHeight: '600px' }}>
+            {/* Real dashboard screenshot - cropped to hide purple text at bottom */}
+            <div className="relative overflow-hidden" style={{ maxHeight: '680px' }}>
               <img 
                 src={heroDashboard} 
                 alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"

@@ -1,8 +1,8 @@
 import { TrendingUp, Sparkles, Bell, Network } from "lucide-react";
 import { GlassCard } from "@/components/monai/GlassCard";
-import cropDsiChart from "@/assets/crop-dsi-chart.png";
-import cropMetrics from "@/assets/crop-metrics.png";
-import cropControls from "@/assets/crop-controls.png";
+import realDriftChart from "@/assets/real-drift-chart.png";
+import realFeatureTable from "@/assets/real-feature-table.png";
+import realDemoProject from "@/assets/real-demo-project.png";
 import cropFeatureTable from "@/assets/crop-feature-table.png";
 
 const features = [
@@ -11,21 +11,21 @@ const features = [
     title: "Drift Detection",
     description: "Monitor statistical and semantic drift using PSI, KL divergence, and embedding changes.",
     color: "primary",
-    image: cropDsiChart,
+    image: realDriftChart,
   },
   {
     icon: Sparkles,
     title: "LLM Behavior Monitoring",
     description: "Track hallucinations, tone shifts, safety violations, and reasoning anomalies.",
     color: "accent",
-    image: cropMetrics,
+    image: realFeatureTable,
   },
   {
     icon: Bell,
     title: "Real-Time Alerts",
     description: "Get notified instantly when reliability issues emerge via Slack, email, or webhooks.",
     color: "warning",
-    image: cropControls,
+    image: realDemoProject,
   },
   {
     icon: Network,
