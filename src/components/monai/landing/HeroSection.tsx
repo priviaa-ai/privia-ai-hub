@@ -55,7 +55,7 @@ export const HeroSection = () => {
         animate="visible"
         variants={fadeUpVariants}
         transition={{ duration: 0.6, delay: 0.5 }}
-        className="text-sm sm:text-base lg:text-lg font-normal text-muted-foreground/70 mb-10 max-w-[780px] mx-auto leading-relaxed px-4"
+        className="text-sm sm:text-base lg:text-lg font-normal text-white mb-10 max-w-[780px] mx-auto leading-relaxed px-4"
       >
         MonAI monitors ML and LLM systems for drift, hallucinations, and behavior shifts in real time so teams can fix issues before they reach customers.
       </motion.p>
