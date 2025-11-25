@@ -40,8 +40,8 @@ export const ValuePropositions = () => {
   return (
     <div className="max-w-6xl mx-auto mb-32">
       <div className="text-center mb-12">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-4">Complete AI Observability</h2>
-        <p className="text-xl text-muted-foreground">
+        <h2 className="text-4xl sm:text-5xl font-bold mb-4">Complete AI Observability</h2>
+        <p className="text-lg sm:text-xl text-muted-foreground">
           Monitor every aspect of your ML and LLM systems
         </p>
       </div>
