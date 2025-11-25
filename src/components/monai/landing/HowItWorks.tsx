@@ -53,19 +53,20 @@ export const HowItWorks = () => {
               transition={{ duration: 0.45, delay: index * 0.1, ease: "easeOut" }}
               className="flex flex-col items-start"
             >
-              {/* Step number badge - aligned left */}
+              {/* Step number badge - minimal outline style */}
               <motion.div 
-                className="w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center font-medium text-sm text-white mb-4 cursor-default"
+                className="w-9 h-9 rounded-full flex items-center justify-center font-normal text-sm mb-4 cursor-default"
                 style={{
-                  background: 'linear-gradient(180deg, rgba(129, 140, 248, 0.6) 0%, rgba(88, 101, 242, 0.25) 100%)',
-                  border: '1px solid rgba(255, 255, 255, 0.18)',
-                  boxShadow: '0 0 22px rgba(129, 140, 248, 0.45)',
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  boxShadow: '0 0 20px rgba(120, 80, 255, 0.15)',
+                  color: 'rgba(255, 255, 255, 0.75)',
                 }}
                 whileHover={{
                   scale: 1.05,
-                  boxShadow: '0 0 28px rgba(129, 140, 248, 0.55)',
+                  boxShadow: '0 0 24px rgba(120, 80, 255, 0.25)',
                 }}
-                transition={{ duration: 0.22, ease: "easeOut" }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
               >
                 {index + 1}
               </motion.div>
