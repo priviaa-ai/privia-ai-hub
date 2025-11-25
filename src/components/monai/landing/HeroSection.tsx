@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Activity } from "lucide-react";
-import dashboardHero from "@/assets/dashboard-hero.png";
+import heroDashboard from "@/assets/hero-dashboard.png";
 
 export const HeroSection = () => {
   return (
@@ -12,14 +12,14 @@ export const HeroSection = () => {
       
       <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8">
         <Activity className="h-4 w-4 text-primary animate-pulse" />
-        <span className="text-sm text-foreground/80">Enterprise AI Reliability Platform</span>
+        <span className="text-sm text-foreground/80">Enterprise-Grade Monitoring</span>
       </div>
 
-      <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-foreground">
+      <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 text-foreground leading-tight">
         AI Reliability Monitoring for ML and LLM Systems
       </h1>
       
-      <p className="text-xl sm:text-2xl text-muted-foreground mb-4 max-w-3xl mx-auto">
+      <p className="text-xl sm:text-2xl text-muted-foreground mb-6 max-w-3xl mx-auto">
         Detect drift, hallucinations, anomalies, and behavior shifts before they impact customers.
       </p>
       
@@ -37,29 +37,28 @@ export const HeroSection = () => {
         </Link>
       </div>
 
-      {/* Composite Dashboard Hero */}
-      <div className="max-w-5xl mx-auto mb-12">
+      {/* Real Dashboard Hero */}
+      <div className="max-w-4xl mx-auto mb-16 mt-12">
         <div className="relative group">
-          {/* Neon blue/purple gradient glow behind */}
-          <div className="absolute -inset-4 bg-gradient-to-r from-primary/40 via-accent/50 to-primary/40 rounded-3xl blur-2xl opacity-70" />
+          {/* Neon gradient glow border */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-[hsl(237,100%,68%)] via-[hsl(270,60%,65%)] to-[hsl(237,100%,68%)] rounded-3xl opacity-60 blur-lg" />
           
-          {/* Glass container with composite dashboard */}
-          <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_80px_rgba(59,130,246,0.3)] backdrop-blur-sm">
-            {/* Slight overlay for glass effect with gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-background/10 via-transparent to-background/10 z-10 pointer-events-none" />
-            <div className="absolute inset-0 bg-white/[0.02] z-10 pointer-events-none" />
+          {/* Glassmorphic container */}
+          <div className="relative rounded-3xl overflow-hidden border border-white/20 shadow-[0_25px_100px_rgba(91,107,255,0.4)] backdrop-blur-[20px] bg-background/10">
+            {/* Frosted glass overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] via-transparent to-white/[0.02] z-10 pointer-events-none" />
             
-            {/* Dashboard image with subtle blur for brand aesthetic */}
+            {/* Real dashboard screenshot */}
             <img 
-              src={dashboardHero} 
-              alt="MonAI Composite Dashboard - Metrics, DSI Trend, and Feature Drift"
+              src={heroDashboard} 
+              alt="MonAI Drift Dashboard - Real-time drift detection and monitoring"
               className="w-full h-auto"
-              style={{ filter: 'blur(2px)' }}
+              style={{ filter: 'blur(10px)' }}
             />
           </div>
           
-          <div className="mt-6 text-sm text-muted-foreground text-center">
-            Real AI reliability monitoring from MonAI
+          <div className="mt-8 text-base text-muted-foreground text-center">
+            Real-time model drift detection across your AI systems
           </div>
         </div>
       </div>

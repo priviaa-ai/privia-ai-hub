@@ -1,5 +1,5 @@
 import { GlassCard } from "@/components/monai/GlassCard";
-import dashboardPreview from "@/assets/dashboard-preview.png";
+import cropFeatureTable from "@/assets/crop-feature-table.png";
 
 export const DashboardPreview = () => {
   return (
@@ -12,20 +12,20 @@ export const DashboardPreview = () => {
       </div>
 
       <div className="max-w-5xl mx-auto">
-        <GlassCard className="p-8">
-          <div className="relative group">
+        <GlassCard className="p-8 group hover:scale-[1.02] transition-transform duration-300">
+          <div className="relative">
             {/* Neon gradient glow */}
-            <div className="absolute -inset-3 bg-gradient-to-r from-primary/30 via-accent/40 to-primary/30 rounded-xl blur-xl opacity-60" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-[hsl(237,100%,68%)] via-[hsl(270,60%,65%)] to-[hsl(237,100%,68%)] rounded-xl opacity-50 blur-lg" />
             
-            {/* Dashboard composite with glass aesthetic */}
-            <div className="relative rounded-xl overflow-hidden border border-white/10 shadow-[0_15px_60px_rgba(59,130,246,0.25)]">
-              <div className="absolute inset-0 bg-gradient-to-t from-background/10 via-transparent to-background/10 z-10 pointer-events-none" />
+            {/* Dashboard crop with glass aesthetic */}
+            <div className="relative rounded-xl overflow-hidden border border-white/20 shadow-[0_15px_60px_rgba(91,107,255,0.3)] backdrop-blur-sm">
+              <div className="absolute inset-0 bg-gradient-to-t from-background/5 via-transparent to-background/5 z-10 pointer-events-none" />
               <div className="absolute inset-0 bg-white/[0.02] z-10 pointer-events-none" />
               <img 
-                src={dashboardPreview} 
-                alt="MonAI Reliability Dashboard Composite"
+                src={cropFeatureTable} 
+                alt="MonAI Feature Metrics Table"
                 className="w-full h-auto"
-                style={{ filter: 'blur(2px)' }}
+                style={{ filter: 'blur(8px)' }}
               />
             </div>
           </div>
