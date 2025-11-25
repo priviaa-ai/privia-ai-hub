@@ -55,7 +55,7 @@ export const HowItWorks = () => {
             >
               {/* Step number badge - minimal outline style */}
               <motion.div 
-                className="w-9 h-9 rounded-full flex items-center justify-center font-normal text-sm mb-4 cursor-default"
+                className="w-9 h-9 rounded-full flex items-center justify-center font-normal text-sm mb-2 cursor-default"
                 style={{
                   background: 'rgba(255, 255, 255, 0.03)',
                   border: '1px solid rgba(255, 255, 255, 0.12)',
