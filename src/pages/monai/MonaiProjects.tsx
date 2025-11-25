@@ -75,11 +75,8 @@ export default function MonaiProjects() {
       // Get total count with archive filter
       const countQuery = supabase
         .from('monai_projects')
-        .select('*', { count: 'exact', head: true });
-      
-      if (!showArchived) {
-        countQuery.eq('is_archived', false);
-      }
+        .select('*', { count: 'exact', head: true })
+        .eq('is_archived', showArchived);
       
       const { count } = await countQuery;
       setTotalCount(count || 0);
@@ -91,13 +88,10 @@ export default function MonaiProjects() {
       const projectsQuery = supabase
         .from('monai_projects')
         .select('*')
+        .eq('is_archived', showArchived)
         .order('is_demo', { ascending: false })
         .order('created_at', { ascending: false })
         .range(from, to);
-      
-      if (!showArchived) {
-        projectsQuery.eq('is_archived', false);
-      }
 
       const { data: projectsData, error: projectsError } = await projectsQuery;
 
