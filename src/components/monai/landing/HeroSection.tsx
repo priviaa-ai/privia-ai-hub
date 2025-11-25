@@ -21,8 +21,8 @@ const buttonVariants = {
 };
 
 const dashboardVariants = {
-  hidden: { opacity: 0, y: 60 },
-  visible: { opacity: 1, y: 0 }
+  hidden: { opacity: 0, y: 80, scale: 0.97 },
+  visible: { opacity: 1, y: 0, scale: 1 }
 };
 
 // Add fade sweep animation keyframes
@@ -173,7 +173,7 @@ export const HeroSection = () => {
         initial="hidden"
         animate="visible"
         variants={dashboardVariants}
-        transition={{ duration: 0.7, delay: 3.1, ease: "easeOut" }}
+        transition={{ duration: 0.7, delay: 3.05, ease: "easeOut" }}
         className="max-w-5xl mx-auto mb-16 mt-12 px-4"
       >
         <div className="relative">
