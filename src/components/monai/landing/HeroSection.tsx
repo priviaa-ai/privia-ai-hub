@@ -45,10 +45,27 @@ export const HeroSection = () => {
         animate="visible"
         variants={fadeUpVariants}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="text-4xl sm:text-5xl lg:text-6xl font-medium mb-6 text-foreground leading-[1.15] max-w-[780px] mx-auto px-4"
+        className="text-4xl sm:text-5xl lg:text-6xl font-medium mb-8 text-foreground leading-[1.15] max-w-[780px] mx-auto px-4"
       >
         Know when your AI drifts<br />before your users do
       </motion.h1>
+      
+      {/* Premium Separator */}
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={fadeUpVariants}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="flex justify-center mb-8 px-4"
+      >
+        <div 
+          className="h-[1px] w-[45%] sm:w-[40%] max-w-[350px] relative"
+          style={{
+            background: 'linear-gradient(90deg, rgba(120, 70, 255, 0.6), rgba(0, 150, 255, 0.6))',
+            boxShadow: '0 0 20px rgba(120, 70, 255, 0.4), 0 0 40px rgba(0, 150, 255, 0.3)'
+          }}
+        />
+      </motion.div>
       
       <motion.p
         initial="hidden"
