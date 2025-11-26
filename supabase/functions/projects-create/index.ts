@@ -81,9 +81,10 @@ serve(async (req) => {
 
     // ALSO create a matching row in monai_projects with the SAME ID
     // This ensures the project ID in the URL matches the monai_projects ID
+    // Using upsert with service role client to bypass RLS
     const { error: monaiProjectError } = await supabaseAdmin
       .from('monai_projects')
-      .insert({
+      .upsert({
         id: project.id,  // Use the same UUID from the projects table
         name: name.trim(),
         description: description || 'MonAI project',
@@ -93,8 +94,9 @@ serve(async (req) => {
         project_type: 'hybrid',
         default_model_type: 'llm',
         is_demo: false,
-        is_archived: false
-      });
+        is_archived: false,
+        created_at: new Date().toISOString()
+      }, { onConflict: 'id' });
 
     if (monaiProjectError) {
       console.error('MonAI project creation error:', monaiProjectError);
