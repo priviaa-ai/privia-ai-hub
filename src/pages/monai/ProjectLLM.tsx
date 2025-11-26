@@ -37,29 +37,54 @@ export default function ProjectLLM() {
   }, [projectId]);
 
   const loadInteractions = async () => {
+    // Get date 7 days ago for filtering
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const sevenDaysAgoISO = sevenDaysAgo.toISOString();
+
+    // First try to get metrics from llm_summary_daily if available
+    const { data: summaryData } = await supabase
+      .from('llm_summary_daily')
+      .select('*')
+      .eq('project_id', projectId)
+      .gte('date', sevenDaysAgo.toISOString().split('T')[0])
+      .order('date', { ascending: false });
+
+    // Fetch recent interactions for display and fallback metrics
     const { data, error } = await supabase
       .from('monai_llm_interactions')
       .select('*')
       .eq('project_id', projectId)
+      .gte('created_at', sevenDaysAgoISO)
       .order('created_at', { ascending: false })
-      .limit(50);
+      .limit(100);
 
     if (!error && data) {
       setInteractions(data);
       
-      // Calculate average hallucination score
-      const scores = data.filter(i => i.hallucination_score !== null);
-      if (scores.length > 0) {
-        const avg = scores.reduce((sum, i) => sum + (i.hallucination_score || 0), 0) / scores.length;
-        setAvgHallucination(avg);
-      }
+      // If we have summary data, use it for more accurate metrics
+      if (summaryData && summaryData.length > 0) {
+        const totalEvents = summaryData.reduce((sum, d) => sum + (d.total_events || 0), 0);
+        const highEvents = summaryData.reduce((sum, d) => sum + (d.high_events || 0), 0);
+        const avgScore = summaryData.reduce((sum, d) => sum + (d.avg_hallucination_score || 0), 0) / summaryData.length;
+        
+        setAvgHallucination(avgScore);
+        setSafetyIncidents(highEvents);
+      } else {
+        // Fallback: Calculate from raw interactions
+        const scores = data.filter(i => i.hallucination_score !== null);
+        if (scores.length > 0) {
+          const avg = scores.reduce((sum, i) => sum + (i.hallucination_score || 0), 0) / scores.length;
+          setAvgHallucination(avg);
+        }
 
-      // Count safety incidents
-      const incidents = data.filter(i => {
-        const flags = i.safety_flags_json as any;
-        return flags?.toxic || flags?.pii || flags?.profanity;
-      });
-      setSafetyIncidents(incidents.length);
+        // Count safety incidents from flags
+        const incidents = data.filter(i => {
+          const flags = i.safety_flags_json as any;
+          return flags?.toxic || flags?.pii || flags?.profanity;
+        });
+        setSafetyIncidents(incidents.length);
+      }
     }
   };
 
