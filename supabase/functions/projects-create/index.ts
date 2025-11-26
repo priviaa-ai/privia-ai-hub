@@ -27,6 +27,12 @@ serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
+    // Use service role for monai_projects insert
+    const supabaseAdmin = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    );
+
     // Verify user is authenticated
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
@@ -36,7 +42,7 @@ serve(async (req) => {
       );
     }
 
-    const { name } = await req.json();
+    const { name, description } = await req.json();
 
     if (!name || typeof name !== 'string' || name.trim().length === 0) {
       return new Response(
@@ -45,7 +51,7 @@ serve(async (req) => {
       );
     }
 
-    // Create project with user_id
+    // Create project with user_id in the projects table
     const { data: project, error: projectError } = await supabase
       .from('projects')
       .insert({ name: name.trim(), user_id: user.id })
@@ -60,7 +66,7 @@ serve(async (req) => {
       );
     }
 
-    // Create default settings
+    // Create default settings for the projects table
     const { error: settingsError } = await supabase
       .from('project_settings')
       .insert({ 
@@ -71,6 +77,31 @@ serve(async (req) => {
 
     if (settingsError) {
       console.error('Settings creation error:', settingsError);
+    }
+
+    // ALSO create a matching row in monai_projects with the SAME ID
+    // This ensures the project ID in the URL matches the monai_projects ID
+    const { error: monaiProjectError } = await supabaseAdmin
+      .from('monai_projects')
+      .insert({
+        id: project.id,  // Use the same UUID from the projects table
+        name: name.trim(),
+        description: description || 'MonAI project',
+        owner_user_id: user.id,
+        dsi_threshold: 0.3,
+        hallucination_threshold: 0.3,
+        project_type: 'hybrid',
+        default_model_type: 'llm',
+        is_demo: false,
+        is_archived: false
+      });
+
+    if (monaiProjectError) {
+      console.error('MonAI project creation error:', monaiProjectError);
+      // Don't fail the whole request, the main project was created
+      // Log for debugging but continue
+    } else {
+      console.log('Successfully created monai_project with id:', project.id);
     }
 
     return new Response(
