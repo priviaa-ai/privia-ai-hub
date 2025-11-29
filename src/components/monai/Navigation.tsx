@@ -42,9 +42,9 @@ export function Navigation() {
         transition: 'background 300ms ease-out, box-shadow 300ms ease-out'
       }}
     >
-      {/* Three-column grid layout for perfect centering */}
+      {/* Three-column grid layout for perfect centering on desktop, two-column on mobile */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-2.5">
-        <div className="grid grid-cols-[1fr_auto_1fr] items-center">
+        <div className="grid grid-cols-[1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center">
           
           {/* Left - Logo */}
           <div className="flex items-center justify-start">
